@@ -5,11 +5,9 @@ import { useState } from "react";
 import { registerUser } from "../../service/features/authSlice";
 
 type FormRegisterProps = {
+  username: string;
   name: string;
-  email: string;
   password: string;
-  phone: string;
-  role: string;
   confirmPassword: string;
 };
 
@@ -20,12 +18,10 @@ const FormRegister = () => {
 
   const form = useForm<FormRegisterProps>({
     defaultValues: {
+      username: "",
       name: "",
-      email: "",
       password: "",
-      phone: "",
       confirmPassword: "",
-      role: "Customer",
     },
   });
   const { register, handleSubmit, formState, reset } = form;
@@ -40,9 +36,8 @@ const FormRegister = () => {
           // Assuming response contains expected data structure
           reset({
             name: "",
-            email: "",
+            username: "",
             password: "",
-            phone: "",
             confirmPassword: "",
           });
           setIsLoading(false);
@@ -73,8 +68,26 @@ const FormRegister = () => {
       >
         <div className="flex flex-col">
           <div className="flex flex-row">
+            <label htmlFor="username" className="text-base font-semibold">
+              Username:
+            </label>
+            {errors.username && (
+              <p className="text-sm text-red-500">* {errors.username.message}</p>
+            )}
+          </div>
+          <input
+            {...register("username", { required: "username is required" })}
+            type="text"
+            id="userame"
+            name="username"
+            placeholder="Enter your username..."
+            className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+          />
+        </div>
+        <div className="flex flex-col">
+          <div className="flex flex-row">
             <label htmlFor="name" className="text-base font-semibold">
-              Name:{" "}
+              Name:
             </label>
             {errors.name && (
               <p className="text-sm text-red-500">* {errors.name.message}</p>
@@ -85,43 +98,7 @@ const FormRegister = () => {
             type="text"
             id="name"
             name="name"
-            placeholder="Enter your name..."
-            className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-          />
-        </div>
-        <div className="flex flex-col mt-4">
-          <div className="flex flex-row">
-            <label htmlFor="email" className="text-base font-semibold">
-              Email:{" "}
-            </label>
-            {errors.email && (
-              <p className="text-sm text-red-500">* {errors.email.message}</p>
-            )}
-          </div>
-          <input
-            {...register("email", { required: "Email is required" })}
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email..."
-            className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-          />
-        </div>
-        <div className="flex flex-col mt-4">
-          <div className="flex flex-row">
-            <label htmlFor="phone" className="text-base font-semibold">
-              Phone:{" "}
-            </label>
-            {errors.phone && (
-              <p className="text-sm text-red-500">* {errors.phone.message}</p>
-            )}
-          </div>
-          <input
-            {...register("phone", { required: "Phone number is required" })}
-            type="text"
-            id="phone"
-            name="phone"
-            placeholder="Enter your phonenumber..."
+            placeholder="Enter your Name..."
             className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
           />
         </div>

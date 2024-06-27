@@ -5,21 +5,18 @@ export interface ILoginResponse {
 }
 
 export interface IUser {
-    token: IToken;
-    userResult: IUserResult;
+    accessToken: string;
+    user: IUserResult;
 }
 
-interface IToken {
-    accessToken: string;
-    expirationMinutes: number;
-}
 interface IUserResult {
-    userID: string;
-    email: string;
-    role: string;
-    name: string;
-    phone: string;
-    storeId: string;
+    id: string,
+    username: string,
+    name: string,
+    phone: null,
+    role: string,
+    status: string,
+    createAt: Date,
 }
 export interface ILogin {
     email: string;
@@ -42,7 +39,7 @@ export interface IUserInfo {
     roleName: string,
 }
 
-export interface IChangePassword{
+export interface IChangePassword {
     oldPassword: string,
     newPassword: string,
 }
