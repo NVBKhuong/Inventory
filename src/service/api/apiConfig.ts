@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api-suame88.evericks.com/api'
+export const BASE_URL = 'https://suame88.azurewebsites.net/api'
 
 export const loginEndpoint = `${BASE_URL}/auth/customers`
 export const registerEndpoint = `${BASE_URL}/customers`
