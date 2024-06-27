@@ -1,0 +1,26 @@
+export const BASE_URL = 'http://api-suame88.evericks.com/api'
+
+export const loginEndpoint = `${BASE_URL}/auth/customers`
+export const registerEndpoint = `${BASE_URL}/customers`
+
+export const changePasswordEndpoint = `${BASE_URL}/Auth/change-password`
+
+//User
+export const getUserProfileEndpoint = `${BASE_URL}/Users/profile`
+export const getAllUsersEndpoint = `${BASE_URL}/User/users`
+
+//category
+export const getAllCategoriesEndpoint = `${BASE_URL}/categories`
+export const getCategoryByIdEndpoint = `${BASE_URL}/categories`
+export const createCategoryEndpoint = `${BASE_URL}/categories`
+export const updateCategoryEndpoint = `${BASE_URL}/categories`
+
+//getAll product
+export const getAllProductsEndpoint = `${BASE_URL}/products`
+export const getProductByIdEndpoint = `${BASE_URL}/products`
+export const createProductEndpoint = `${BASE_URL}/products`
+export const updateProductEndpoint = `${BASE_URL}/products`
+
+//Feedback Endpoints
+export const getFeedbackByProductId = `${BASE_URL}/feedbacks`
+export const createFeedbackEndpoint = `${BASE_URL}/feedbacks`
