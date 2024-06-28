@@ -46,9 +46,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         price: 1,
         promotionPrice: 1,
         quantity: 1,
-        productCategories: {
-            label:'', value:''
-        }
+        productCategories: [{ categoryId: ""}]
     })
     const [checkValid, setCheckValid]=useState({
         name: false,
@@ -77,10 +75,23 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('price',form.price.toString())
         formData.append('promotionPrice', form.promotionPrice.toString())
         formData.append('quantity', form.quantity.toString())
-        // formData.append('productCategories', form.productCategories)
-        // await dispatch(createProduct(formData))
-        // await dispatch(getAllProducts())
-        // closePopupCreateProduct()
+        formData.append('productCategories', JSON.stringify(form.productCategories))
+        await dispatch(createProduct(formData))
+        await dispatch(getAllProducts()).then(()=>{
+            setForm({
+                name:'',
+                description:'',
+                origin:'',
+                thumbnail: null,
+                madeIn:'',
+                brand:'Vinamilk',
+                price: 1,
+                promotionPrice: 1,
+                quantity: 1,
+                productCategories: [{ categoryId: ""}]
+            })
+            closePopupCreateProduct()
+        })
     }
 
     const [productCategories, setProductCategories] = useState([])
@@ -144,18 +155,21 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 </div>
                             <div className="mb-4">
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Product category</label>
-                                <Autocomplete options={productCategories} value={form.productCategories}
-                                disablePortal disableClearable size='small'
-                                onChange={(e, value) => setForm(prev => ({...prev, productCategories: value}))}
-                                renderInput={(params) => <TextField {...params} />} />
-                                                            </div>
+                               {productCategories.length>0 && <Autocomplete multiple options={productCategories}
+                                    size='small' filterSelectedOptions
+                                    onChange={(event, value) => {
+                                        const newList = value.map((item: {label: string, value: string}) => ({categoryId: item.value}))
+                                        setForm(prev => ({...prev, productCategories: newList}))
+                                    }}
+                                    renderInput={(params) => ( <TextField {...params} placeholder="Select multiple categories" /> )} />}
+                            </div>
                             <div className="mb-4">
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
                                 <Autocomplete options={['Vinamilk','TH True milk','Nutricare','Dutch Lady','NutiFood']} value={form.brand}
                                 disablePortal disableClearable size='small'
                                 onChange={(e, value) => setForm(prev => ({...prev, brand: value}))}
                                 renderInput={(params) => <TextField {...params} />} />
-                                                            </div>
+                            </div>
                             <div className="mb-4">
                                 <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
                                 <input value={form.description} onChange={(e) => setForm(prev => ({...prev, description: e.target.value}))}
