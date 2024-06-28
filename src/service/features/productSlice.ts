@@ -63,7 +63,7 @@ export const getProductById = createAsyncThunk<IProduct, { id: number }>(
     },
 );
 
-export const createProduct = createAsyncThunk<IProductCreate, Object>(
+export const createProduct = createAsyncThunk<IProductCreate, FormData>(
     'products/createProduct',
     async (product, thunkAPI) => {
         try {
