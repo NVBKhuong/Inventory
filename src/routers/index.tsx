@@ -19,7 +19,8 @@ const AppRouter = () => {
 
     // Check if account and userResult are defined before accessing role
     const isAdmin = account && account.user && account.user.role.includes('Admin');
-    const isStoreOwner = account && account.user && account.user.role.includes('Staff');
+    // const isStoreOwner = account && account.user && account.user.role.includes('Staff');
+    const isStoreOwner = 'Staff'
     const isCustomer = account && account.user && account.user.role.includes('Customer');
 
     if (!token || !account) {
