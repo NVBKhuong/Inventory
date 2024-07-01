@@ -20,7 +20,7 @@ const initialState: FeedbackState = {
     success: false,
 };
 
-export const getAllFeedbacksByProductId = createAsyncThunk<IFeedback[], { productId: number }>(
+export const getAllFeedbacksByProductId = createAsyncThunk<IFeedback[], { productId: string }>(
     'feedbacks/getAllFeedbacksByProductId',
     async ({ productId }, thunkAPI) => {
         try {

@@ -2,15 +2,16 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { getAllProducts } from "../../service/features/productSlice";
+import { Spinner } from "../Layout/Spinner";
 
-const Product = () => {
+const Product: React.FC<{ text?: string | null }> = ({ text }) => {
     const dispatch = useAppDispatch();
     const { products, loading } = useAppSelector((state) => state.products);
 
     useEffect(() => {
-        dispatch(getAllProducts());
-    }, [dispatch]);
-    if (loading) return <p className="flex items-center justify-center">Loading...</p>;
+        dispatch(getAllProducts({ text }));
+    }, [dispatch, text]);
+    if (loading) return <Spinner />;
     if (!products) return <p>No products available</p>;
 
     return (

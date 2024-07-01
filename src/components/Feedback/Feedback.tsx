@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../service/store/store';
 import { getAllFeedbacksByProductId } from '../../service/features/feedbackSlice';
 
 type FeedbackProps = {
-  productId: number | undefined;
+  productId?: string ;
 };
 
 const Feedback: React.FC<FeedbackProps> = ({ productId }) => {
