@@ -35,7 +35,7 @@ const ProductDetails = () => {
                 quantity,
                 cartId: newCartId
             }));
-            toast.success(`Đã thêm ${product.name} vào giỏ hàng.`);
+            toast.success(`Added ${product.name} to cart.`);
         }
     };
 
