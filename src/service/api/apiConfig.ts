@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://suame88.azurewebsites.net/api'
 
-export const loginEndpoint = `${BASE_URL}/auth/customers`
+export const loginEndpoint = `${BASE_URL}/auth`
 export const registerEndpoint = `${BASE_URL}/customers`
 
 export const changePasswordEndpoint = `${BASE_URL}/Auth/change-password`

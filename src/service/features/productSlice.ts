@@ -36,11 +36,13 @@ const initialState: ProductState = {
     success: false,
 };
 
-export const getAllProducts = createAsyncThunk<IProduct[], void>(
+export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | null }>(
     'products/getAllProducts',
-    async (_, thunkAPI) => {
+    async (data, thunkAPI) => {
         try {
-            const response = await axios.post('/products/filter',{});
+            const response = await axios.post('/products/filter', {
+                search: data.text
+            });
             return response.data.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data);
@@ -48,7 +50,7 @@ export const getAllProducts = createAsyncThunk<IProduct[], void>(
     },
 );
 
-export const getProductById = createAsyncThunk<IProduct, { id: number }>(
+export const getProductById = createAsyncThunk<IProduct, { id: string }>(
     'products/getProductById',
     async (data, thunkAPI) => {
         const { id } = data;

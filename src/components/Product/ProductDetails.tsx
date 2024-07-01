@@ -6,12 +6,16 @@ import { addToCart, getProductById, increaseQuantity, decreaseQuantity } from ".
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
+import { Link } from "react-router-dom";
+//import { string } from "yup";
 
 const ProductDetails = () => {
     const params = useParams();
     const dispatch = useAppDispatch();
     const { product, cart } = useAppSelector((state) => state.products);
-    const productId = params.id ? Number(params.id) : undefined;
+    const productId = params.id ? params.id : "";
+    const { account } = useAppSelector((state) => state.auth);
+    const isCustomer = account && account.user && account.user.role.includes('Customer');
 
     const [quantity, setQuantity] = useState(1);
 
@@ -85,12 +89,17 @@ const ProductDetails = () => {
                                         +
                                     </button>
                                 </div>
-                                <button
+                                {isCustomer ? (<button
                                     onClick={handleAddToCart}
                                     className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                                 >
                                     Add To Cart
-                                </button>
+                                </button>) : (<Link to="/login"
+                                    className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                                >
+                                    Add To Cart
+                                </Link>
+                                )}
                                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                     <svg
                                         fill="currentColor"
