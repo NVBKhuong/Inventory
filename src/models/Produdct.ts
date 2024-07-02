@@ -10,11 +10,31 @@ export interface IProduct {
     capacity: string;
     description: string;
     price: number;
+    promotionPrice: number;
+    sold: number;
     quantity: number;
     expireAt: string;
     createAt: string;
     status: string;
-    productImages: any[];
+    feedbacks: IFeedback[];
+}
+export interface IFeedback {
+    id: number;
+    message: string;
+    star: number;
+    productId: number;
+    createAt: string;
+    status: string;
+    customer: ICustomer;
+}
+export interface ICustomer {
+    id: number;
+    username: string;
+    name: string;
+    phone: string;
+    address: string;
+    createAt: string;
+    status: string;
 }
 export interface IProductCreate {
     id: number;

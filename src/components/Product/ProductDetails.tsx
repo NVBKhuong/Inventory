@@ -119,7 +119,10 @@ const ProductDetails = () => {
             </section>
             <section className="text-gray-700 body-font overflow-hidden bg-white border-t-4 w-full">
                 <div className="m-10">
-                    <Feedback productId={productId} />
+                    <Feedback
+                        productId={productId}
+                        feedbacks={product?.feedbacks}
+                    />
                 </div>
             </section>
             <section>

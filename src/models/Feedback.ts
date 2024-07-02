@@ -1,8 +1,9 @@
 interface ICustomer {
     id: string;
-    email: string;
+    username: string;
     phone: string;
     name: string;
+    address: string;
     avatarUrl: string | null;
     rank: string;
     status: boolean;
@@ -29,10 +30,10 @@ interface IProduct {
 
 export interface IFeedback {
     id: string;
-    customer: ICustomer;
     product: IProduct;
-    rateStar: number;
-    content: string;
+    message: string;
+    star: number;
+    customer: ICustomer;
     productId: string;
 }
 
