@@ -20,12 +20,12 @@ const initialState: FeedbackState = {
     success: false,
 };
 
-export const getAllFeedbacksByProductId = createAsyncThunk<IFeedback[], { productId: string }>(
+export const getAllFeedbacksByProductId = createAsyncThunk<IFeedback[], void>(
     'feedbacks/getAllFeedbacksByProductId',
-    async ({ productId }, thunkAPI) => {
+    async (_, thunkAPI) => {
         try {
             const token = sessionStorage.getItem('suame88');
-            const response = await axios.get(`${getFeedbackByProductId}?productId=${productId}`, {
+            const response = await axios.post(`${getFeedbackByProductId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

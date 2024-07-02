@@ -22,5 +22,5 @@ export const createProductEndpoint = `${BASE_URL}/products`
 export const updateProductEndpoint = `${BASE_URL}/products`
 
 //Feedback Endpoints
-export const getFeedbackByProductId = `${BASE_URL}/feedbacks`
+export const getFeedbackByProductId = `${BASE_URL}/feedbacks/filter`
 export const createFeedbackEndpoint = `${BASE_URL}/feedbacks`

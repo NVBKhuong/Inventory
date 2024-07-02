@@ -7,7 +7,7 @@ import { IFeedbackCreate } from '../../models/Feedback';
 import { createFeedbackByProductId, getAllFeedbacksByProductId } from '../../service/features/feedbackSlice';
 
 type FeedbackFormProps = {
-  productId: number | undefined;
+  productId: string | undefined;
 };
 
 const FeedbackForm: React.FC<FeedbackFormProps> = ({ productId }) => {

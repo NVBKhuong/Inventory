@@ -1,5 +1,5 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createProductEndpoint, getAllProductsEndpoint, getProductByIdEndpoint } from "../api/apiConfig";
+// import { createProductEndpoint, getAllProductsEndpoint, getProductByIdEndpoint } from "../api/apiConfig";
 import { IProduct, IProductCreate } from "../../models/Produdct";
 import { toast } from "react-toastify";
 import { ICartItem } from "../../models/CartItem";
