@@ -90,9 +90,17 @@ const ViewCart = () => {
 
     const handleCheckout = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+    
+        const totalAmount = calculateTotal(cartItems);
+        const finalAmount = totalAmount - discountValue;
+    
+        if (finalAmount <= 0) {
+            toast.error('Total amount should be greater than zero.');
+            return;
+        }
+    
         const orderPayload = {
-            amount: calculateTotal(cartItems) - discountValue,
+            amount: finalAmount,
             discount: discountValue,
             receiver,
             address,
@@ -105,20 +113,38 @@ const ViewCart = () => {
                 price: item.price
             })) : []
         };
-
+    
         try {
             const response = await instance.post('/orders', orderPayload);
-            console.log('Response status:', response.status);
-            console.log('Response data:', response.data);
-
+            const orderId = response.data.id; // Assume the order ID is in the response data
+    
+            // Clear the cart items
             cartItems && cartItems.forEach(item => dispatch(removeFromCart(item.id)));
-
-            navigate('/thank-you');
+    
+            if (paymentMethod === "Cash") {
+                navigate('/thank-you');
+            } else if (paymentMethod === "VNPay") {
+                const paymentResponse = await instance.post('/payments/request', {
+                    amount: finalAmount,
+                    orderId: orderId
+                });
+    
+                const paymentUrl = paymentResponse.data; 
+                if (paymentUrl) {
+                    window.location.href = paymentUrl;
+                } else {
+                    toast.error('Failed to get payment URL.');
+                    console.error('Payment URL is missing:', paymentResponse.data);
+                }
+            }
         } catch (error) {
             console.error('Error creating order:', error);
             toast.error('Failed to create order.');
         }
     };
+    
+    
+    
 
     return (
         <>
