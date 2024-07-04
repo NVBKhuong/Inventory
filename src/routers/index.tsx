@@ -12,7 +12,7 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
-import OrderReview from '../components/Payment/OrderReview';
+import ThankYou from '../components/Payment/ThankYou';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -54,7 +54,7 @@ const AppRouter = () => {
                     <Route path="/home" element={<Home />} />
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/view-cart" element={<ViewCart />} />
-                    <Route path="/order-review" element={<OrderReview />} />
+                    <Route path="/thank-you" element={<ThankYou />} />
 
                 </>
             )}

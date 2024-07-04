@@ -4,6 +4,7 @@ import { IProduct, IProductCreate } from "../../models/Produdct";
 import { toast } from "react-toastify";
 import { ICartItem } from "../../models/CartItem";
 import axios from "../api/customAxios";
+
 const loadCartFromStorage = (): ICartItem[] | null => {
     const cartString = localStorage.getItem('cart');
     if (cartString) {
