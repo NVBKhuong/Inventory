@@ -29,7 +29,7 @@ const ViewCart = () => {
     const [receiver, setReceiver] = useState("");
     const [address, setAddress] = useState("");
     const [phone, setPhone] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("COD");
+    const [paymentMethod, setPaymentMethod] = useState("Cash");
     const [selectedVoucherId, setSelectedVoucherId] = useState("");
     const [discountValue, setDiscountValue] = useState(0);
     const [vouchers, setVouchers] = useState<IVoucher[]>([]);
@@ -107,7 +107,7 @@ const ViewCart = () => {
         };
 
         try {
-            const response = await instance.post('/api/orders', orderPayload);
+            const response = await instance.post('/orders', orderPayload);
             console.log('Response status:', response.status);
             console.log('Response data:', response.data);
 
@@ -169,14 +169,14 @@ const ViewCart = () => {
                     </div>
                     <div className="lg:w-1/2 w-full mt-12 mx-auto">
                         <div className="flex flex-col items-center justify-center">
-                            <p className="text-xl text-gray-900 mb-4">Total: ${calculateTotal(cartItems) - discountValue}</p>
+                            <p className="text-xl text-gray-900 mb-4">Total: {calculateTotal(cartItems) - discountValue} VND</p>
                             <div className="flex flex-row space-x-4 mb-4">
                                 <label className="flex items-center">
                                     <input
                                         type="radio"
                                         value="COD"
-                                        checked={paymentMethod === "COD"}
-                                        onChange={() => setPaymentMethod("COD")}
+                                        checked={paymentMethod === "Cash"}
+                                        onChange={() => setPaymentMethod("Cash")}
                                         className="mr-2"
                                     />
                                     COD
