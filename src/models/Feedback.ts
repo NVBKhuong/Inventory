@@ -40,5 +40,5 @@ export interface IFeedback {
 export interface IFeedbackCreate {
     rateStar: number;
     content: string;
-    productId: number;
+    productId: string;
 }

@@ -47,6 +47,7 @@ const AppRouter = () => {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/category-management" element={<CategoryManagement />} />
                     <Route path="/product-management" element={<ProductManagement />} />
+                    <Route path="/product-line-management" element={<ProductManagement />} />
                 </>
             )}
             {isCustomer && (
@@ -56,9 +57,6 @@ const AppRouter = () => {
                     <Route path="/view-cart" element={<ViewCart />} />
                     <Route path="/thank-you" element={<ThankYou />} />
                     {/* <Route path="/order-history" element={<OrderHistory />} /> */}
-
-
-
                 </>
             )}
             {isAdmin && (

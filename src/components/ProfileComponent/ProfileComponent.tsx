@@ -15,7 +15,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({ email, phone, name, avatarUr
     const navigate = useNavigate()
 
     const { account } = useAppSelector((state) => state.auth);
-    const isCustomer = account && account.userResult && account.userResult.role.includes('Customer');
+    const isCustomer = account && account.user && account.user.role.includes('Customer');
 
   return (
     <div className={`${isCustomer ? "flex justify-center items-center min-h-screen bg-gray-100 p-4 " : "flex justify-center items-center p-4"}`}>

@@ -30,7 +30,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ productId }) => {
       dispatch(createFeedbackByProductId(feedbackData))
         .unwrap()
         .then(() => {
-          dispatch(getAllFeedbacksByProductId({ productId }));
+          dispatch(getAllFeedbacksByProductId({ id: productId }));
           reset();
 
         }
