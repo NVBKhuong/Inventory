@@ -19,7 +19,7 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
             {products.map((product, index) => (
                 <div key={index} className="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[400px]">
                     <div className="flex items-center justify-center">
-                        <img className="w-[250px] h-[200px] p-4" src={'https://lzd-img-global.slatic.net/g/p/a76230e0f618381db919783fd72ac32c.jpg_320x320.jpg_550x550.jpg'} alt={product.name} />
+                        <img className="w-[250px] h-[200px] p-4" src={'https://firebasestorage.googleapis.com/v0/b/happy-milk-1b780.appspot.com/o/suame88%2Fc0a1440d-86d6-4395-84b8-ed2e12c123c3.png?alt=media'} alt={product.name} />
                     </div>
                     <div className="flex flex-col justify-between p-5 flex-grow">
                         <div>
