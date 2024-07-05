@@ -38,7 +38,7 @@ export interface IFeedback {
 }
 
 export interface IFeedbackCreate {
-    rateStar: number;
-    content: string;
+    star: number;
+    message: string;
     productId: string;
 }

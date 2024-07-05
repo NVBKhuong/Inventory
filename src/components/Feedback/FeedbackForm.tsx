@@ -4,7 +4,8 @@ import { TextField, Button, Typography, Box } from '@mui/material';
 import Rating from '@mui/material/Rating';
 import { useAppSelector, useAppDispatch } from '../../service/store/store';
 import { IFeedbackCreate } from '../../models/Feedback';
-import { createFeedbackByProductId, getAllFeedbacksByProductId } from '../../service/features/feedbackSlice';
+import { createFeedbackByProductId } from '../../service/features/feedbackSlice';
+import { getProductById } from '../../service/features/productSlice';
 
 type FeedbackFormProps = {
   productId: string | undefined;
@@ -15,22 +16,22 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ productId }) => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      content: '',
-      rateStar: 0,
+      message: '',
+      star: 0,
     },
   });
 
-  const onSubmit = (data: { content: string, rateStar: number }) => {
+  const onSubmit = (data: { message: string, star: number }) => {
     if (productId && account) {
       const feedbackData: IFeedbackCreate = {
         productId,
-        content: data.content,
-        rateStar: data.rateStar,
+        message: data.message,
+        star: data.star,
       };
       dispatch(createFeedbackByProductId(feedbackData))
         .unwrap()
         .then(() => {
-          dispatch(getAllFeedbacksByProductId({ id: productId }));
+          dispatch(getProductById({ id: productId }));
           reset();
 
         }
@@ -48,7 +49,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ productId }) => {
         <Box sx={{ mt: 2, mb: 2 }}>
           <Typography component="legend">Rating</Typography>
           <Controller
-            name="rateStar"
+            name="star"
             control={control}
             render={({ field }) => (
               <Rating
@@ -60,7 +61,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ productId }) => {
           />
         </Box>
         <Controller
-          name="content"
+          name="message"
           control={control}
           render={({ field }) => (
             <TextField

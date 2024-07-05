@@ -64,7 +64,7 @@ const ProductDetails = () => {
                         <img
                             alt="ecommerce"
                             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                            src="https://lzd-img-global.slatic.net/g/p/a76230e0f618381db919783fd72ac32c.jpg_320x320.jpg_550x550.jpg"
+                            src="https://firebasestorage.googleapis.com/v0/b/happy-milk-1b780.appspot.com/o/suame88%2Fc0a1440d-86d6-4395-84b8-ed2e12c123c3.png?alt=media"
                         />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
