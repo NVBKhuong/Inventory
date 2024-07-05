@@ -58,18 +58,21 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await instance.post('/orders/filter', { customerId : customerId });
-        console.log("API Response:", response.data.data);  
-        setOrders(response.data.data);  
+        const response = await instance.post('/orders/filter?pageSize=100', { customerId });
+        console.log("API Response:", response.data.data);
+          const sortedOrders = response.data.data.sort((a: Order, b: Order) => {
+          return new Date(b.createAt).getTime() - new Date(a.createAt).getTime();
+        });
+          
+        setOrders(sortedOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       }
     };
-
+  
     fetchOrders();
   }, []);
 
-  console.log("Orders state:", orders);  
 
   return (
     <>
@@ -100,7 +103,7 @@ const OrderHistory = () => {
                   <p className="text-gray-600"><span className="font-semibold">Payment Method:</span> {order.paymentMethod}</p>
                 </div>
                 <div className="mb-2">
-                  <p className={`text-sm font-medium ${order.status === "Paid" ? "text-green-600" : "text-yellow-600"}`}>
+                <p className={`text-sm font-medium ${order.status === "Paid" ? "text-green-600" : order.status === "Canceled" ? "text-red-600" : "text-yellow-600"}`}>
                     <span className="font-semibold">Status:</span> {order.status}
                   </p>
                 </div>
