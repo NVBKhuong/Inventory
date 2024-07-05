@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IUserInfo } from '../../models/User';
 import axios from 'axios';
 import { getAllUsersEndpoint, getUserProfileEndpoint } from '../api/apiConfig';
+import instance from '../api/customAxios';
 
 interface UserState {
     loading: boolean;
@@ -37,26 +38,11 @@ export const getUserProfile = createAsyncThunk<IUserInfo, void>(
         }
     },
 );
-export const getAllUser = createAsyncThunk<IUserInfo[], void>(
+export const getAllUser = createAsyncThunk<any, {role: string, params:{pageNumber:number, pageSize: number}}>(
     'users/getAllUser',
-    async (_, thunkAPI) => {
-        try {
-            const token = sessionStorage.getItem('suame88');
-            const response = await axios.get(
-                `${getAllUsersEndpoint}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
-            return response.data.data;
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue(
-                error.response?.data?.errorMessages || 'Unknown error',
-            );
-        }
-    },
+    async (arg) => await instance.post(`/Accounts/${arg.role}s/filter`,{params: arg.params})
+    .then(res => res.data.data)
+    .catch(err => console.log(err))
 );
 
 export const usersSlice = createSlice({

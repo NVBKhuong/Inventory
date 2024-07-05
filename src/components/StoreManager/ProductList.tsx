@@ -47,7 +47,7 @@ const ProductList = () => {
 
     useEffect(() => {
         if (!isPopupOpen) {
-            dispatch(getAllProducts());
+            dispatch(getAllProducts({text:""}));
         }
     }, [isPopupOpen, dispatch]);
 

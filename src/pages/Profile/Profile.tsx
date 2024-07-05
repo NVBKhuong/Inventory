@@ -12,7 +12,7 @@ const Profile= () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector(state=>state.users.user);
     const { account } = useAppSelector((state) => state.auth);
-    const isCustomer = account && account.userResult && account.userResult.role.includes('Customer');
+    const isCustomer = account && account.user && account.user.role.includes('Customer');
 
     useEffect(() => {
         dispatch(getUserProfile())
