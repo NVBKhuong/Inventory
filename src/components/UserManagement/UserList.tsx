@@ -3,47 +3,47 @@ import { IUserInfo } from "../../models/User";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { useEffect, useState } from "react";
 import { getAllUser } from "../../service/features/userSlice";
-import { Stack } from "@mui/material";
+import { Stack, Autocomplete,TextField,Button } from "@mui/material";
 import CommonTable from "../Table/CommonTable";
 import PopupUserDetail from "../Popup/PopupUserDetail";
+import PopupCreateAccount from "../Popup/PopupCreateAccount";
 const columns: MRT_ColumnDef<IUserInfo>[] = [
     {
         accessorKey: "name",
         header: "Name",
     },
     {
-        accessorKey: "email",
-        header: "Email Address",
+        accessorKey: "username",
+        header: "Username",
     },
-
+    {
+        accessorKey: "address",
+        header: "Address",
+    },
     {
         accessorKey: "phone",
         header: "Phone",
     },
 
     {
-        accessorKey: "rank",
-        header: "Rank",
+        accessorKey: "status",
+        header: "Status",
     },
-    {
-        accessorKey: "role",
-        header: "Role",
-    },
-
 ];
 
 const UserList = () => {
     const dispatch = useAppDispatch();
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
     const { users } = useAppSelector((state) => state.users);
     const [onPopupUserDetail, setOnPopupUserDetail] =
         useState<boolean>(false);
-    const [userData, setUserData] = useState<IUserInfo | null>(null);
-
+    const [userData, setUserData] = useState(null);
+    const [role, setRole] = useState('Customer')
     useEffect(() => {
-        dispatch(getAllUser());
-    }, [dispatch]);
+        dispatch(getAllUser({role: role, params:{pageNumber:0, pageSize:100}}));
+    }, [dispatch,role]);
 
-    const handleShowCategoryDetail = (user: IUserInfo) => {
+    const handleShowAccountDetail = async(user:any) => {
         setUserData(user);
         setOnPopupUserDetail(true);
     };
@@ -51,22 +51,43 @@ const UserList = () => {
 
     return (
         <Stack sx={{ m: "2rem 0" }}>
+            <Autocomplete disableClearable disablePortal className="ms-4 w-[23%]" size='small'
+            options={['Customer','Staff']} value={role} onChange={(e,value)=>setRole(value)}
+            renderInput={(params) => <TextField {...params} label="Role" />} />
             <CommonTable
                 columns={columns}
                 data={users || []}
-                onRowDoubleClick={handleShowCategoryDetail}
+                onRowDoubleClick={handleShowAccountDetail}
+                toolbarButtons={
+                    <Button
+                        variant="contained"
+                        onClick={()=>setIsPopupOpen(true)}
+                        sx={{
+                            color: "black",
+                            backgroundColor: "pink",
+                        }}
+                    >
+                        Add New Account
+                    </Button>
+                }
+            />
+            <PopupCreateAccount
+                isPopupCreateAccountOpen={isPopupOpen}
+                closePopupCreateAccount={()=>setIsPopupOpen(false)}
+                role={role} 
+                loadAllUsers={()=>dispatch(getAllUser({role: role, params:{pageNumber:0, pageSize:100}}))}
             />
             {userData && (
                 <>
                     <PopupUserDetail
-                        user={userData}
+                        user={userData} role={role} 
                         onPopupDetail={onPopupUserDetail}
-                        setOnPopupDetail={setOnPopupUserDetail}
+                        closePopupDetail={()=>setOnPopupUserDetail(false)}
+                        loadAllUsers={()=>dispatch(getAllUser({role: role, params:{pageNumber:0, pageSize:100}}))}
                     />
                 </>
             )}
 
-            {/* Update Status */}
         </Stack>
     )
 }

@@ -77,7 +77,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('quantity', form.quantity.toString())
         formData.append('productCategories', JSON.stringify(form.productCategories))
         await dispatch(createProduct(formData))
-        await dispatch(getAllProducts()).then(()=>{
+        await dispatch(getAllProducts({text:''})).then(()=>{
             setForm({
                 name:'',
                 description:'',

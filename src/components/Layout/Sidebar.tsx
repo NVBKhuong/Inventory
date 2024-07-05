@@ -9,7 +9,7 @@ const SidebarComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { account } = useAppSelector((state) => state.auth);
-    const role = account?.userResult?.role;
+    const role = account?.user.role;
 
     const activeMenuItem = [...menu.storeManagementMenu, ...menu.isAdminMenu].find(item => item.url === location.pathname);
 
