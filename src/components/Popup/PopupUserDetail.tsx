@@ -1,5 +1,4 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import { IUserInfo } from "../../models/User";
 import { useEffect, useState } from "react";
 import instance from "../../service/api/customAxios";
 import { toast } from "react-toastify";

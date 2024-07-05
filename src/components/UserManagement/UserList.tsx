@@ -48,11 +48,10 @@ const UserList = () => {
         setOnPopupUserDetail(true);
     };
 
-
     return (
         <Stack sx={{ m: "2rem 0" }}>
             <Autocomplete disableClearable disablePortal className="ms-4 w-[23%]" size='small'
-            options={['Customer','Staff']} value={role} onChange={(e,value)=>setRole(value)}
+            options={['Customer','Staff']} value={role} onChange={(_,value)=>setRole(value)}
             renderInput={(params) => <TextField {...params} label="Role" />} />
             <CommonTable
                 columns={columns}

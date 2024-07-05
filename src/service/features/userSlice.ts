@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IUserInfo } from '../../models/User';
 import axios from 'axios';
-import { getAllUsersEndpoint, getUserProfileEndpoint } from '../api/apiConfig';
+import {getUserProfileEndpoint } from '../api/apiConfig';
 import instance from '../api/customAxios';
 
 interface UserState {

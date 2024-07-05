@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { Form, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schemaProduct } from "../../schema/schemaProduct";
+import { useAppDispatch } from "../../service/store/store";
 import { createProduct, getAllProducts } from "../../service/features/productSlice";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { Autocomplete,TextField,Stack } from "@mui/material";
@@ -11,23 +8,6 @@ import instance from "../../service/api/customAxios";
 type ProductCreateState = {
     isPopupCreateProductOpen: boolean;
     closePopupCreateProduct: () => void;
-};
-
-type ProductCreateFormValues = {
-    name: string;
-    origin: string;
-    brand: string;
-    ingredient: string;
-    sweetLevel: string;
-    flavour: string;
-    sample: string;
-    capacity: string;
-    description: string;
-    price: number;
-    quantity: number;
-    storeId: number;
-    expireAt: Date;
-    status: string;
 };
 
 const PopupCreateProduct: React.FC<ProductCreateState> = ({
@@ -157,7 +137,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Product category</label>
                                {productCategories.length>0 && <Autocomplete multiple options={productCategories}
                                     size='small' filterSelectedOptions
-                                    onChange={(event, value) => {
+                                    onChange={(_, value) => {
                                         const newList = value.map((item: {label: string, value: string}) => ({categoryId: item.value}))
                                         setForm(prev => ({...prev, productCategories: newList}))
                                     }}
@@ -167,7 +147,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
                                 <Autocomplete options={['Vinamilk','TH True milk','Nutricare','Dutch Lady','NutiFood']} value={form.brand}
                                 disablePortal disableClearable size='small'
-                                onChange={(e, value) => setForm(prev => ({...prev, brand: value}))}
+                                onChange={(_, value) => setForm(prev => ({...prev, brand: value}))}
                                 renderInput={(params) => <TextField {...params} />} />
                             </div>
                             <div className="mb-4">

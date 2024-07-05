@@ -19,7 +19,7 @@ const ChangePassword = () => {
     const dispatch = useAppDispatch();
 
     const { account } = useAppSelector((state) => state.auth);
-    const isCustomer = account && account.userResult && account.userResult.role.includes('Customer');
+    const isCustomer = account && account.user && account.user.role.includes('Customer');
 
     const form = useForm<FormChangePasswordValues>({
         defaultValues: {
