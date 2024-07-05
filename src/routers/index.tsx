@@ -14,6 +14,8 @@ import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
 import ThankYou from '../components/Payment/ThankYou';
 import OrderHistory from '../components/Payment/OrderHistory';
+import ProductLineManagement from '../pages/StoreManager/ProductLineManagement';
+
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -47,7 +49,7 @@ const AppRouter = () => {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/category-management" element={<CategoryManagement />} />
                     <Route path="/product-management" element={<ProductManagement />} />
-                    <Route path="/product-line-management" element={<ProductManagement />} />
+                    <Route path="/product-line-management" element={<ProductLineManagement />} />
                 </>
             )}
             {isCustomer && (
