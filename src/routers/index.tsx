@@ -13,7 +13,7 @@ import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
 import ThankYou from '../components/Payment/ThankYou';
-// import OrderHistory from '../components/Payment/OrderHistory';
+import OrderHistory from '../components/Payment/OrderHistory';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -56,7 +56,7 @@ const AppRouter = () => {
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/view-cart" element={<ViewCart />} />
                     <Route path="/thank-you" element={<ThankYou />} />
-                    {/* <Route path="/order-history" element={<OrderHistory />} /> */}
+                    <Route path="/order-history" element={<OrderHistory />} />
                 </>
             )}
             {isAdmin && (
