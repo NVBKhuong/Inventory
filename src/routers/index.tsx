@@ -13,6 +13,7 @@ import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
 import ThankYou from '../components/Payment/ThankYou';
+import ProductLineManagement from '../pages/StoreManager/ProductLineManagement';
 // import OrderHistory from '../components/Payment/OrderHistory';
 
 const AppRouter = () => {
@@ -47,7 +48,7 @@ const AppRouter = () => {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/category-management" element={<CategoryManagement />} />
                     <Route path="/product-management" element={<ProductManagement />} />
-                    <Route path="/product-line-management" element={<ProductManagement />} />
+                    <Route path="/product-line-management" element={<ProductLineManagement />} />
                 </>
             )}
             {isCustomer && (
