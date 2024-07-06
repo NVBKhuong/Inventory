@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ICategory, ICategoryCreate, ICategoryRename } from '../../models/Category';
 import axios from 'axios';
-import { createCategoryEndpoint, getAllCategoriesEndpoint, updateCategoryEndpoint } from '../api/apiConfig';
 import { toast } from 'react-toastify';
+import instance from '../api/customAxios';
 
 type CategoryState = {
     loading: boolean;
@@ -19,20 +19,15 @@ const initialState: CategoryState = {
     success: false,
 };
 
-export const getAllCategories = createAsyncThunk<ICategory[], void>(
+export const getAllCategories = createAsyncThunk<void>(
     'categories/getAllCategories',
-    async (_, thunkAPI) => {
-        try {
-            const token = sessionStorage.getItem('suame88');
-            const response = await axios.get(getAllCategoriesEndpoint, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            return response.data.data;
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.response.data);
-        }
+    async () => {
+       
+            await instance.post('/categories/filter',{name: ''}).then(response => {
+                console.log(response.data.data)
+                return response.data.data;
+            }).catch(error => console.log(error))
+       
     },
 );
 
@@ -42,7 +37,7 @@ export const createCategory = createAsyncThunk<ICategoryCreate, Object>(
         try {
             const token = sessionStorage.getItem('suame88');
             const response = await axios.post(
-                createCategoryEndpoint,
+                '/categories',
                 category,
                 {
                     headers: {
@@ -64,7 +59,7 @@ export const updateCategory = createAsyncThunk<ICategory, ICategoryRename>(
         try {
             const token = sessionStorage.getItem('suame88');
             const response = await axios.put(
-                `${updateCategoryEndpoint}/${id}`,
+                `/categories/${id}`,
                 { id, name, targetAudience, ageRange, milkType, icon },
                 {
                     headers: {
@@ -92,9 +87,10 @@ export const categorySlice = createSlice({
         builder.addCase(getAllCategories.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(getAllCategories.fulfilled, (state, action) => {
+        builder.addCase(getAllCategories.fulfilled, (state: any, action) => {
             state.loading = false;
             state.categories = action.payload;
+            console.log(action.payload)
         });
         builder.addCase(getAllCategories.rejected, (state, action) => {
             state.loading = false;

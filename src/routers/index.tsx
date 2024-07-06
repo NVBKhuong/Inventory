@@ -36,7 +36,7 @@ const AppRouter = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="*" element={<Navigate to="/home" replace />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/product/:id" element={<ProductDetails />} />                            
                 <Route path="/product-page" element={<ProductPage />} />
 
 
