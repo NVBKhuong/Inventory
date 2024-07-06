@@ -2,12 +2,11 @@ import { MRT_ColumnDef } from "material-react-table";
 import { useEffect, useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { ICategory } from "../../models/Category";
-import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { getAllCategories } from "../../service/features/categorySlice";
 import CommonTable from "../Table/CommonTable";
 import PopupCreateCategory from "../Popup/PopupCreateCategory";
 import PopupCategoryDetail from "../Popup/PopupCategoryDetail";
 import PopupRenameCategory from "../Popup/PopupRenameCategory";
+import instance from "../../service/api/customAxios";
 
 
 const columns: MRT_ColumnDef<ICategory>[] = [
@@ -31,11 +30,11 @@ const columns: MRT_ColumnDef<ICategory>[] = [
 ];
 
 const CategoryList = () => {
-  const dispatch = useAppDispatch();
-  const { categories } = useAppSelector((state) => state.categories);
+  
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [cateData, setCateData] = useState<ICategory | null>(null);
+  const [categories, setCategories] = useState([]);
   const [onPopupCategoryDetail, setOnPopupCategoryDetail] =
     useState<boolean>(false);
   const [openPopupRename, setOpenPopupRename] = useState<boolean>(false);
@@ -45,13 +44,15 @@ const CategoryList = () => {
   // useEffect(() => {
   //     dispatch(getAllCategories());
   // }, [dispatch]);
-
+  const loadCategories = async()=>{
+    await instance.post('/categories/filter',{name: ''}).then(response => {
+                setCategories(response.data.data);
+            }).catch(error => console.log(error))
+  }
   useEffect(() => {
-    if (!isPopupOpen) {
-      dispatch(getAllCategories());
-    }
-  }, [isPopupOpen, dispatch]);
-  console.log(categories)
+   loadCategories()
+  }, []);
+ 
   const handlePopupOpen = () => {
     setIsPopupOpen(true);
   };

@@ -17,6 +17,7 @@ import OrderHistory from '../components/Payment/OrderHistory';
 import ProductLineManagement from '../pages/StoreManager/ProductLineManagement';
 import ThankyouforVnpay from '../components/Payment/ThankyouforVnpay';
 import OrderManagement from '../pages/StoreManager/OrderManagerment';
+import ProductPage from '../pages/client/ProductPage';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -35,9 +36,9 @@ const AppRouter = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="*" element={<Navigate to="/home" replace />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/category-management" element={<CategoryManagement />} />
-                
+                <Route path="/product/:id" element={<ProductDetails />} />                            
+                <Route path="/product-page" element={<ProductPage />} />
+
 
             </Routes>
         );
@@ -65,6 +66,8 @@ const AppRouter = () => {
                     <Route path="/thank-you" element={<ThankYou />} />
                     <Route path="/order-history" element={<OrderHistory />} />
                     <Route path="/thankyou" element={<ThankyouforVnpay />} />
+                    <Route path="/product-page" element={<ProductPage />} />
+
 
                 </>
             )}

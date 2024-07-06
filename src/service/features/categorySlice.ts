@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ICategory, ICategoryCreate, ICategoryRename } from '../../models/Category';
 import axios from 'axios';
-import { createCategoryEndpoint, getAllCategoriesEndpoint, updateCategoryEndpoint } from '../api/apiConfig';
 import { toast } from 'react-toastify';
 import instance from '../api/customAxios';
 
@@ -25,7 +24,7 @@ export const getAllCategories = createAsyncThunk<void>(
     async () => {
        
             await instance.post('/categories/filter',{name: ''}).then(response => {
-
+                console.log(response.data.data)
                 return response.data.data;
             }).catch(error => console.log(error))
        
@@ -88,9 +87,10 @@ export const categorySlice = createSlice({
         builder.addCase(getAllCategories.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(getAllCategories.fulfilled, (state, action) => {
+        builder.addCase(getAllCategories.fulfilled, (state: any, action) => {
             state.loading = false;
             state.categories = action.payload;
+            console.log(action.payload)
         });
         builder.addCase(getAllCategories.rejected, (state, action) => {
             state.loading = false;
