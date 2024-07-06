@@ -37,6 +37,10 @@ const columns: MRT_ColumnDef<IProduct>[] = [
         accessorKey: "price",
         header: "Price",
     },
+    {
+        accessorKey: "status",
+        header: "Status",
+    },
 ];
 
 const ProductList = () => {
