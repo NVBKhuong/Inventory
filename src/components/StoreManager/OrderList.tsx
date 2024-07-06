@@ -22,7 +22,10 @@ const OrderManagementPage: React.FC = () => {
   const loadOrders = async () => {
     try {
       const response = await instance.post("/orders/filter?pageSize=1000", {});
-      setOrders(response.data.data);
+      const sortedOrders = response.data.data.sort((a: Order, b: Order) =>
+        new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+      );
+      setOrders(sortedOrders);
     } catch (error) {
       console.error("Error fetching orders:", error);
       toast.error("Failed to load orders.");

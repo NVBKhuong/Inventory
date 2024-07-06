@@ -80,14 +80,19 @@ const ViewCart = () => {
 
     const handleApplyVoucher = async () => {
         const voucher = await getVoucher(selectedVoucherId);
-        if (voucher && voucher.status === 'active') {
-            setDiscountValue(voucher.value);
-            toast.success(`Áp dụng mã giảm giá ${voucher.code} - ${voucher.name} thành công!`);
+        const totalAmount = calculateTotal(cartItems);
+        if (voucher) {
+            if (voucher.status === 'active' && totalAmount >= voucher.minOrderValue) {
+                setDiscountValue(voucher.value);
+                toast.success(`Successfully applied voucher ${voucher.code} - ${voucher.name}!`);
+            } else {
+                toast.error(`Invalid voucher or order value does not meet the required minimum.`);
+            }
         } else {
-            toast.error(`Mã giảm giá không hợp lệ hoặc đã hết hạn.`);
+            toast.error(`Invalid or expired voucher.`);
         }
     };
-
+    
     const handleCheckout = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
@@ -143,8 +148,6 @@ const ViewCart = () => {
         }
     };
     
-    
-    
 
     return (
         <>
@@ -195,7 +198,10 @@ const ViewCart = () => {
                     </div>
                     <div className="lg:w-1/2 w-full mt-12 mx-auto">
                         <div className="flex flex-col items-center justify-center">
-                            <p className="text-xl text-gray-900 mb-4">Total: {calculateTotal(cartItems) - discountValue} VND</p>
+                        <p className="text-xl text-gray-900 mb-4 border-t-2 pt-4">
+                            Total: {calculateTotal(cartItems) - discountValue} VND
+                            <span className="text-red-500 ml-2">(-{discountValue} VND)</span>
+                        </p>
                             <div className="flex flex-row space-x-4 mb-4">
                                 <label className="flex items-center">
                                     <input
