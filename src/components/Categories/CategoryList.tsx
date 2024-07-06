@@ -12,12 +12,12 @@ import PopupRenameCategory from "../Popup/PopupRenameCategory";
 
 const columns: MRT_ColumnDef<ICategory>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "id",
     header: "Category Name",
   },
 
   {
-    accessorKey: "targetAudience",
+    accessorKey: "name",
     header: "Target Audience",
   },
   {
@@ -51,7 +51,7 @@ const CategoryList = () => {
       dispatch(getAllCategories());
     }
   }, [isPopupOpen, dispatch]);
-
+  console.log(categories)
   const handlePopupOpen = () => {
     setIsPopupOpen(true);
   };
