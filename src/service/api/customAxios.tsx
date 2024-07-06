@@ -8,7 +8,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Lấy accessToken từ local storage
-    const token = sessionStorage.getItem('suame88');
+    const token = localStorage.getItem('suame88');
     // Kiểm tra xem accessToken có tồn tại không
     if (token) {
       // Thêm accessToken vào header của request

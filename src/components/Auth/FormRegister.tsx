@@ -8,7 +8,7 @@ type FormRegisterProps = {
   username: string;
   name: string;
   password: string;
-  confirmPassword: string;
+  
 };
 
 const FormRegister = () => {
@@ -21,7 +21,7 @@ const FormRegister = () => {
       username: "",
       name: "",
       password: "",
-      confirmPassword: "",
+    
     },
   });
   const { register, handleSubmit, formState, reset } = form;
@@ -38,7 +38,7 @@ const FormRegister = () => {
             name: "",
             username: "",
             password: "",
-            confirmPassword: "",
+           
           });
           setIsLoading(false);
           navigate("/login");
@@ -117,33 +117,6 @@ const FormRegister = () => {
             id="password"
             name="password"
             placeholder="Enter your password..."
-            className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-          />
-        </div>
-        <div className="flex flex-col mt-4">
-          <div className="flex flex-row">
-            <label
-              htmlFor="confirmPassword"
-              className="text-base font-semibold"
-            >
-              Confirm Password:{" "}
-            </label>
-            {errors.confirmPassword && (
-              <p className="text-sm text-red-500">
-                *{errors.confirmPassword.message}
-              </p>
-            )}
-          </div>
-          <input
-            {...register("confirmPassword", {
-              required: "Please confirm your password",
-              validate: (value) =>
-                value === form.watch("password") || "Passwords do not match",
-            })}
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            placeholder="Confirm your password"
             className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
           />
         </div>
