@@ -74,7 +74,6 @@ export const createProduct = createAsyncThunk<IProductCreate, FormData>(
                 '/products',
                 product
             );
-            toast.success('Create Successfully!');
             return response.data.data;
         } catch (error: any) {
             toast.error('Create Failed!');

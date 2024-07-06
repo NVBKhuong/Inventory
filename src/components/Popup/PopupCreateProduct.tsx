@@ -4,6 +4,7 @@ import { createProduct, getAllProducts } from "../../service/features/productSli
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { Autocomplete,TextField,Stack } from "@mui/material";
 import instance from "../../service/api/customAxios";
+import { toast } from "react-toastify";
 
 type ProductCreateState = {
     isPopupCreateProductOpen: boolean;
@@ -52,22 +53,29 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('price',form.price.toString())
         formData.append('promotionPrice', form.promotionPrice.toString())
         formData.append('quantity', form.quantity.toString())
-        formData.append('productCategories', JSON.stringify(form.productCategories))
-        await dispatch(createProduct(formData))
-        await dispatch(getAllProducts({text:''})).then(()=>{
-            setForm({
-                name:'',
-                description:'',
-                origin:'',
-                thumbnail: null,
-                brand:'Vinamilk',
-                price: 1,
-                promotionPrice: 1,
-                quantity: 1,
-                productCategories: [{ categoryId: ""}]
+        // formData.append('productCategories', JSON.stringify(form.productCategories))
+        formData.append('productCategories', JSON.stringify(form.productCategories.map(item => item.categoryId)))
+        await dispatch(createProduct(formData)).then(()=>{
+            dispatch(getAllProducts({text:''})).then(()=>{
+                setForm({
+                    name:'',
+                    description:'',
+                    origin:'',
+                    thumbnail: null,
+                    brand:'Vinamilk',
+                    price: 1,
+                    promotionPrice: 1,
+                    quantity: 1,
+                    productCategories: [{ categoryId: ""}]
+                })
+                toast.success('Create successfully!')
+                closePopupCreateProduct()
             })
-            closePopupCreateProduct()
+        }).catch(err => {
+            console.log(err)
+            toast.error('Create failed!')
         })
+        
     }
 
     const [productCategories, setProductCategories] = useState([])
@@ -103,7 +111,6 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 <input
                                     value={form.name} onChange={(e) => setForm(prev => ({...prev, name: e.target.value}))}
                                     type="text"
-                                    name="name"
                                     id="name"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />
@@ -111,16 +118,17 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="origin" className="block text-sm font-medium text-gray-700">Origin <span className="text-red-600 text-xl">*</span></label>
-                                {/* <input value={form.origin} onChange={(e) => setForm(prev => ({...prev, origin: e.target.value}))}
+                                <input value={form.origin} onChange={(e) => setForm(prev => ({...prev, origin: e.target.value}))}
                                     type="text"
-                                    name="origin"
                                     id="origin"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                                /> */}
-                                <Autocomplete options={['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kosovo','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Vatican City','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe']} value={form.brand}
+                                />
+                                {/* <Autocomplete options={['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kosovo','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Vatican City','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe']} value={form.brand}
                                 disablePortal disableClearable size='small'
+
                                 onChange={(_, value) => setForm(prev => ({...prev, origin: value}))}
                                 renderInput={(params) => <TextField {...params} />} />
+
                                 {checkValid.origin && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                 </div>
                             

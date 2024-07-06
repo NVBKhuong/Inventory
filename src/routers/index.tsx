@@ -21,6 +21,8 @@ import ProductPage from '../pages/client/ProductPage';
 import Blog from '../pages/client/Blog/Blog';
 import FAQ from '../pages/client/FAQ'
 import Contact from '../pages/client/ContactUs';
+import VoucherManagement from '../pages/StoreManager/VoucherManagement';
+
 
 const AppRouter = () => {
     const token = localStorage.getItem('suame88');
@@ -45,6 +47,7 @@ const AppRouter = () => {
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/contact" element={<Contact />} />
 
+
             </Routes>
         );
     }
@@ -60,7 +63,7 @@ const AppRouter = () => {
                     <Route path="/product-management" element={<ProductManagement />} />
                     <Route path="/product-line-management" element={<ProductLineManagement />} />
                     <Route path="/order-management" element={<OrderManagement />} />
-                    <Route path="/voucher-management" element={<OrderManagement />} /> 
+                    <Route path="/voucher-management" element={<VoucherManagement />} /> 
 
                 </>
             )}
