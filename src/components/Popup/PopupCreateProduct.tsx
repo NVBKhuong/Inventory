@@ -4,6 +4,7 @@ import { createProduct, getAllProducts } from "../../service/features/productSli
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { Autocomplete,TextField,Stack } from "@mui/material";
 import instance from "../../service/api/customAxios";
+import { toast } from "react-toastify";
 
 type ProductCreateState = {
     isPopupCreateProductOpen: boolean;
@@ -52,22 +53,29 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('price',form.price.toString())
         formData.append('promotionPrice', form.promotionPrice.toString())
         formData.append('quantity', form.quantity.toString())
-        formData.append('productCategories', JSON.stringify(form.productCategories))
-        await dispatch(createProduct(formData))
-        await dispatch(getAllProducts({text:''})).then(()=>{
-            setForm({
-                name:'',
-                description:'',
-                origin:'',
-                thumbnail: null,
-                brand:'Vinamilk',
-                price: 1,
-                promotionPrice: 1,
-                quantity: 1,
-                productCategories: [{ categoryId: ""}]
+        // formData.append('productCategories', JSON.stringify(form.productCategories))
+        formData.append('productCategories', JSON.stringify(form.productCategories.map(item => item.categoryId)))
+        await dispatch(createProduct(formData)).then(()=>{
+            dispatch(getAllProducts({text:''})).then(()=>{
+                setForm({
+                    name:'',
+                    description:'',
+                    origin:'',
+                    thumbnail: null,
+                    brand:'Vinamilk',
+                    price: 1,
+                    promotionPrice: 1,
+                    quantity: 1,
+                    productCategories: [{ categoryId: ""}]
+                })
+                toast.success('Create successfully!')
+                closePopupCreateProduct()
             })
-            closePopupCreateProduct()
+        }).catch(err => {
+            console.log(err)
+            toast.error('Create failed!')
         })
+        
     }
 
     const [productCategories, setProductCategories] = useState([])
@@ -103,7 +111,6 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 <input
                                     value={form.name} onChange={(e) => setForm(prev => ({...prev, name: e.target.value}))}
                                     type="text"
-                                    name="name"
                                     id="name"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />
