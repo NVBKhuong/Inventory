@@ -14,6 +14,10 @@ const columns: MRT_ColumnDef<IProduct>[] = [
         header: "Product Name",
     },
     {
+        accessorKey: "description",
+        header: "Description",
+    },
+    {
         accessorKey: "origin",
         header: "Origin",
     },
@@ -22,12 +26,12 @@ const columns: MRT_ColumnDef<IProduct>[] = [
         header: "Brand",
     },
     {
-        accessorKey: "ingredient",
-        header: "Ingredient",
+        accessorKey: "inStock",
+        header: "In stock",
     },
     {
-        accessorKey: "capacity",
-        header: "Capacity",
+        accessorKey: "promotionPrice",
+        header: "Promotion price",
     },
     {
         accessorKey: "price",
@@ -42,12 +46,9 @@ const ProductList = () => {
     const [productData, setProductData] = useState<IProduct | null>(null);
     const [onPopupProductDetail, setOnPopupProductDetail] = useState<boolean>(false);
 
-    //Create   
-
-
     useEffect(() => {
         if (!isPopupOpen) {
-            dispatch(getAllProducts());
+            dispatch(getAllProducts({text:""}));
         }
     }, [isPopupOpen, dispatch]);
 

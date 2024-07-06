@@ -9,7 +9,7 @@ const SidebarComponent = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { account } = useAppSelector((state) => state.auth);
-    const role = account?.userResult?.role;
+    const role = account?.user.role;
 
     const activeMenuItem = [...menu.storeManagementMenu, ...menu.isAdminMenu].find(item => item.url === location.pathname);
 
@@ -31,7 +31,7 @@ const SidebarComponent = () => {
                 </div>
                 <hr />
                 <ul className='mt-3 text-pink-800 font-bold'>
-                    {role === 'StoreOwner' && menu.storeManagementMenu.map((item, index) => (
+                    {role === 'Staff' && menu.storeManagementMenu.map((item, index) => (
                         <Link to={item.url} key={index} className=''>
                             <li className={`ml-4 mb-2 gap-6 rounded hover:shadow hover:bg-pink-300 py-2 cursor-pointer flex ${item.url === location.pathname ? 'text-pink-500' : ''}`}>
                                 <span>{item.title}</span>

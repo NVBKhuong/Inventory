@@ -3,18 +3,36 @@ export interface IProduct {
     name: string;
     origin: string;
     brand: string;
-    ingredient: string;
-    sweetLevel: string;
-    flavour: string;
-    sample: string | null;
-    capacity: string;
     description: string;
     price: number;
+    promotionPrice: number;
+    inStock : number;
+    sold: number;
     quantity: number;
     expireAt: string;
+    thumbnailUrl: string | File | null;
+    thumbnail: string | File | null;
     createAt: string;
     status: string;
-    productImages: any[];
+    feedbacks: IFeedback[];
+}
+export interface IFeedback {
+    id: number;
+    message: string;
+    star: number;
+    productId: number;
+    createAt: string;
+    status: string;
+    customer: ICustomer;
+}
+export interface ICustomer {
+    id: number;
+    username: string;
+    name: string;
+    phone: string;
+    address: string;
+    createAt: string;
+    status: string;
 }
 export interface IProductCreate {
     id: number;

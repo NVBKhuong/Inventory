@@ -10,6 +10,10 @@ const listMenu = {
             url: '/product-management',
         },
         {
+            title: 'Product Line Management',
+            url: '/product-line-management',
+        },
+        {
             title: 'Category Management',
             url: '/category-management',
         },

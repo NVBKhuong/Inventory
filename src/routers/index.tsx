@@ -12,6 +12,12 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
+import ThankYou from '../components/Payment/ThankYou';
+import OrderHistory from '../components/Payment/OrderHistory';
+import ProductLineManagement from '../pages/StoreManager/ProductLineManagement';
+import ThankyouforVnpay from '../components/Payment/ThankyouforVnpay';
+import OrderManagement from '../pages/StoreManager/OrderManagerment';
+import ProductPage from '../pages/client/ProductPage';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -19,8 +25,7 @@ const AppRouter = () => {
 
     // Check if account and userResult are defined before accessing role
     const isAdmin = account && account.user && account.user.role.includes('Admin');
-    // const isStoreOwner = account && account.user && account.user.role.includes('Staff');
-    const isStoreOwner = 'Staff'
+    const isStoreOwner = account && account.user && account.user.role.includes('Staff');
     const isCustomer = account && account.user && account.user.role.includes('Customer');
 
     if (!token || !account) {
@@ -31,7 +36,9 @@ const AppRouter = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/" element={<Navigate to="/home" replace />} />
                 <Route path="*" element={<Navigate to="/home" replace />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/product/:id" element={<ProductDetails />} />                            
+                <Route path="/product-page" element={<ProductPage />} />
+
 
             </Routes>
         );
@@ -46,6 +53,9 @@ const AppRouter = () => {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/category-management" element={<CategoryManagement />} />
                     <Route path="/product-management" element={<ProductManagement />} />
+                    <Route path="/product-line-management" element={<ProductLineManagement />} />
+                    <Route path="/order-management" element={<OrderManagement />} />
+
                 </>
             )}
             {isCustomer && (
@@ -53,6 +63,12 @@ const AppRouter = () => {
                     <Route path="/home" element={<Home />} />
                     <Route path="/product/:id" element={<ProductDetails />} />
                     <Route path="/view-cart" element={<ViewCart />} />
+                    <Route path="/thank-you" element={<ThankYou />} />
+                    <Route path="/order-history" element={<OrderHistory />} />
+                    <Route path="/thankyou" element={<ThankyouforVnpay />} />
+                    <Route path="/product-page" element={<ProductPage />} />
+
+
                 </>
             )}
             {isAdmin && (

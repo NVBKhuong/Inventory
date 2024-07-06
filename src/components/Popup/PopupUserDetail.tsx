@@ -1,17 +1,62 @@
 import { XMarkIcon } from "@heroicons/react/16/solid";
-import { IUserInfo } from "../../models/User";
+import { useEffect, useState } from "react";
+import instance from "../../service/api/customAxios";
+import { toast } from "react-toastify";
 
 type PopupUserDetailProps = {
-    user: IUserInfo | null;
+    user: {
+        "id": string,
+        "username": string,
+        "name": string,
+        "phone": string | null,
+        "address": string | null,
+        "point": number,
+        "status": string,
+        "createAt": string
+    };
     onPopupDetail: boolean;
-    setOnPopupDetail: React.Dispatch<React.SetStateAction<boolean>>;
+    closePopupDetail: ()=>void;
+    loadAllUsers: ()=>void,
+    role: string
 }
 
 const PopupUserDetail = ({
     user,
     onPopupDetail,
-    setOnPopupDetail,
+    closePopupDetail,
+    loadAllUsers,role
 }: PopupUserDetailProps) => {
+    const [form, setForm] = useState(user)
+    const [checkValid, setCheckValid]=useState({
+        name: false,
+    })
+      const validation = () =>{
+          setCheckValid(prev => ({...prev, name: form.name.trim() === '',
+          }))
+          return form.name.trim() === ''
+      }
+      const handleUpdateAccount = async() =>{
+        if(validation()) return;
+        role === 'Customer' ? await instance.put(`/Accounts/customers/update/${user.id}`, {
+            "name": form.name,
+            "phone": form.phone,
+            "address": form.address
+          }).then(()=>{
+            loadAllUsers()
+            toast.success('Update successfully')
+            closePopupDetail()
+        }).catch(err => {
+            err.response ? toast.error(err.response.data) : toast.error('Update failed')
+        }) : await instance.put(`/Accounts/staffs/update/${user.id}`, {name: form.name}).then(()=>{
+            loadAllUsers()
+            toast.success('Update successfully')
+            closePopupDetail()
+        }).catch(err => {
+            err.response ? toast.error(err.response.data) : toast.error('Update failed')
+        })
+    }
+    
+    useEffect(()=>{setForm(user)},[user])
     return (
         <div
             className={`fixed z-10 inset-0 overflow-y-auto ${onPopupDetail ? '' : 'hidden'
@@ -40,67 +85,62 @@ const PopupUserDetail = ({
                                         className="text-lg leading-6 w-full font-medium text-gray-900"
                                         id="modal-title"
                                     >
-                                        Category Detail
+                                        Account Detail
                                     </h3>
                                     <XMarkIcon
                                         width={16}
                                         height={16}
                                         className="h-6 w-6 ml-auto cursor-pointer"
-                                        onClick={() => setOnPopupDetail(false)}
+                                        onClick={closePopupDetail}
                                     />
                                     <hr className="mt-2 text-black-700" />
                                 </div>
-                                <div className="mt-4 border-t grid grid-cols-2 gap-4 p-8">
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Name
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{user?.name}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Email
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{user?.email}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Phone
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{user?.phone}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Rank
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{user?.rank}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Action
-                                        </span>
-                                    </div>
-                                    <div className="w-auto flex gap-4">
-                                        <button
-                                            // onClick={onUpdate}
-                                            className="text-xs w-24 border border-blue-500p-1 bg-blue-500 text-white-900 font-bold rounded-lg"
-                                        >
-                                            Update
-                                        </button>
-                                        <button
-                                            className="text-xs w-24 border border-blue-500p-1 bg-red-500 text-white font-bold rounded-lg"
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
+                                <div className="overflow-y-scroll h-96 w-auto">
+                                    <div className="mb-4">
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name <span className="text-red-600 text-xl">*</span></label>
+                                <input
+                                    value={form.name} onChange={(e) => setForm(prev => ({...prev, name: e.target.value}))}
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                />
+                                {checkValid.name && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
+                            </div>
+                            {role === 'Customer' && <><div className="mb-4">
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
+                                <input
+                                    value={form.phone ? form.phone : ""} onChange={(e) => setForm(prev => ({...prev, phone: e.target.value}))}
+                                    type="text"
+                                    id="phone"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                                <input
+                                    value={form.address ? form.address : ""} onChange={(e) => setForm(prev => ({...prev, address: e.target.value}))}
+                                    type="text"
+                                    id="address"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                />
+                            </div></>}
+                            <div className="mb-4">
+                                <span className="block text-sm font-medium text-gray-700">
+                                    Username: {form.username}
+                                </span>
+                            </div>
+                            <div className="mb-4">
+                                <span className="block text-sm font-medium text-gray-700">
+                                    Status: {form.status}
+                                </span>
+                            </div>
+                            <div className="flex justify-end">
+                                <button onClick={handleUpdateAccount}
+                                    className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">
+                                    Update
+                                </button>
+                            </div>
                                 </div>
                             </div>
                         </div>

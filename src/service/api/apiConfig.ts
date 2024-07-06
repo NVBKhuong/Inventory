@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://suame88.azurewebsites.net/api'
 
-export const loginEndpoint = `${BASE_URL}/auth/customers`
+export const loginEndpoint = `${BASE_URL}/auth`
 export const registerEndpoint = `${BASE_URL}/customers`
 
 export const changePasswordEndpoint = `${BASE_URL}/Auth/change-password`
@@ -22,5 +22,9 @@ export const createProductEndpoint = `${BASE_URL}/products`
 export const updateProductEndpoint = `${BASE_URL}/products`
 
 //Feedback Endpoints
-export const getFeedbackByProductId = `${BASE_URL}/feedbacks`
-export const createFeedbackEndpoint = `${BASE_URL}/feedbacks`
+export const getFeedbackByProductId = `${BASE_URL}/feedbacks/filter`
+export const createFeedbackEndpoint = `${BASE_URL}/feedbacks/create`
+//Order
+export const CreateOrder = `${BASE_URL}/orders`
+export const UpdateOrder = `${BASE_URL}/orders`
+export const getOrderByCustomerId = `${BASE_URL}/orders/filter`
