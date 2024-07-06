@@ -21,7 +21,6 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         description:'',
         origin:'',
         thumbnail: null as string | null,
-        madeIn:'',
         brand:'Vinamilk',
         price: 1,
         promotionPrice: 1,
@@ -31,17 +30,15 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
     const [checkValid, setCheckValid]=useState({
         name: false,
         origin: false,
-        thumbnail: false,
-        madeIn: false,
+        thumbnail: false,description: false,
     })
     const validation = () =>{
         setCheckValid(prev => ({...prev, name: form.name.trim() === '',
             origin: form.origin.trim() === '',
-            madeIn: form.madeIn.trim() === '',
-            thumbnail: form.thumbnail === null
+            thumbnail: form.thumbnail === null,
+            description: form.description.trim() === '',
         }))
-        return form.name.trim() === '' || form.origin.trim() === '' || form.madeIn.trim() === ''
-        || form.thumbnail === null
+        return form.name.trim() === '' || form.origin.trim() === '' || form.thumbnail === null ||form.description.trim() === ''
     }
     const handleCreateProduct = async() =>{
         if(validation()) return;
@@ -50,7 +47,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('description', form.description)
         imageSend && formData.append('thumbnail', imageSend)
         formData.append('origin', form.origin)
-        formData.append('madeIn',form.madeIn)
+        formData.append('madeIn',form.origin)
         formData.append('brand',form.brand)
         formData.append('price',form.price.toString())
         formData.append('promotionPrice', form.promotionPrice.toString())
@@ -63,7 +60,6 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                 description:'',
                 origin:'',
                 thumbnail: null,
-                madeIn:'',
                 brand:'Vinamilk',
                 price: 1,
                 promotionPrice: 1,
@@ -123,16 +119,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 />
                                 {checkValid.origin && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                 </div>
-                            <div className="mb-4">
-                                <label htmlFor="origin" className="block text-sm font-medium text-gray-700">Made in <span className="text-red-600 text-xl">*</span></label>
-                                <input value={form.madeIn} onChange={(e) => setForm(prev => ({...prev, madeIn: e.target.value}))}
-                                    type="text"
-                                    name="madeIn"
-                                    id="madeIn"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                                />
-                                {checkValid.madeIn && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
-                                </div>
+                            
                             <div className="mb-4">
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Product category</label>
                                {productCategories.length>0 && <Autocomplete multiple options={productCategories}
@@ -151,13 +138,14 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 renderInput={(params) => <TextField {...params} />} />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description <span className="text-red-600 text-xl">*</span></label>
                                 <input value={form.description} onChange={(e) => setForm(prev => ({...prev, description: e.target.value}))}
                                     type="text"
                                     name="description"
                                     id="description"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />
+                                {checkValid.description && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                             </div>
                             
                             <div className="mb-4">
@@ -188,7 +176,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                 />
                             </div>
 
-                            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Thumbnail <span className="text-red-600 text-xl">*</span></label>
+                            <label className="block text-sm font-medium text-gray-700">Thumbnail <span className="text-red-600 text-xl">*</span></label>
                             {checkValid.thumbnail && <p className='text-red-500 text-xs mt-2'>Thumbnail is required!</p>}
                             {form.thumbnail === null || form.thumbnail === "" ? (
                                 <img
@@ -232,7 +220,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                                     Clear image
                                 </button>
                                 )}
-                </Stack>
+                            </Stack>
                             <div className="flex justify-end">
                                 <button onClick={handleCreateProduct}
                                     className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">
