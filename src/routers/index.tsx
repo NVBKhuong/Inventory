@@ -66,6 +66,8 @@ const AppRouter = () => {
                     <Route path="/thank-you" element={<ThankYou />} />
                     <Route path="/order-history" element={<OrderHistory />} />
                     <Route path="/thankyou" element={<ThankyouforVnpay />} />
+                    <Route path="/product-page" element={<ProductPage />} />
+
 
                 </>
             )}
