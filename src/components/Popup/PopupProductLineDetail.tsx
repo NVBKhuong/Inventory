@@ -23,17 +23,11 @@ const PopupProductLineDetail: React.FC<PopupProductDetailProps> = ({
     setOnPopupDetail,loadProductLines
 }) => {
   const [checkExpireDate, setCheckExpireDate] = useState(false)
-  const formatDateForInput = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
+  const formatDateString = (dateString: string) => {
+    const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
-  };
-  const [form, setForm] = useState({
-    ...productLine,
-    expiredAt: formatDateForInput(productLine.expiredAt)
-  });
+};
+  const [form, setForm] = useState({...productLine, expiredAt: formatDateString(productLine.expiredAt)});
   const validation = () => {
     form.expiredAt === '' ? setCheckExpireDate(true) : setCheckExpireDate(false)
     return form.expiredAt === ''
@@ -93,16 +87,16 @@ const PopupProductLineDetail: React.FC<PopupProductDetailProps> = ({
                                 </div>
                                 <div className="overflow-y-scroll h-96 w-auto my-6">
                                 <div className="mb-4">
-                                <label htmlFor="expiredAt" className="block text-sm font-medium text-gray-700">Product line ID: {productLine.id}</label>
+                                <label className="block text-sm font-medium text-gray-700">Product line ID: {productLine.id}</label>
                                 </div>
                                 <div className="mb-4">
-                                <label htmlFor="expiredAt" className="block text-sm font-medium text-gray-700">Imported at: {new Date(productLine.importDate).toLocaleDateString()}</label>
+                                <label className="block text-sm font-medium text-gray-700">Imported at: {new Date(productLine.importDate).toLocaleDateString()}</label>
                                 </div>
                                 <div className="mb-4">
-                                <label htmlFor="expiredAt" className="block text-sm font-medium text-gray-700">Expire at</label>
+                                <label className="block text-sm font-medium text-gray-700">Expire at</label>
                                 <input
                                     value={form.expiredAt} onChange={(e) => setForm(prev => ({...prev, expiredAt: e.target.value}))}
-                                    type="date" min={form.importDate.split('T')[0]}
+                                    type="date" min={form.expiredAt}
                                     id="expiredAt"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />
