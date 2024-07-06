@@ -27,7 +27,7 @@ const Carousel = () => {
 
     return (
         <div id="default-carousel" className="relative w-full" data-carousel="slide">
-            <div className="relative mt-1 h-72 overflow-hidden rounded-lg md:h-72">
+            <div className="relative mt-1 h-96 overflow-hidden rounded-lg md:h-96"> {/* Adjusted height */}
                 {carouselItems.map((item, index) => (
                     <div
                         key={index}
