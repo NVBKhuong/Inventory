@@ -18,6 +18,7 @@ import ProductLineManagement from '../pages/StoreManager/ProductLineManagement';
 import ThankyouforVnpay from '../components/Payment/ThankyouforVnpay';
 import OrderManagement from '../pages/StoreManager/OrderManagerment';
 import ProductPage from '../pages/client/ProductPage';
+import Blog from '../pages/client/Blog/Blog';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -38,7 +39,7 @@ const AppRouter = () => {
                 <Route path="*" element={<Navigate to="/home" replace />} />
                 <Route path="/product/:id" element={<ProductDetails />} />                            
                 <Route path="/product-page" element={<ProductPage />} />
-
+                <Route path="/blog" element={<Blog />} />
 
             </Routes>
         );
@@ -55,6 +56,7 @@ const AppRouter = () => {
                     <Route path="/product-management" element={<ProductManagement />} />
                     <Route path="/product-line-management" element={<ProductLineManagement />} />
                     <Route path="/order-management" element={<OrderManagement />} />
+                    <Route path="/voucher-management" element={<OrderManagement />} /> 
 
                 </>
             )}
