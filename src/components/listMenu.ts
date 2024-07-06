@@ -21,6 +21,10 @@ const listMenu = {
             title: 'Order Management',
             url: '/order-management',
         },
+        {
+            title: 'Voucher Management',
+            url: '/voucher-management',
+        },
     ],
     isAdminMenu: [
         {
