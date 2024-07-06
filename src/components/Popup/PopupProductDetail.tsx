@@ -48,6 +48,7 @@ const PopupProductDetail: React.FC<PopupProductDetailProps> = ({
         formData.append('brand', form.brand)
         formData.append('price', form.price.toString())
         formData.append('promotionPrice', form.promotionPrice.toString())
+        formData.append('status', form.status)
         await instance.put(`/products/${product.id}`,formData)
         .then(()=>{
             dispatch(getAllProducts({text:''})).then(()=>{
@@ -182,7 +183,17 @@ const PopupProductDetail: React.FC<PopupProductDetailProps> = ({
                                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                         />
                                     </div>
-
+                                    <div>
+                                        <span className="text-sm text-back-500 font-bold">
+                                            Status
+                                        </span>
+                                    </div>
+                                    <div>
+                                    <Autocomplete options={['Active', 'Inactive']} value={form.status}
+                                disablePortal disableClearable size='small'
+                                onChange={(_, value) => setForm(prev => ({...prev, status: value}))}
+                                renderInput={(params) => <TextField {...params} />} />
+                                    </div>
                                 <Stack direction='column' spacing={2}>
                                     <label className="text-sm text-back-500 font-bold">Thumbnail <span className="text-red-600 text-xl">*</span></label>
                                     {form.thumbnailUrl === null || form.thumbnailUrl === "" ? (
