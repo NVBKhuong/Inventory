@@ -3,6 +3,7 @@ import { IChangePassword, IChangePasswordResponse, ILogin, ILoginResponse, IRegi
 import { toast } from "react-toastify";
 import { changePasswordEndpoint, loginEndpoint, registerEndpoint } from "../api/apiConfig";
 import axios from "axios";
+import localStorage from "redux-persist/es/storage";
 
 type AccountState = {
   loading: boolean;
@@ -45,7 +46,7 @@ export const loginUser = createAsyncThunk<IUser, ILogin>(
     try {
       const response = await axios.post(loginEndpoint, data);
       const token = response.data.accessToken;
-      sessionStorage.setItem("suame88", token);
+      localStorage.setItem("suame88", token);
       toast.success("Login Successful !");
       return response.data;
     } catch (error: any) {
@@ -60,7 +61,7 @@ export const logoutUser = createAsyncThunk<
   string | Object
 >("auth/logout-user", async (_, thunkAPI) => {
   try {
-    sessionStorage.removeItem("suame88");
+    localStorage.removeItem("suame88");
     toast.success(" Logout Successful !");
     return null;
   } catch (error: any) {
@@ -73,7 +74,7 @@ export const changePassword = createAsyncThunk<IChangePasswordResponse, IChangeP
   "auth/changePassword",
   async (data, thunkAPI) => {
     try {
-      const token = sessionStorage.getItem('suame88');
+      const token = localStorage.getItem('suame88');
       const response = await axios.put(changePasswordEndpoint, data, {
         headers: {
           Authorization: `Bearer ${token}`,

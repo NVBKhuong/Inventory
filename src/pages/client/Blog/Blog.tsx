@@ -1,111 +1,86 @@
 import React from 'react';
-import IMG1 from '../img/img-01.jpg';
-import IMG2 from '../img/img-02.jpg';
-import IMG3 from '../img/img-03.jpg';
-import IMG4 from '../img/img-04.jpg';
-import IMG5 from '../img/img-05.jpg';
-import IMG6 from '../img/img-06.jpg';
+import Header from '../../../components/Layout/Header';
+import Footer from '../../../components/Layout/Footer';
+import milkImage1 from '../../../assets/blog/milk1.jpg';
+import milkImage2 from '../../../assets/blog/milk2.jpg';
+import milkImage3 from '../../../assets/blog/milk3.jpg';
+import milkImage4 from '../../../assets/blog/milk4.jpg';
+import milkImage5 from '../../../assets/blog/milk5.jpg';
+import milkImage6 from '../../../assets/blog/milk6.jpg';
+
+interface BlogPost {
+  id: number;
+  title: string;
+  content: string;
+  imageUrl: string;
+  link: string;
+}
 
 const Blog: React.FC = () => {
+  // Dummy data for blog posts
+  const blogPosts: BlogPost[] = [
+    {
+      id: 1,
+      title: 'The Importance of Milk in Pregnancy',
+      content: 'Although the number and types of studies provide insufficient evidence to offer definite conclusions, there appears to be an important trend of positive associations between moderate maternal milk intake during pregnancy and both infant birth weight and length. Randomized controlled trials are needed that examine the relations between maternal dairy product intake and the main pregnancy and lactation outcomes to provide women with specific dietary advice during these critical physiological periods regarding both themselves and their offspring.',
+      imageUrl: milkImage1,
+      link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4302093/',
+    },
+    {
+      id: 2,
+      title: 'Choosing the Right Milk for Your Baby',
+      content: 'Choosing the right formula for your baby involves considering various factors, including nutritional content, dietary needs, and potential allergies. By focusing on key ingredients like lactose, extra whey protein, and essential fatty acids, parents can select a formula that supports their infants growth and development. Remember, consulting with healthcare professionals and referring to guidelines from reputable organizations like the AAP and FDA can provide valuable guidance in making this important decision. At the end of the day, every baby is unique, and you know whats best for your little one!',
+      imageUrl: milkImage2,
+      link: 'https://babysonly.com/blogs/formula-101/how-to-choose-baby-formula',
+    },
+    {
+      id: 3,
+      title: 'Benefits of Breastfeeding',
+      content: 'Breastfeeding can help protect babies against some short- and long-term illnesses and diseases.',
+      imageUrl: milkImage3,
+      link: 'https://reliefweb.int/report/world/5-ways-breastfeeding-helps-mothers-and-babies-alike?gad_source=1&gclid=Cj0KCQjw1qO0BhDwARIsANfnkv93aTLMmUG6Z8BSN1h2PtNgTYlCMklw22-JliOh0YwVVmbjRq9QeSgaAl7VEALw_wcB',
+    },
+    {
+      id: 4,
+      title: 'Cool Summer Milk Recipes',
+      content: 'Summer is finally here and cool, tasty treats are in order. Here are a couple of recipes to help you stay fresh during the season, while getting your daily dose of Enfamama A+. As a bonus, they even help give relief not just from the heat, but also from two common problems every pregnant woman faces.',
+      imageUrl: milkImage4,
+      link: 'https://www.enfagrow.com.sg/articles/cool-summer-milk-recipes',
+    },
+    {
+      id: 5,
+      title: 'Milk Allergies in Babies',
+      content: 'A milk allergy occurs when a child’s immune system mistakenly recognizes cow’s milk protein as a foreign invader. Milk allergies are most common in infants and young children.',
+      imageUrl: milkImage5,
+      link: 'https://www.chop.edu/conditions-diseases/milk-allergies',
+    },
+    {
+      id: 6,
+      title: 'Nutritional Value of Different Types of Milk',
+      content: 'Milk is rich in calcium, and contains more than 10 essential nutrients that promote general health.',
+      imageUrl: milkImage6,
+      link: 'https://www.dairy.com.au/products/milk',
+    },
+  ];
+
   return (
     <>
-      <header className="tm-header" id="tm-header">
-        <div className="tm-header-wrapper">
-          <button className="navbar-toggler" type="button" aria-label="Toggle navigation">
-            <i className="fas fa-bars"></i>
-          </button>
-          <div className="tm-site-header">
-            <h1 className="text-center font-bold"><b>MomMilk88 Blog</b></h1>
-          </div>
-          <p className="tm-mb-80 pr-5 text-black">
-            <i>Welcome to the blog of <u><b>MomMilk88</b></u>! We are proud to be a trusted provider of high-quality milk products for mothers and babies, bringing absolute peace of mind to families. Our blog is designed to share valuable knowledge about nutrition, health care for mothers and babies, along with advice from leading experts in the field.
-            Additionally, you will find detailed articles about the milk products we offer, including their nutritional content, benefits, and the best ways to use them. We continuously update the latest trends and reliable scientific research, helping you make smart and informed decisions in caring for your family.
-            Join MomMilk88 on the journey of nurturing future generations, so that every day is filled with health and happiness!</i>
-          </p>
-        </div>
-      </header>
-      <div className="container mx-auto px-4">
-        <main className="tm-main">
-          {/* Search form */}
-          <div className="row tm-row">
-            <div className="col-12">
-              <form method="GET" className="flex items-center mb-20">
-                <input className="form-control tm-search-input border rounded py-2 px-4 mr-2" name="query" type="text" placeholder="Search..." aria-label="Search" />
-                <button className="tm-search-button bg-blue-500 text-white py-2 px-4 rounded" type="submit">
-                  <i className="fas fa-search tm-search-icon" aria-hidden="true"></i>
-                </button>
-              </form>
+      <Header />
+      <section className="container mx-auto py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blogPosts.map(post => (
+            <div key={post.id} className="bg-white p-6 rounded-lg shadow-md">
+              <img src={post.imageUrl} alt={post.title} className="mb-4 rounded-lg" />
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 text-gray-800 hover:text-blue-600 transition duration-300">{post.title}</h2>
+              <p className="text-gray-700 leading-relaxed">{post.content}</p>
+              <a href={post.link} className="text-blue-500 mt-2 inline-block hover:underline">Read more</a>
             </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Article 
-              imgSrc={IMG1} 
-              badge="Most viewed" 
-              title="The Importance of Proper Nutrition for New Mothers" 
-              description="Welcoming a new baby into the family is a joyous and transformative experience. However, it also brings a lot of changes, especially for new mothers. One of the key areas to focus on is proper nutrition, which is crucial for both the mother's health and the baby's development. In this blog post, we'll explore why proper nutrition is so important for new mothers and provide some practical tips on how to maintain a balanced diet during this critical period . . . (READ MORE)" 
-            />
-            <Article 
-              imgSrc={IMG2}
-              badge="Most search" 
-              title="Choosing the Right Milk Formula for Your Baby" 
-              description="Selecting the right milk formula for your baby can be a daunting task, given the myriad of options available on the market. Each baby is unique, and what works for one may not be suitable for another. In this blog post, we'll guide you through the process of choosing the right milk formula for your baby, considering factors such as nutritional content, special dietary needs, and personal preferences . . . (READ MORE)" 
-            />
-            <Article 
-              imgSrc={IMG3} 
-              badge="New" 
-              title="Breastfeeding vs. Formula Feeding: Pros and Cons" 
-              description="One of the most common decisions new parents face is whether to breastfeed or formula feed their baby. Both methods have their advantages and disadvantages, and the right choice varies for each family. In this blog post, we'll compare breastfeeding and formula feeding to help you make an informed decision that suits your family's needs and lifestyle . . . (READ MORE)" 
-            />
-            <Article 
-              imgSrc={IMG4}
-              badge="New" 
-              title="Tips for Introducing Solid Foods to Your Baby" 
-              description="Introducing solid foods to your baby is an exciting milestone that marks the beginning of their culinary journey. However, it can also be a time of uncertainty and questions for many parents. In this blog post, we’ll provide you with practical tips and guidelines to help make the transition to solid foods a smooth and enjoyable experience for both you and your baby . . . (READ MORE)" 
-            />
-            <Article 
-              imgSrc={IMG5}
-              title="Common Myths About Baby Nutrition Debunked" 
-              description="When it comes to baby nutrition, there are many myths and misconceptions that can cause confusion for parents. In this blog post, we’ll debunk some of the most common myths about baby nutrition to help you make informed decisions and provide the best care for your little one . . . (READ MORE)" 
-            />
-            <Article 
-              imgSrc={IMG6}
-              title="The Role of Omega-3 Fatty Acids in Infant Development" 
-              description="Omega-3 fatty acids are essential nutrients that play a critical role in infant development, particularly for brain and eye health. In this blog post, we’ll explore the importance of omega-3 fatty acids, sources of these nutrients, and how to ensure your baby is getting enough for optimal growth and development . . . (READ MORE)" 
-            />
-          </div>
-          <footer className="row tm-row">
-            <hr className="col-12" />
-          </footer>
-        </main>
-      </div>
-      <script src="js/jquery.min.js"></script>
-      <script src="js/templatemo-script.js"></script>
+          ))}
+        </div>
+      </section>
+      <Footer />
     </>
   );
 };
-
-interface ArticleProps {
-  imgSrc: string;
-  badge?: string;
-  title: string;
-  description: string;
-}
-
-const Article: React.FC<ArticleProps> = ({ imgSrc, badge, title, description }) => (
-  <article className="col-12 col-md-6 tm-post">
-    <hr className="tm-hr-primary" />
-    <a href="post.html" className="effect-lily tm-post-link tm-pt-60">
-      <div className="tm-post-link-inner">
-        <img src={imgSrc} alt="Image" className="img-fluid" />
-      </div>
-      {badge && <span className="absolute top-0 left-0 bg-red-500 text-white px-2 py-1">{badge}</span>}
-      <h2 className="mt-4 text-blue-500 text-2xl font-semibold">{title}</h2>
-    </a>
-    <p className="mt-4">
-      {description}
-    </p>
-    <hr />
-  </article>
-);
 
 export default Blog;

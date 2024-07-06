@@ -35,7 +35,7 @@ const OrderManagementPage: React.FC = () => {
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
       console.log(`Updating order ${orderId} status to ${newStatus}`);
-      const response = await instance.put(`/orders`, { id: orderId, status: newStatus });
+      const response = await instance.put(`/orders/status`, { id: orderId, status: newStatus });
       console.log("Update response:", response);
       toast.success("Order status updated successfully.");
       loadOrders();
@@ -84,9 +84,10 @@ const OrderManagementPage: React.FC = () => {
             handleStatusChange(row.original.id, event.target.value)
           }
         >
-          <MenuItem value="Pending">Pending</MenuItem>
-          <MenuItem value="Paid">Paid</MenuItem>
-          <MenuItem value="Canceled">Canceled</MenuItem>
+          
+          <MenuItem value="Confirmed">Confirmed</MenuItem>
+          <MenuItem value="Delivering">Delivering</MenuItem>
+          <MenuItem value="Completed">Completed</MenuItem>
         </Select>
       ),
     },
