@@ -19,6 +19,7 @@ import ThankyouforVnpay from '../components/Payment/ThankyouforVnpay';
 import OrderManagement from '../pages/StoreManager/OrderManagerment';
 import ProductPage from '../pages/client/ProductPage';
 import Blog from '../pages/client/Blog/Blog';
+import BlogPost1 from '../pages/client/Blog/BlogPost1';
 
 const AppRouter = () => {
     const token = sessionStorage.getItem('suame88');
@@ -40,6 +41,7 @@ const AppRouter = () => {
                 <Route path="/product/:id" element={<ProductDetails />} />                            
                 <Route path="/product-page" element={<ProductPage />} />
                 <Route path="/blog" element={<Blog />} />
+                <Route path="/blog-post-1" element={<BlogPost1 />} />
 
             </Routes>
         );

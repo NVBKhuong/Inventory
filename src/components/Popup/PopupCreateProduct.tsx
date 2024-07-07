@@ -136,7 +136,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
-                                <Autocomplete options={['Vinamilk','TH True milk','Nutricare','Dutch Lady','NutiFood']} value={form.brand}
+                                <Autocomplete options={['Vinamilk', 'TH True Milk', 'Dutch Lady', 'Meadow Fresh', 'Nutifood', 'Nestle', 'Dalat Milk', 'Morinaga', 'Anlene', 'Abbott', 'Friso', 'Aptamil', 'Glico', 'Wyeth', 'Hipp', 'Mead Johnson', 'Bellamy’s', 'Kendamil', 'Biomil', 'Namyang', 'Ovaltine', 'Vinasoy', 'Yakult', 'Coca-Cola','Enfa', 'Pediasure', 'Similac', 'S26', 'Grow Plus+', 'Ensure', 'Nutricare', 'XO', 'Horizon Organic', 'Fairlife', 'Silk', 'Alpro', 'Goodday', 'Anchor', 'Paul’s', 'Arla', 'Devondale', 'Parmalat', 'Borden', 'Dean Foods', 'Land O Lakes', 'TruMoo', 'Yili', 'Mengniu', 'Marigold','Other']} value={form.brand}
                                 disablePortal disableClearable size='small'
                                 onChange={(_, value) => setForm(prev => ({...prev, brand: value}))}
                                 renderInput={(params) => <TextField {...params} />} />

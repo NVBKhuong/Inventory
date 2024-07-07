@@ -1,6 +1,6 @@
 import React from 'react';
-import 'fontawesome/css/all.min.css'; 
-import './CSS/templatemo-xtra-blog.css'; 
+// import 'fontawesome/css/all.min.css'; 
+// import './CSS/templatemo-xtra-blog.css'; 
 
 const BlogPost1: React.FC = () => {
   return (
