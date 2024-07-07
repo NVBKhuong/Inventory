@@ -92,19 +92,14 @@ const FormLogin = () => {
             className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
           />
         </div>
-        <div className="flex flex-col sm:flex-row items-center mt-4 w-full sm:w-80 gap-12">
+        <div className="flex flex-col sm:flex-row items-center mt-4 w-full sm:w-80 gap-12 justify-center">
           <button
             type="submit"
-            className="bg-pink-200 p-3 rounded-xl text-black font-bold hover:bg-pink-600 cursor-pointer w-full sm:w-48"
+            className="bg-pink-200 p-3 rounded-xl text-black font-bold hover:bg-pink-600 cursor-pointer w-full sm:w-48 "
           >
             {isLoading ? "Loading..." : "Login"}
           </button>
-          <Link
-            to="#"
-            className="text-red-600 underline font-normal text-base mt-2 sm:mt-0 w-full sm:w-44"
-          >
-            Forgot Password?
-          </Link>
+          
         </div>
       </form>
       <Link
