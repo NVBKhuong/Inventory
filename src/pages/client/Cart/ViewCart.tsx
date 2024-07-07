@@ -220,7 +220,7 @@ const ViewCart = () => {
                                         />
                                         <div className="text-center mt-4">
                                             <h2 className="text-gray-900 text-lg title-font font-medium mb-1">{item.name}</h2>
-                                            <div className="flex items-center justify-center gap-4">
+                                            <div className="flex items-center justify-center gap-2">
                                                 <button
                                                     onClick={() => handleDecreaseQuantity(item)}
                                                     className="text-white bg-red-600 border-0 py-1 px-5 focus:outline-none hover:bg-red-700 rounded font-bold"
@@ -242,7 +242,7 @@ const ViewCart = () => {
                                                 </button>
                                                 <button
                                                     onClick={() => handleRemoveFromCart(item)}
-                                                    className="text-white bg-red-600 border-0 py-1 px-5 focus:outline-none hover:bg-red-700 rounded"
+                                                    className="text-white bg-red-600 border-0 py-1 px-1.5 focus:outline-none hover:bg-red-700 rounded"
                                                 >
                                                     Delete
                                                 </button>
