@@ -21,7 +21,7 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
             {products.map((product, index) => (
                 <div key={index} className="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[400px]">
                     <div className="flex items-center justify-center">
-                        <img className="w-[250px] h-[200px] p-4" src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""} alt={product?.name ? product.name.toString() : ""} />
+                        <img className="w-[220px] h-[220px] p-4" src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""} alt={product?.name ? product.name.toString() : ""} />
                     </div>
                     <div className="flex flex-col justify-between p-5 flex-grow">
                         <div>
