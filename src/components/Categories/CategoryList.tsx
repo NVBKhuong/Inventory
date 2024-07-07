@@ -19,14 +19,14 @@ const columns: MRT_ColumnDef<ICategory>[] = [
     accessorKey: "name",
     header: "Target Audience",
   },
-  {
-    accessorKey: "ageRange",
-    header: "Age Range",
-  },
-  {
-    accessorKey: "milkType",
-    header: "Milk Type",
-  },
+  // {
+  //   accessorKey: "ageRange",
+  //   header: "Age Range",
+  // },
+  // {
+  //   accessorKey: "milkType",
+  //   header: "Milk Type",
+  // },
 ];
 
 const CategoryList = () => {
