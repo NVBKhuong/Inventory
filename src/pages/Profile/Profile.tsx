@@ -2,15 +2,11 @@ import { useEffect, useState } from "react";
 import Footer from "../../components/Layout/Footer";
 import Header from "../../components/Layout/Header";
 import ProfileComponent from "../../components/ProfileComponent/ProfileComponent";
-import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import SidebarComponent from "../../components/Layout/Sidebar";
-import { FaUser } from "react-icons/fa";
+import { useAppSelector } from "../../service/store/store";
 import instance from "../../service/api/customAxios";
 
 
 const Profile= () => {
-    const dispatch = useAppDispatch();
-    const user = useAppSelector(state=>state.users.user);
     const { account } = useAppSelector((state) => state.auth);
     const isCustomer = account && account.user && account.user.role.includes('Customer');
     const customerId = localStorage.getItem('customerId')
@@ -28,10 +24,8 @@ const Profile= () => {
       await instance.get(`/Accounts/customers/${customerId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err))
     }
     useEffect(() => {
-      console.log('chạy')
       loadUserInfo()
     }, []);
-    console.log(userInfo)
   return (
     <>
       {isCustomer && (

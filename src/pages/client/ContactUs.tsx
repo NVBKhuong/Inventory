@@ -31,7 +31,6 @@ const ContactPage = () => {
                   width="100%"
                   height="400"
                   style={{ border: 0 }}
-                  allowFullScreen=""
                   loading="lazy"
                   title="Google Map"
                   className="rounded-t-lg"
