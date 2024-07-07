@@ -1,6 +1,6 @@
 import { FaDatabase } from "react-icons/fa"
 import SidebarComponent from "../../components/Layout/Sidebar"
-import VoucherList from "../../components/StoreManager/VoucherList"
+import VoucherList from "../../components/StoreManager/VoucherList" 
 
 
 const VoucherManagement = () => {

@@ -14,7 +14,7 @@ const ContactPage = () => {
               <p className="mb-2">If you have any issues regarding your purchase or any inquiries, please contact us at the address below:</p>
               <p className="mb-2">Email: <a href="mailto:baockse172296@fpt.edu.vn">baockse172296@fpt.edu.vn</a></p>
               <p className="mb-2">Phone: <a href="tel:+84355418118">0355 418 118</a></p>
-              <p className="mb-2">Address: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh 700000</p>
+              <p className="mb-2">Address: Lô E2a-7, Đường D1, Đ. D1, Long Thạnh Mỹ, Thành Phố Thủ Đức, Hồ Chí Minh</p>
               <p className="mb-2">Additional Email Addresses:</p>
               <ul className="list-disc list-inside">
                 <li><a href="mailto:phatnttse184119@fpt.edu.vn">phatnttse184119@fpt.edu.vn</a></li>
