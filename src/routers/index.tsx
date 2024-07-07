@@ -8,7 +8,7 @@ import ProductDetails from '../components/Product/ProductDetails';
 import ProductManagement from '../pages/StoreManager/ProductManagement';
 import Profile from '../pages/Profile/Profile';
 import ChangePassword from '../pages/Profile/ChangePassword';
-import AdminDashboard from '../pages/admin/AdminDashboard';
+// import AdminDashboard from '../pages/admin/AdminDashboard';
 import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
@@ -46,8 +46,6 @@ const AppRouter = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/contact" element={<Contact />} />
-
-
             </Routes>
         );
     }

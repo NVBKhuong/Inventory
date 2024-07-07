@@ -8,7 +8,7 @@ type FormRegisterProps = {
   username: string;
   name: string;
   password: string;
-  
+  confirmPassword: string;
 };
 
 const FormRegister = () => {
@@ -21,24 +21,24 @@ const FormRegister = () => {
       username: "",
       name: "",
       password: "",
-    
+      confirmPassword: "",
     },
   });
-  const { register, handleSubmit, formState, reset } = form;
+  const { register, handleSubmit, formState, reset, watch } = form;
   const { errors } = formState;
 
   const onSubmit = (data: FormRegisterProps) => {
+    const { username, name, password } = data; // Extract necessary fields
     setIsLoading(true);
-    dispatch(registerUser(data))
+    dispatch(registerUser({ username, name, password }))
       .unwrap()
       .then((response) => {
         if (response) {
-          // Assuming response contains expected data structure
           reset({
             name: "",
             username: "",
             password: "",
-           
+            confirmPassword: "",
           });
           setIsLoading(false);
           navigate("/login");
@@ -52,7 +52,6 @@ const FormRegister = () => {
         setIsLoading(false);
       });
   };
-
 
   return (
     <div className="flex flex-col items-center mt-10 gap-8 px-4 sm:px-0">
@@ -76,9 +75,9 @@ const FormRegister = () => {
             )}
           </div>
           <input
-            {...register("username", { required: "username is required" })}
+            {...register("username", { required: "Username is required" })}
             type="text"
-            id="userame"
+            id="username"
             name="username"
             placeholder="Enter your username..."
             className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
@@ -117,6 +116,28 @@ const FormRegister = () => {
             id="password"
             name="password"
             placeholder="Enter your password..."
+            className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+          />
+        </div>
+        <div className="flex flex-col mt-4">
+          <div className="flex flex-row">
+            <label htmlFor="confirmPassword" className="text-base font-semibold">
+              Confirm Password:{" "}
+            </label>
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">*{errors.confirmPassword.message}</p>
+            )}
+          </div>
+          <input
+            {...register("confirmPassword", {
+              required: "Confirm Password is required",
+              validate: (value) =>
+                value === watch("password") || "Passwords do not match",
+            })}
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirm your password..."
             className="mt-2 p-2 border-2 border-pink-400 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
           />
         </div>
