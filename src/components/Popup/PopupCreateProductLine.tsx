@@ -28,7 +28,7 @@ const PopupCreateProductLine: React.FC<ProductCreateState> = ({
     }
     const handleCreateProductLine = async() => {
       if(validation()) return;
-        await instance.post(`/product-lines/update/${productId}`,{...form,expiredAt: new Date(form.expiredAt).toLocaleDateString()})
+        await instance.post(`/product-lines/create/${productId}`,{...form,expiredAt: new Date(form.expiredAt).toLocaleDateString()})
       .then(() => {
         loadProductLines()
         setForm({
