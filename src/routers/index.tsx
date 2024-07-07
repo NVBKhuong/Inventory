@@ -8,7 +8,7 @@ import ProductDetails from '../components/Product/ProductDetails';
 import ProductManagement from '../pages/StoreManager/ProductManagement';
 import Profile from '../pages/Profile/Profile';
 import ChangePassword from '../pages/Profile/ChangePassword';
-import AdminDashboard from '../pages/admin/AdminDashboard';
+// import AdminDashboard from '../pages/admin/AdminDashboard';
 import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
@@ -81,12 +81,8 @@ const AppRouter = () => {
             )}
             {isAdmin && (
                 <>
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
                     <Route path="/user-management" element={<UserManagement />} />
-                    <Route path="/product-management" element={<ProductManagement />} />
-                    <Route path="/category-management" element={<CategoryManagement />} />
-                    <Route path="/order-management" element={<OrderManagement />} />
-
                 </>
 
             )}

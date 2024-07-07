@@ -5,27 +5,13 @@ import { ICategory } from "../../models/Category";
 import CommonTable from "../Table/CommonTable";
 import PopupCreateCategory from "../Popup/PopupCreateCategory";
 import PopupCategoryDetail from "../Popup/PopupCategoryDetail";
-import PopupRenameCategory from "../Popup/PopupRenameCategory";
 import instance from "../../service/api/customAxios";
 
 
 const columns: MRT_ColumnDef<ICategory>[] = [
   {
-    accessorKey: "id",
-    header: "Category Name",
-  },
-
-  {
     accessorKey: "name",
-    header: "Target Audience",
-  },
-  {
-    accessorKey: "ageRange",
-    header: "Age Range",
-  },
-  {
-    accessorKey: "milkType",
-    header: "Milk Type",
+    header: "Category name",
   },
 ];
 
@@ -33,17 +19,10 @@ const CategoryList = () => {
   
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  const [cateData, setCateData] = useState<ICategory | null>(null);
+  const [cateData, setCateData] = useState(null);
   const [categories, setCategories] = useState([]);
   const [onPopupCategoryDetail, setOnPopupCategoryDetail] =
     useState<boolean>(false);
-  const [openPopupRename, setOpenPopupRename] = useState<boolean>(false);
-
-  const [selectedCateId, setSelectedCateId] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //     dispatch(getAllCategories());
-  // }, [dispatch]);
   const loadCategories = async()=>{
     await instance.post('/categories/filter',{name: ''}).then(response => {
                 setCategories(response.data.data);
@@ -61,17 +40,9 @@ const CategoryList = () => {
     setIsPopupOpen(false);
   };
 
-  const handleShowCategoryDetail = (cate: ICategory) => {
+  const handleShowCategoryDetail = (cate: any) => {
     setCateData(cate);
     setOnPopupCategoryDetail(true);
-  };
-
-  const handleOpenPopupRenameCategory = (id: string) => {
-    if (!selectedCateId) {
-      return
-    }
-    setSelectedCateId(id);
-    setOpenPopupRename(true);
   };
 
   return (
@@ -94,33 +65,17 @@ const CategoryList = () => {
         }
       />
 
-      <PopupCreateCategory
+      {cateData && <PopupCreateCategory loadCategories={loadCategories}
         isPopupOpen={isPopupOpen}
         closePopup={handlePopupClose}
-      />
+      />}
       {cateData && (
-        <>
-          <PopupCategoryDetail
+          <PopupCategoryDetail loadCategories={loadCategories}
             cate={cateData}
             onPopupDetail={onPopupCategoryDetail}
             setOnPopupDetail={setOnPopupCategoryDetail}
-            onUpdate={() => handleOpenPopupRenameCategory(cateData.id)}
           />
-          <PopupRenameCategory
-            onClosePopupDetail={() => setOnPopupCategoryDetail(false)}
-            open={openPopupRename}
-            closePopup={() => setOpenPopupRename(false)}
-            name={cateData?.name ?? ""}
-            cateId={cateData.id}
-            targetAudience={cateData.targetAudience}
-            ageRange={cateData.ageRange}
-            milkType={cateData.milkType}
-            icon={cateData.icon}
-          />
-        </>
       )}
-
-      {/* Update Status */}
     </Stack>
   );
 };
