@@ -54,7 +54,8 @@ export const createFeedbackByProductId = createAsyncThunk<IFeedback, IFeedbackCr
             toast.success('Feedback Successfully!');
             return response.data.data;
         } catch (error: any) {
-            toast.error('Customer has already given a feedback');
+            toast.error('Maybe you have not purchased the product yet or you already have feedback');
+            // console.log(error.response.body);            
             return thunkAPI.rejectWithValue(error.response.data);
         }
     }
