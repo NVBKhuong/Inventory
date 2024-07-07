@@ -238,7 +238,7 @@ const OrderHistory = () => {
             <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
             <span className="ml-2">{getPaymentMethodIcon(order.paymentMethod)}</span>
           </div>
-          <p><strong>Payment Status:</strong> {order.isPayment ? "Paid" : "Unpaid"}</p>
+          <p><strong>Payment Status:</strong> {order.isPayment ? <span className="text-green-600">Paid</span> : <span className="text-red-600">Unpaid</span>}</p>
           <p className={`flex items-center ${getStatusColor(order.status)}`}>
             <span>{getStatusIcon(order.status)}</span>
             <span className="ml-2"><strong>Order Status:</strong> {order.status}</span>
