@@ -83,12 +83,8 @@ const AppRouter = () => {
             )}
             {isAdmin && (
                 <>
-                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
+                    {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
                     <Route path="/user-management" element={<UserManagement />} />
-                    <Route path="/product-management" element={<ProductManagement />} />
-                    <Route path="/category-management" element={<CategoryManagement />} />
-                    <Route path="/order-management" element={<OrderManagement />} />
-
                 </>
 
             )}

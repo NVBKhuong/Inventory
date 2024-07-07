@@ -43,8 +43,6 @@ export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | nul
     async (_, thunkAPI) => await instance.post('/products/filter?pageNumber=0&pageSize=1000',{}).then(
         (res) => res.data.data
     ).catch(error => thunkAPI.rejectWithValue(error.response.data))
-            
-            // return thunkAPI.rejectWithValue(error.response.data);
 );
 
 export const getProductById = createAsyncThunk<IProduct, { id: string }>(
