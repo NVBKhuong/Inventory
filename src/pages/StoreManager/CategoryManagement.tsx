@@ -1,5 +1,5 @@
 import { FaDatabase } from "react-icons/fa"
-import CategoryList from "../../components/Categories/CategoryList"
+import CategoryList from "../../components/StoreManager/CategoryList"
 import SidebarComponent from "../../components/Layout/Sidebar"
 
 

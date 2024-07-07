@@ -2,10 +2,6 @@
 const listMenu = {
     storeManagementMenu: [
         {
-            title: 'Dashboard',
-            url: '/dashboard',
-        },
-        {
             title: 'Product Management',
             url: '/product-management',
         },
@@ -27,10 +23,10 @@ const listMenu = {
         },
     ],
     isAdminMenu: [
-        {
-            title: 'Admin Dashboard',
-            url: '/admin-dashboard',
-        },
+        // {
+        //     title: 'Admin Dashboard',
+        //     url: '/admin-dashboard',
+        // },
         {
             title: 'User Management',
             url: '/user-management',

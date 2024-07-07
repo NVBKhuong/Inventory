@@ -1,18 +1,42 @@
 import { XMarkIcon } from '@heroicons/react/16/solid';
-import { ICategory } from '../../models/Category';
+import { useEffect, useState } from 'react';
+import { Stack } from '@mui/material';
+import instance from '../../service/api/customAxios';
+import { toast } from 'react-toastify';
 
 type PopupCategoryDetailProps = {
-    cate: ICategory | null;
+    cate: {id?: string, name:string};
     onPopupDetail: boolean;
     setOnPopupDetail: React.Dispatch<React.SetStateAction<boolean>>;
-    onUpdate: () => void;
+    loadCategories: ()=>void;
 }
 const PopupCategoryDetail: React.FC<PopupCategoryDetailProps> = ({
     cate,
     onPopupDetail,
+    loadCategories,
     setOnPopupDetail,
-    onUpdate,
 }) => {
+    const [form, setForm] = useState(cate)
+    const [checkName, setCheckName] = useState(false)
+    const handleUpdate = async() => {
+        if(form.name.trim()==='') {
+            setCheckName(true);
+            return;
+        }
+        await instance.put(`/categories/${cate.id}`,form).then(()=>{
+            loadCategories()
+            toast.success('Update successfully!')
+            setOnPopupDetail(false)
+        })
+        .catch(err => {
+            console.log(err)
+            toast.error('Update failed!')
+        })
+    }
+
+    useEffect(()=>{
+        setForm(cate)
+    },[cate])
     return (
         <div
             className={`fixed z-10 inset-0 overflow-y-auto ${onPopupDetail ? '' : 'hidden'
@@ -47,62 +71,24 @@ const PopupCategoryDetail: React.FC<PopupCategoryDetailProps> = ({
                                         width={16}
                                         height={16}
                                         className="h-6 w-6 ml-auto cursor-pointer"
-                                        onClick={() => setOnPopupDetail(false)}
+                                        onClick={() => {setOnPopupDetail(false); setCheckName(false)}}
                                     />
                                     <hr className="mt-2 text-black-700" />
                                 </div>
-                                <div className="mt-4 border-t grid grid-cols-2 gap-4 p-8">
-                                    <div>
+                                    <Stack direction='row' spacing={2} alignItems={'center'} className='w-[100%] py-14'>
                                         <span className="text-sm text-back-500 font-bold">
-                                            Name
+                                            Name 
                                         </span>
-                                    </div>
-                                    <div>
-                                        <span>{cate?.name}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Target Audience
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{cate?.targetAudience}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Age Range
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{cate?.ageRange}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Milk Type
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <span>{cate?.milkType}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-sm text-back-500 font-bold">
-                                            Action
-                                        </span>
-                                    </div>
-                                    <div className="w-auto flex gap-4">
-                                        <button
-                                            onClick={onUpdate}
-                                            className="text-xs w-24 border border-blue-500p-1 bg-blue-500 text-white-900 font-bold rounded-lg"
-                                        >
-                                            Update
-                                        </button>
-                                        <button
-                                            className="text-xs w-24 border border-blue-500p-1 bg-red-500 text-white font-bold rounded-lg"
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                </div>
+                                        <input value={form.name} onChange={e => setForm({name: e.target.value})} type="text" id="name"
+                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"/>
+                                    {checkName && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
+                                    </Stack>
+                                    <div className="flex justify-end">
+                                <button onClick={handleUpdate}
+                                    className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">
+                                    Update
+                                </button>
+                            </div>
                             </div>
                         </div>
                     </div>
