@@ -157,6 +157,16 @@ export const productSlice = createSlice({
                 }
             }
         },
+        updateQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
+            const { id, quantity } = action.payload;
+            if (state.cart) {
+                const cartItem = state.cart.find(item => item.id === id);
+                if (cartItem) {
+                    cartItem.quantity = quantity;
+                    saveCartToStorage(state.cart);
+                }
+            }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getAllProducts.pending, (state) => {
@@ -198,5 +208,5 @@ export const productSlice = createSlice({
     },
 });
 
-export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart } = productSlice.actions;
+export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity } = productSlice.actions;
 export default productSlice.reducer;
