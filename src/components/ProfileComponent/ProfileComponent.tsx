@@ -39,7 +39,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({ address, phone, name, avatar
               className="w-24 h-24 mr-4"
             />
             <div>
-              <Typography variant="h6">{name}</Typography>
+              <Typography variant="h6">{info.name}</Typography>
             </div>
           </div>
           <div>

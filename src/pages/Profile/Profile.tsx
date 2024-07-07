@@ -28,10 +28,8 @@ const Profile= () => {
       await instance.get(`/Accounts/customers/${customerId}`).then(res => setUserInfo(res.data)).catch(err => console.log(err))
     }
     useEffect(() => {
-      console.log('chạy')
       loadUserInfo()
     }, []);
-    console.log(userInfo)
   return (
     <>
       {isCustomer && (
