@@ -214,9 +214,9 @@ const ViewCart = () => {
                                 <div key={item.id} className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                                     <div className="flex items-center justify-center shadow-lg rounded-lg">
                                         <img
-                                            alt={item.name}
+                                            alt={item?.name ? item.name.toString() : ""}
                                             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                                            src="https://lzd-img-global.slatic.net/g/p/a76230e0f618381db919783fd72ac32c.jpg_320x320.jpg_550x550.jpg"
+                                            src={item?.thumbnailUrl ? item.thumbnailUrl.toString() : ""}
                                         />
                                         <div className="text-center mt-4">
                                             <h2 className="text-gray-900 text-lg title-font font-medium mb-1">{item.name}</h2>
