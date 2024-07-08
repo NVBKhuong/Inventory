@@ -23,6 +23,7 @@ import FAQ from '../pages/client/FAQ'
 import Contact from '../pages/client/ContactUs';
 import VoucherManagement from '../pages/StoreManager/VoucherManagement';
 import PolicyAndTerms from '../pages/client/PolicyAndTerms';
+import NotFound from '../pages/client/NotFound';
 
 
 const AppRouter = () => {
@@ -89,8 +90,7 @@ const AppRouter = () => {
                 </>
 
             )}
-            {/* Fallback route if none of the above matches */}
-            {/* <Route path="*" element={<Navigate to={isCustomer ? "/home" : "/dashboard"} replace />} /> */}
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 };

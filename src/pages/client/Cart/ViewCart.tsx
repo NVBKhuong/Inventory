@@ -25,11 +25,11 @@ interface IVoucher {
 const ViewCart = () => {
     const dispatch = useAppDispatch();
     const cartItems = useAppSelector((state) => state.products.cart);
-    const products = useAppSelector((state) => state.products.products); // Assuming products are stored in state.products.products
+    const products = useAppSelector((state) => state.products.products); 
     const navigate = useNavigate();
-    const [receiver, setReceiver] = useState("");
-    const [address, setAddress] = useState("");
-    const [phone, setPhone] = useState("");
+    const [receiver, setReceiver] = useState<string>(localStorage.getItem("USERNAME") || "");
+    const [address, setAddress] = useState<string>(localStorage.getItem("USERADDRESS") || "");
+    const [phone, setPhone] = useState<string>(localStorage.getItem("USERPHONE") || "");
     const [paymentMethod, setPaymentMethod] = useState("Cash");
     const [selectedVoucherId, setSelectedVoucherId] = useState("");
     const [discountValue, setDiscountValue] = useState(0);
@@ -149,7 +149,7 @@ const ViewCart = () => {
         const finalAmount = totalAmount - discountValue;
 
         const phoneRegex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
-        if (!phone.match(phoneRegex)) {
+        if (!phone?.match(phoneRegex)) {
             toast.error('Invalid phone number format.');
             return;
         }
@@ -286,7 +286,7 @@ const ViewCart = () => {
                             <form className="mt-8 w-full" onSubmit={handleCheckout}>
                                 <h2 className="text-gray-900 text-lg font-medium mb-3">Shipping Information</h2>
                                 <div className="flex flex-col mb-4">
-                                    <input
+                                   <input
                                         type="text"
                                         placeholder="Receiver Name"
                                         value={receiver}
@@ -302,7 +302,7 @@ const ViewCart = () => {
                                         required
                                         className="border-2 border-gray-200 mb-2 py-2 px-4 w-full rounded-lg focus:outline-none"
                                     />
-                                    <input
+                                   <input
                                         type="text"
                                         placeholder="Phone"
                                         value={phone}

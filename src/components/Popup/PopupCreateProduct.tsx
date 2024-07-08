@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch } from "../../service/store/store";
-import { createProduct, getAllProducts } from "../../service/features/productSlice";
+import {  getAllProducts } from "../../service/features/productSlice";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import { Autocomplete,TextField,Stack } from "@mui/material";
 import instance from "../../service/api/customAxios";
