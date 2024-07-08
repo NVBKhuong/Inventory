@@ -25,6 +25,7 @@ interface IVoucher {
 const ViewCart = () => {
     const dispatch = useAppDispatch();
     const cartItems = useAppSelector((state) => state.products.cart);
+    const products = useAppSelector((state) => state.products.products); // Assuming products are stored in state.products.products
     const navigate = useNavigate();
     const [receiver, setReceiver] = useState("");
     const [address, setAddress] = useState("");
@@ -65,12 +66,28 @@ const ViewCart = () => {
     };
 
     const handleIncreaseQuantity = (cartItem: ICartItem) => {
-        dispatch(increaseQuantity(cartItem.id));
+        const product = products?.find((product) => product.id === cartItem.id);
+        if (product) {
+            if (cartItem.quantity < product.inStock) {
+                dispatch(increaseQuantity(cartItem.id));
+            } else {
+                toast.error('Quantity exceeds available stock.');
+                dispatch(updateQuantity({ id: cartItem.id, quantity: product.inStock }));
+            }
+        }
     };
 
     const handleQuantityChange = (cartItem: ICartItem, quantity: number) => {
-        if (quantity > 0) {
-            dispatch(updateQuantity({ id: cartItem.id, quantity }));
+        const product = products?.find((product) => product.id === cartItem.id);
+        if (product) {
+            if (quantity <= product.inStock) {
+                if (quantity > 0) {
+                    dispatch(updateQuantity({ id: cartItem.id, quantity }));
+                }
+            } else {
+                toast.error('Quantity exceeds available stock.');
+                dispatch(updateQuantity({ id: cartItem.id, quantity: product.inStock }));
+            }
         }
     };
 
@@ -107,6 +124,26 @@ const ViewCart = () => {
 
     const handleCheckout = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        // Check if any cart item's quantity exceeds the available stock
+        let hasExceedingQuantity = false;
+        const updatedCartItems = cartItems?.map(item => {
+            const product = products?.find((product) => product.id === item.id);
+            if (product && item.quantity > product.inStock) {
+                toast.error(`Quantity of ${item.name} exceeds available stock. Adjusted to maximum available.`);
+                hasExceedingQuantity = true;
+                return { ...item, quantity: product.inStock };
+            }
+            return item;
+        });
+
+        if (hasExceedingQuantity) {
+            // Update cart items in the store
+            updatedCartItems?.forEach(item => {
+                dispatch(updateQuantity({ id: item.id, quantity: item.quantity }));
+            });
+            return;
+        }
 
         const totalAmount = calculateTotal(cartItems);
         const finalAmount = totalAmount - discountValue;
@@ -183,7 +220,7 @@ const ViewCart = () => {
                                         />
                                         <div className="text-center mt-4">
                                             <h2 className="text-gray-900 text-lg title-font font-medium mb-1">{item.name}</h2>
-                                            <div className="flex items-center justify-center gap-4">
+                                            <div className="flex items-center justify-center gap-2">
                                                 <button
                                                     onClick={() => handleDecreaseQuantity(item)}
                                                     className="text-white bg-red-600 border-0 py-1 px-5 focus:outline-none hover:bg-red-700 rounded font-bold"
@@ -195,7 +232,7 @@ const ViewCart = () => {
                                                     min="1"
                                                     value={item.quantity}
                                                     onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
-                                                    className="border border-gray-300 text-center w-12"
+                                                    className="border border-gray-300 text-center h-7 w-20"
                                                 />
                                                 <button
                                                     onClick={() => handleIncreaseQuantity(item)}
@@ -205,7 +242,7 @@ const ViewCart = () => {
                                                 </button>
                                                 <button
                                                     onClick={() => handleRemoveFromCart(item)}
-                                                    className="text-white bg-red-600 border-0 py-1 px-5 focus:outline-none hover:bg-red-700 rounded"
+                                                    className="text-white bg-red-600 border-0 py-1 px-1.5 focus:outline-none hover:bg-red-700 rounded"
                                                 >
                                                     Delete
                                                 </button>
@@ -282,7 +319,7 @@ const ViewCart = () => {
                                         >
                                             <option value="">Select a voucher</option>
                                             {vouchers.length > 0 && vouchers.map((item) => (
-                                                 <option key={item.id} value={item.id}>{`${item.code} - ${item.name} - MinOrderPrice: ${formatCurrency(item.minOrderValue)}`}</option>
+                                                <option key={item.id} value={item.id}>{`${item.code} - ${item.name} - MinOrderPrice: ${formatCurrency(item.minOrderValue)}`}</option>
                                             ))}
                                         </select>
                                         <button

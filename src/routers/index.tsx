@@ -8,7 +8,7 @@ import ProductDetails from '../components/Product/ProductDetails';
 import ProductManagement from '../pages/StoreManager/ProductManagement';
 import Profile from '../pages/Profile/Profile';
 import ChangePassword from '../pages/Profile/ChangePassword';
-// import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminDashboard from '../pages/admin/AdminDashboard';
 import Dashboard from '../pages/StoreManager/Dashboard';
 import UserManagement from '../pages/admin/UserManagement';
 import ViewCart from '../pages/client/Cart/ViewCart';
@@ -22,6 +22,7 @@ import Blog from '../pages/client/Blog/Blog';
 import FAQ from '../pages/client/FAQ'
 import Contact from '../pages/client/ContactUs';
 import VoucherManagement from '../pages/StoreManager/VoucherManagement';
+import PolicyAndTerms from '../pages/client/PolicyAndTerms';
 
 
 const AppRouter = () => {
@@ -46,6 +47,7 @@ const AppRouter = () => {
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/policy-and-terms" element={<PolicyAndTerms />} />
             </Routes>
         );
     }
@@ -77,11 +79,12 @@ const AppRouter = () => {
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/faq" element={<FAQ />} />
                     <Route path="/contact" element={<Contact />} />
+                    <Route path="/policy-and-terms" element={<PolicyAndTerms />} />
                 </>
             )}
             {isAdmin && (
                 <>
-                    {/* <Route path="/admin-dashboard" element={<AdminDashboard />} /> */}
+                    <Route path="/admin-dashboard" element={<AdminDashboard />} />
                     <Route path="/user-management" element={<UserManagement />} />
                 </>
 

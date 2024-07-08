@@ -62,6 +62,7 @@ export const logoutUser = createAsyncThunk<
 >("auth/logout-user", async (_, thunkAPI) => {
   try {
     localStorage.removeItem("suame88");
+    localStorage.removeItem("customerId");
     toast.success(" Logout Successful !");
     return null;
   } catch (error: any) {

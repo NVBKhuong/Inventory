@@ -24,7 +24,7 @@ export const getAllFeedbacksByProductId = createAsyncThunk<IFeedback[], {id: str
     'feedbacks/getAllFeedbacksByProductId',
     async (arg, thunkAPI) => {
         try {
-            const token = sessionStorage.getItem('suame88');
+            const token = localStorage.getItem('suame88');
             const response = await axios.post(`${getFeedbackByProductId}/${arg.id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ export const createFeedbackByProductId = createAsyncThunk<IFeedback, IFeedbackCr
     'feedbacks/createFeedbackByProductId',
     async (feedback, thunkAPI) => {
         try {
-            const token = sessionStorage.getItem('suame88');
+            const token = localStorage.getItem('suame88');
             const response = await axios.post(
                 createFeedbackEndpoint,
                 feedback,
@@ -54,7 +54,8 @@ export const createFeedbackByProductId = createAsyncThunk<IFeedback, IFeedbackCr
             toast.success('Feedback Successfully!');
             return response.data.data;
         } catch (error: any) {
-            toast.error('Create Failed!');
+            toast.error(error.response.data);
+            // console.log(error.response.body);            
             return thunkAPI.rejectWithValue(error.response.data);
         }
     }
