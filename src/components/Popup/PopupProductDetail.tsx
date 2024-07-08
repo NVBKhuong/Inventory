@@ -1,7 +1,7 @@
 import { XMarkIcon } from '@heroicons/react/16/solid';
 import { IProduct } from '../../models/Produdct';
 import { useEffect, useState } from 'react';
-import { Autocomplete, TextField, Stack } from "@mui/material";
+import { Autocomplete,  TextField,  Stack } from "@mui/material";
 import instance from '../../service/api/customAxios';
 import { useAppDispatch } from '../../service/store/store';
 import { getAllProducts } from '../../service/features/productSlice';
@@ -151,6 +151,11 @@ const PopupProductDetail: React.FC<PopupProductDetailProps> = ({
                                             onChange={(_, value) => setForm(prev => ({ ...prev, origin: value }))}
                                             renderInput={(params) => <TextField {...params} />} />
                                     </div>
+                                        <input
+                                            value={form.origin} onChange={(e) => setForm(prev => ({ ...prev, origin: e.target.value }))}
+                                            type="text" id="origin"
+                                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                                        />
                                         {checkValid.origin && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                     </div>
                                     <div>
