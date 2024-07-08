@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+// Trong file ProductDetails.tsx
+import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { addToCart, getProductById, increaseQuantity, decreaseQuantity } from "../../service/features/productSlice";
+import { addToCart, getProductById, increaseQuantity, decreaseQuantity, resetProduct } from "../../service/features/productSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
@@ -11,9 +12,11 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 
+const POLLING_INTERVAL = 1000; // 1 seconds
 
 const ProductDetails = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { product, cart } = useAppSelector((state) => state.products);
     const productId = params.id ? params.id : "";
@@ -26,6 +29,26 @@ const ProductDetails = () => {
         if (productId) {
             dispatch(getProductById({ id: productId }));
         }
+
+        return () => {
+            dispatch(resetProduct());
+        };
+    }, [dispatch, productId]);
+
+    useEffect(() => {
+        if (product && product.status === "Inactive") {
+            navigate("*");
+        }
+    }, [product, navigate]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (productId) {
+                dispatch(getProductById({ id: productId }));
+            }
+        }, POLLING_INTERVAL);
+
+        return () => clearInterval(interval);
     }, [dispatch, productId]);
 
     const handleAddToCart = () => {
@@ -41,6 +64,7 @@ const ProductDetails = () => {
                 return;
             }
             // Tạo cartId mới bằng cách lấy độ dài của cart hiện tại + 1
+
             const newCartId = (cart ? cart.length : 0) + 1;
 
             dispatch(addToCart({
@@ -90,6 +114,7 @@ const ProductDetails = () => {
     const formatCurrency = (price: number): string => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
+
     const renderStars = (rating: number) => {
         const fullStars = Math.floor(rating);
         const halfStars = rating % 1 !== 0;
@@ -103,8 +128,6 @@ const ProductDetails = () => {
             </>
         );
     };
-
-
 
     return (
         <>
@@ -171,7 +194,6 @@ const ProductDetails = () => {
                                         )}
                                     </>
                                 )}
-
                             </div>
                             <div className="w-auto h-auto">
                                 {product?.description ? (
@@ -182,22 +204,19 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                </div >
-            </section >
+                </div>
+            </section>
             <section className="text-gray-700 body-font overflow-hidden bg-white border-t-4 w-full">
-
                 <div className="m-10">
                     <Feedback
                         productId={productId}
                         feedbacks={product?.feedbacks}
                     />
                 </div>
-
             </section>
             <section>
                 <Footer />
             </section>
-
         </>
     );
 };
