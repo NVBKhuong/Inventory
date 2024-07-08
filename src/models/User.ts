@@ -30,13 +30,13 @@ export interface IRegister {
 }
 
 export interface IUserInfo {
-    email: string;
     name: string;
     phone: string;
-    avatarUrl: string;
     rank: string,
-    roleId: number,
-    roleName: string,
+    id: string,
+    status: string,
+    address: string,
+    createAt: string
 }
 
 export interface IChangePassword {

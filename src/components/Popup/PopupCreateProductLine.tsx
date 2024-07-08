@@ -28,7 +28,7 @@ const PopupCreateProductLine: React.FC<ProductCreateState> = ({
     }
     const handleCreateProductLine = async() => {
       if(validation()) return;
-        await instance.post(`/product-lines/create/${productId}`,{...form,expiredAt: new Date(form.expiredAt).toLocaleDateString()})
+        await instance.post(`/product-lines/create/${productId}`,{...form,expiredAt: new Date(form.expiredAt)})
       .then(() => {
         loadProductLines()
         setForm({
@@ -41,9 +41,14 @@ const PopupCreateProductLine: React.FC<ProductCreateState> = ({
         closePopupCreateProduct()
       }).catch(err => {
         console.log(err)
-        toast.error('Create failed')
+        toast.error(err.response ? "Invalid date" : 'Create failed')
       })
     }
+    const getTomorrowDate = () => {
+        const date = new Date();
+        date.setDate(date.getDate() + 1);
+        return date.toISOString().split('T')[0];
+      };
     return (
         isPopupCreateProductOpen && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
@@ -80,7 +85,7 @@ const PopupCreateProductLine: React.FC<ProductCreateState> = ({
                                 <label htmlFor="expiredAt" className="block text-sm font-medium text-gray-700">Expire at <span className="text-red-600 text-xl">*</span></label>
                                 <input
                                     value={form.expiredAt} onChange={(e) => setForm(prev => ({...prev, expiredAt: e.target.value}))}
-                                    type="date" min={new Date().toISOString().split('T')[0]}
+                                    type="date" min={getTomorrowDate()}
                                     id="expiredAt"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />

@@ -27,6 +27,15 @@ const PopupProductLineDetail: React.FC<PopupProductDetailProps> = ({
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
 };
+  const formatMinDateString = (dateString: string) => {
+    const [day, month, year] = dateString.split('/');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    date.setDate(date.getDate() + 1);
+    const newDay = String(date.getDate()).padStart(2, '0');
+    const newMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const newYear = date.getFullYear();
+    return `${newYear}-${newMonth}-${newDay}`;
+};
   const [form, setForm] = useState({...productLine, expiredAt: formatDateString(productLine.expiredAt)});
   const validation = () => {
     form.expiredAt === '' ? setCheckExpireDate(true) : setCheckExpireDate(false)
@@ -47,6 +56,7 @@ const PopupProductLineDetail: React.FC<PopupProductDetailProps> = ({
       toast.error('Update failed')
     })
   }
+  console.log(form.expiredAt)
     return (
         <div
             className={`fixed z-10 inset-0 overflow-y-auto ${onPopupDetail ? '' : 'hidden'
@@ -96,7 +106,7 @@ const PopupProductLineDetail: React.FC<PopupProductDetailProps> = ({
                                 <label className="block text-sm font-medium text-gray-700">Expire at</label>
                                 <input
                                     value={form.expiredAt} onChange={(e) => setForm(prev => ({...prev, expiredAt: e.target.value}))}
-                                    type="date" min={form.expiredAt}
+                                    type="date" min={formatMinDateString(form.importDate)}
                                     id="expiredAt"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />

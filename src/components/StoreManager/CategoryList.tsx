@@ -65,10 +65,10 @@ const CategoryList = () => {
         }
       />
 
-      {cateData && <PopupCreateCategory loadCategories={loadCategories}
+      <PopupCreateCategory loadCategories={loadCategories}
         isPopupOpen={isPopupOpen}
         closePopup={handlePopupClose}
-      />}
+      />
       {cateData && (
           <PopupCategoryDetail loadCategories={loadCategories}
             cate={cateData}

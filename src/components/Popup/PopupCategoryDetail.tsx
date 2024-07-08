@@ -79,7 +79,7 @@ const PopupCategoryDetail: React.FC<PopupCategoryDetailProps> = ({
                                         <span className="text-sm text-back-500 font-bold">
                                             Name 
                                         </span>
-                                        <input value={form.name} onChange={e => setForm({name: e.target.value})} type="text" id="name"
+                                        <input value={form.name.trim()} onChange={e => setForm({name: e.target.value})} type="text" id="name"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"/>
                                     {checkName && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                     </Stack>

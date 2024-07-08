@@ -54,13 +54,27 @@ const PopupCreateVoucher:React.FC<PopupCreateVoucherProps> = ({
             closePopupCreateVoucher()
         })
     }
-
+    const getMinToDate = () => {
+        if(form.from === "") return;
+        const date = new Date(form.from);
+        date.setDate(date.getDate() + 1);
+        return date.toISOString().split('T')[0];
+      };
     return (
       isPopupCreateVoucherOpen && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
                 <div className="relative p-6 bg-white border rounded-lg shadow-lg w-1/2">
                     <button
-                        onClick={closePopupCreateVoucher}
+                        onClick={()=>{setForm({
+                            "code": "",
+                            "name": "",
+                            "thumbnailUrl": "string",
+                            "from": "",
+                            "to": "",
+                            "minOrderValue": 1,
+                            "value": 1,
+                            "quantity": 1
+                          }); closePopupCreateVoucher();}}
                         className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
                     >
                         <XMarkIcon width={24} height={24} />
@@ -103,7 +117,7 @@ const PopupCreateVoucher:React.FC<PopupCreateVoucherProps> = ({
                                 <label htmlFor="to" className="block text-sm font-medium text-gray-700">To <span className="text-red-600 text-xl">*</span></label>
                                 <input
                                     value={form.to} onChange={(e) => setForm(prev => ({...prev, to: e.target.value}))}
-                                    type="date" min={new Date().toISOString().split('T')[0]}
+                                    type="date" min={getMinToDate()} disabled={form.from !== "" ? false :true}
                                     id="to"
                                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
                                 />

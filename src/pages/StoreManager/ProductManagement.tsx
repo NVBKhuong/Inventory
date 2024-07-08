@@ -2,7 +2,6 @@ import { FaDatabase } from "react-icons/fa"
 import SidebarComponent from "../../components/Layout/Sidebar"
 import ProductList from "../../components/StoreManager/ProductList"
 
-
 const ProductManagement = () => {
     return (
         <div className="">
