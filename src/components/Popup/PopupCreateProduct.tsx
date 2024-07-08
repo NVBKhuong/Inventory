@@ -55,7 +55,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
         formData.append('quantity', form.quantity.toString())
         // formData.append('productCategories', JSON.stringify(form.productCategories))
         formData.append('productCategories', JSON.stringify(form.productCategories.map(item => item.categoryId)))
-        await dispatch(createProduct(formData)).then(()=>{
+        await instance.post(`/products`,formData).then(()=>{
             dispatch(getAllProducts({text:''})).then(()=>{
                 setForm({
                     name:'',
@@ -69,8 +69,8 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                     productCategories: [{ categoryId: ""}]
                 })
                 toast.success('Create successfully!')
-                closePopupCreateProduct()
             })
+            closePopupCreateProduct()
         }).catch(err => {
             console.log(err)
             toast.error('Create failed!')
