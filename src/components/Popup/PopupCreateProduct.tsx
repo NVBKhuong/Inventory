@@ -118,11 +118,11 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="origin" className="block text-sm font-medium text-gray-700">Origin <span className="text-red-600 text-xl">*</span></label>
-                                <input value={form.origin} onChange={(e) => setForm(prev => ({...prev, origin: e.target.value}))}
-                                    type="text"
-                                    id="origin"
-                                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                                />
+                                <Autocomplete options={['Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo (Congo-Brazzaville)','Costa Rica','Croatia','Cuba','Cyprus','Czechia (Czech Republic)','Democratic Republic of the Congo','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini (fmr. "Swaziland")','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar (formerly Burma)','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Palestine State','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States of America','Uruguay','Uzbekistan','Vanuatu','Vatican City','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe'
+]} value={form.origin}
+                                disablePortal disableClearable size='small'
+                                onChange={(_, value) => setForm(prev => ({...prev, origin: value}))}
+                                renderInput={(params) => <TextField {...params} />} />
                                 {checkValid.origin && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                 </div>
                             
@@ -138,7 +138,7 @@ const PopupCreateProduct: React.FC<ProductCreateState> = ({
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
-                                <Autocomplete options={['Vinamilk','TH True milk','Nutricare','Dutch Lady','NutiFood']} value={form.brand}
+                                <Autocomplete options={['Vinamilk', 'TH True Milk', 'Dielac', 'Dutch Lady', 'Meadow Fresh', 'Nutifood', 'Nestle', 'Dalat Milk', 'Morinaga', 'Anlene', 'Abbott', 'Friso', 'Aptamil', 'Glico', 'Wyeth', 'Hipp', 'Mead Johnson', 'Bellamy’s', 'Kendamil', 'Biomil', 'Namyang', 'Ovaltine', 'Vinasoy', 'Yakult', 'Coca-Cola', 'Enfa', 'Pediasure', 'Similac', 'S26', 'Grow Plus+', 'Ensure', 'Nutricare', 'XO', 'Horizon Organic', 'Fairlife', 'Silk', 'Alpro', 'Goodday', 'Anchor', 'Paul’s', 'Arla', 'Devondale', 'Parmalat', 'Borden', 'Dean Foods', 'Land O Lakes', 'TruMoo', 'Yili', 'Mengniu', 'Marigold','Other']} value={form.brand}
                                 disablePortal disableClearable size='small'
                                 onChange={(_, value) => setForm(prev => ({...prev, brand: value}))}
                                 renderInput={(params) => <TextField {...params} />} />

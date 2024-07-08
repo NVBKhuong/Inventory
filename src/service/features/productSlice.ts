@@ -4,7 +4,7 @@ import { IProduct, IProductCreate } from "../../models/Produdct";
 import { toast } from "react-toastify";
 import { ICartItem } from "../../models/CartItem";
 import axios from "../api/customAxios";
-import instance from "../api/customAxios";
+// import instance from "../api/customAxios";
 
 const loadCartFromStorage = (): ICartItem[] | null => {
     const cartString = localStorage.getItem('cart');
@@ -40,9 +40,16 @@ const initialState: ProductState = {
 
 export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | null }>(
     'products/getAllProducts',
-    async (_, thunkAPI) => await instance.post('/products/filter?pageNumber=0&pageSize=1000',{}).then(
-        (res) => res.data.data
-    ).catch(error => thunkAPI.rejectWithValue(error.response.data))
+    async (data, thunkAPI) => {
+        try {
+            const response = await axios.post('/products/filter?pageSize=100', {
+                search: data.text
+            });
+            return response.data.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data);
+        }
+    },
 );
 
 export const getProductById = createAsyncThunk<IProduct, { id: string }>(

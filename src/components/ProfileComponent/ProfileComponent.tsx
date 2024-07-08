@@ -35,7 +35,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({ address, phone, name, avatar
           <div className="flex items-center">
             <Avatar
               alt="Profile Picture"
-              src={avatarUrl ? avatarUrl : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf_kICgvJcn6Y3n27_wy9ho6k2w7OL0-bZZg&s"}
+              src={avatarUrl ? avatarUrl : "https://imagev3.vietnamplus.vn/w1000/Uploaded/2024/mzdic/2024_01_10/ronaldo-the-ky-21-1-5129.jpg.webp "}
               className="w-24 h-24 mr-4"
             />
             <div>

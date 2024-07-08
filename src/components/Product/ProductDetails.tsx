@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
 import { Link } from "react-router-dom";
-//import { string } from "yup";
 
 const ProductDetails = () => {
     const params = useParams();
@@ -27,6 +26,16 @@ const ProductDetails = () => {
 
     const handleAddToCart = () => {
         if (product) {
+            if (quantity < 1) {
+                toast.error("Quantity cannot be less than 1.");
+                setQuantity(1);
+                return;
+            }
+            if (quantity > product.inStock) {
+                toast.error("Quantity exceeds available stock.");
+                setQuantity(product.inStock);
+                return;
+            }
             // Tạo cartId mới bằng cách lấy độ dài của cart hiện tại + 1
             const newCartId = (cart ? cart.length : 0) + 1;
 
@@ -40,7 +49,7 @@ const ProductDetails = () => {
     };
 
     const handleIncreaseQuantity = () => {
-        if (product) {
+        if (product && quantity < product.inStock) {
             setQuantity(quantity + 1);
             dispatch(increaseQuantity(product.id));
         }
@@ -53,6 +62,31 @@ const ProductDetails = () => {
         }
     };
 
+    const handleQuantityChange = (e: { target: { value: string; }; }) => {
+        const value = parseInt(e.target.value);
+        if (!isNaN(value)) {
+            if (value < 1) {
+                setQuantity(1);
+            } else if (product && value > product.inStock) {
+                setQuantity(product.inStock);
+            } else {
+                setQuantity(value);
+            }
+        } else {
+            setQuantity(1);
+        }
+    };
+
+    const handleQuantityBlur = () => {
+        if (!quantity) {
+            setQuantity(1);
+        }
+    };
+
+    const formatCurrency = (price: number): string => {
+        return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    };
+
     return (
         <>
             <section>
@@ -62,23 +96,22 @@ const ProductDetails = () => {
                 <div className="container px-5 py-24 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img
-                            alt="ecommerce"
                             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                            src="https://firebasestorage.googleapis.com/v0/b/happy-milk-1b780.appspot.com/o/suame88%2Fc0a1440d-86d6-4395-84b8-ed2e12c123c3.png?alt=media"
+                            src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""} alt={product?.name ? product.name.toString() : ""}
                         />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
                             <div className="flex flex-row gap-8">
                                 <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
-                                <span className="title-font font-medium text-base text-gray-900">Quantity: {product?.inStock} </span>
+                                <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
                                     <span className="title-font font-medium text-base text-red-500">Out of Stock</span>
                                 )}
                             </div>
 
                             <div className="flex mt-10">
-                                <span className="title-font font-medium text-2xl text-gray-900">$ {product?.price}</span>
+                                <span className="title-font font-medium text-2xl text-gray-900">{formatCurrency(product?.price ?? 0)}</span>
                                 {product && product.inStock > 0 && (
                                     <>
                                         <div className="ml-auto flex items-center">
@@ -88,7 +121,15 @@ const ProductDetails = () => {
                                             >
                                                 -
                                             </button>
-                                            <span className="mx-2 text-sm">{quantity}</span>
+                                            <input
+                                                type="number"
+                                                min={1}
+                                                max={product?.inStock}
+                                                value={quantity}
+                                                onChange={handleQuantityChange}
+                                                onBlur={handleQuantityBlur}
+                                                className="mx-2 text-sm w-20 h-7 text-center"
+                                            />
                                             {product && product?.inStock > quantity ? (
                                                 <button
                                                     onClick={handleIncreaseQuantity}

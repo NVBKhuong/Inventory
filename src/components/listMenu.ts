@@ -31,14 +31,14 @@ const listMenu = {
             title: 'User Management',
             url: '/user-management',
         },
-        {
-            title: 'Category Management',
-            url: '/category-management',
-        },
-        {
-            title: 'Product Management',
-            url: '/product-management',
-        },
+        // {
+        //     title: 'Category Management',
+        //     url: '/category-management',
+        // },
+        // {
+        //     title: 'Product Management',
+        //     url: '/product-management',
+        // },
     ]
 };
 export default listMenu;
