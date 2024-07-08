@@ -34,8 +34,25 @@ const OrderManagementPage: React.FC = () => {
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      console.log(`Updating order ${orderId} status to ${newStatus}`);
-      const response = await instance.put(`/orders/status`, { id: orderId, status: newStatus });
+      let endpoint;
+      switch (newStatus) {
+        case "Confirmed":
+          endpoint = `/orders/confirm?orderId=${orderId}`;
+          break;
+        case "Delivering":
+          endpoint = `/orders/deliver?orderId=${orderId}`;
+          break;
+        case "Completed":
+          endpoint = `/orders/complete?orderId=${orderId}`;
+          break;
+        case "Canceled":
+          endpoint = `/orders/cancel?orderId=${orderId}`;
+          break;
+        default:
+          throw new Error("Unknown status");
+      }
+
+      const response = await instance.put(endpoint);
       console.log("Update response:", response);
       toast.success("Order status updated successfully.");
       loadOrders();
@@ -83,11 +100,12 @@ const OrderManagementPage: React.FC = () => {
           onChange={(event) =>
             handleStatusChange(row.original.id, event.target.value)
           }
+          disabled={cell.getValue() === "Completed"}
         >
-          
           <MenuItem value="Confirmed">Confirmed</MenuItem>
           <MenuItem value="Delivering">Delivering</MenuItem>
           <MenuItem value="Completed">Completed</MenuItem>
+          <MenuItem value="Canceled">Canceled</MenuItem>
         </Select>
       ),
     },

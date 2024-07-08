@@ -23,10 +23,10 @@ const listMenu = {
         },
     ],
     isAdminMenu: [
-        // {
-        //     title: 'Admin Dashboard',
-        //     url: '/admin-dashboard',
-        // },
+        {
+            title: 'Admin Dashboard',
+            url: '/admin-dashboard',
+        },
         {
             title: 'User Management',
             url: '/user-management',
