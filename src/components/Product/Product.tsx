@@ -40,7 +40,7 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
                     product.status !== 'Inactive' && (
                         <div key={index} className="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[400px]">
                             <div className="flex items-center justify-center">
-                                <img className="w-[220px] h-[220px] p-4"
+                                <img className="w-[200px] h-[180px] p-4"
                                     src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""}
                                     alt={product?.name ? product.name.toString() : ""} />
                             </div>
