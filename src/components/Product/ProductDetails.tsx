@@ -7,6 +7,10 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
 import { Link } from "react-router-dom";
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+
 
 const ProductDetails = () => {
     const params = useParams();
@@ -86,6 +90,21 @@ const ProductDetails = () => {
     const formatCurrency = (price: number): string => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
+    const renderStars = (rating: number) => {
+        const fullStars = Math.floor(rating);
+        const halfStars = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStars ? 1 : 0);
+
+        return (
+            <>
+                {Array(fullStars).fill(null).map((_, index) => <span key={`full-${index}`}><StarIcon /></span>)}
+                {halfStars && <span key="half"><StarHalfIcon /></span>}
+                {Array(emptyStars).fill(null).map((_, index) => <span key={`empty-${index}`}><StarBorderIcon /></span>)}
+            </>
+        );
+    };
+
+
 
     return (
         <>
@@ -103,6 +122,7 @@ const ProductDetails = () => {
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
                             <div className="flex flex-row gap-8">
+                                <span className="title-font font-medium text-base text-yellow-500">{product?.rating && renderStars(product.rating)} </span>
                                 <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
                                 <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
@@ -165,12 +185,14 @@ const ProductDetails = () => {
                 </div >
             </section >
             <section className="text-gray-700 body-font overflow-hidden bg-white border-t-4 w-full">
+
                 <div className="m-10">
                     <Feedback
                         productId={productId}
                         feedbacks={product?.feedbacks}
                     />
                 </div>
+
             </section>
             <section>
                 <Footer />

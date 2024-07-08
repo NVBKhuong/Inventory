@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedbackForm from './FeedbackForm';
+// import FeedbackForm from './FeedbackForm';
 import { FaStar, FaUser } from 'react-icons/fa';
 
 type FeedbackProps = {
@@ -13,13 +13,13 @@ type FeedbackProps = {
   }>;
 };
 
-const Feedback: React.FC<FeedbackProps> = ({ productId, feedbacks }) => {
+const Feedback: React.FC<FeedbackProps> = ({ feedbacks }) => { //theem productId vao trong FeedbackProps de chay form
   return (
     <div className="container mx-auto">
-      <h4 className="text-gray-900 text-3xl title-font font-medium mb-1">Feedback</h4>
+      {/* <h4 className="text-gray-900 text-3xl title-font font-medium mb-1">Feedback</h4> */}
       <div className="flex flex-row">
         <div className="mt-5 flex">
-          <FeedbackForm productId={productId} />
+          {/* <FeedbackForm productId={productId} /> */}
         </div>
         <div className="ml-56 mt-5">
           <span className="text-2xl font-bold">Reviews</span>
@@ -32,8 +32,9 @@ const Feedback: React.FC<FeedbackProps> = ({ productId, feedbacks }) => {
                     <div className="mb-2">
                       <span className="text-lg font-semibold block">{feedback.customer.name}</span>
                       <div className="flex items-center text-xl gap-1">
-                        <span className="text-gray-500">{feedback.star}</span>
-                        <FaStar size={24} color="#ffd700" />
+                        {[...Array(feedback.star)].map((_, index) => (
+                          <FaStar key={index} size={24} color="#ffd700" />
+                        ))}
                       </div>
                     </div>
                     <div>
