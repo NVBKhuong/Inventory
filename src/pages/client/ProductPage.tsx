@@ -13,7 +13,7 @@ const Home = () => {
                 <Header />
             </div>
             <div className="row-start-2 row-end-3 grid" style={{ gridTemplateRows: 'auto 1fr' }}>
-                
+
                 <div className="row-start-2 row-end-3">
                     <SearchBar
                         text={text}
