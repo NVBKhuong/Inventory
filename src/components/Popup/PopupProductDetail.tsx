@@ -151,11 +151,6 @@ const PopupProductDetail: React.FC<PopupProductDetailProps> = ({
                                             onChange={(_, value) => setForm(prev => ({ ...prev, origin: value }))}
                                             renderInput={(params) => <TextField {...params} />} />
                                     </div>
-                                        <input
-                                            value={form.origin} onChange={(e) => setForm(prev => ({ ...prev, origin: e.target.value }))}
-                                            type="text" id="origin"
-                                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                                        />
                                         {checkValid.origin && <p className='text-red-500 text-xs mt-2'>This field is required!</p>}
                                     </div>
                                     <div>
