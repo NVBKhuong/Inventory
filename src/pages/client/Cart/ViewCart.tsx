@@ -27,9 +27,12 @@ const ViewCart = () => {
     const cartItems = useAppSelector((state) => state.products.cart);
     const products = useAppSelector((state) => state.products.products); 
     const navigate = useNavigate();
-    const [receiver, setReceiver] = useState<string>(localStorage.getItem("USERNAME") || "");
-    const [address, setAddress] = useState<string>(localStorage.getItem("USERADDRESS") || "");
-    const [phone, setPhone] = useState<string>(localStorage.getItem("USERPHONE") || "");
+    const storedReceiver = localStorage.getItem("USERNAME") || "";
+    const storedAddress = localStorage.getItem("USERADDRESS");
+    const storedPhone = localStorage.getItem("USERPHONE");
+    const [receiver, setReceiver] = useState<string>(storedReceiver);
+    const [address, setAddress] = useState<string>(storedAddress === "null" ? "" : storedAddress ?? "");
+    const [phone, setPhone] = useState<string>(storedPhone === "null" ? "" : storedPhone ?? "");
     const [paymentMethod, setPaymentMethod] = useState("Cash");
     const [selectedVoucherId, setSelectedVoucherId] = useState("");
     const [discountValue, setDiscountValue] = useState(0);
@@ -232,7 +235,7 @@ const ViewCart = () => {
                                                     min="1"
                                                     value={item.quantity}
                                                     onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
-                                                    className="border border-gray-300 text-center h-7 w-20"
+                                                    className="w-16 h-8 text-center border border-gray-400 rounded"
                                                 />
                                                 <button
                                                     onClick={() => handleIncreaseQuantity(item)}
