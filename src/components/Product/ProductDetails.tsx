@@ -145,8 +145,9 @@ const ProductDetails = () => {
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
                             <div className="flex flex-row gap-8">
-                                <span className="title-font font-medium text-base text-yellow-500">{product?.rating && renderStars(product.rating)} </span>
-                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
+                                <div className="flex items-center gap-1 mb-2 text-yellow-500">
+                                    {renderStars(product?.rating || 0)}
+                                </div>                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
                                 <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
                                     <span className="title-font font-medium text-base text-red-500">Out of Stock</span>
