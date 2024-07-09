@@ -1,18 +1,16 @@
-// Trong file ProductDetails.tsx
-import { useParams, useNavigate } from "react-router-dom";
-import Footer from "../Layout/Footer";
-import Header from "../Layout/Header";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { addToCart, getProductById, increaseQuantity, decreaseQuantity, resetProduct } from "../../service/features/productSlice";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
-import { Link } from "react-router-dom";
+import Footer from "../Layout/Footer";
+import Header from "../Layout/Header";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 
-const POLLING_INTERVAL = 1000; // 1 seconds
+const POLLING_INTERVAL = 1000; // 1 second
 
 const ProductDetails = () => {
     const params = useParams();
@@ -63,15 +61,13 @@ const ProductDetails = () => {
                 setQuantity(product.inStock);
                 return;
             }
-            // Tạo cartId mới bằng cách lấy độ dài của cart hiện tại + 1
-
             const newCartId = (cart ? cart.length : 0) + 1;
 
             dispatch(addToCart({
                 ...product,
                 quantity,
                 cartId: newCartId,
-                image : product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""
+                image: product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""
             }));
             toast.success(`Added ${product.name} to cart.`);
         }
@@ -130,6 +126,14 @@ const ProductDetails = () => {
         );
     };
 
+    const renderCategories = (productCategories: any[]) => {
+        return productCategories.map((categoryObj, index) => (
+            <span key={index} className="inline-block mr-2 mb-2 px-3 py-1 text-sm font-medium text-gray-900 bg-gray-200 rounded-full">
+                {categoryObj.category.name}
+            </span>
+        ));
+    };
+
     return (
         <>
             <section>
@@ -140,7 +144,8 @@ const ProductDetails = () => {
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img
                             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-                            src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""} alt={product?.name ? product.name.toString() : ""}
+                            src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""}
+                            alt={product?.name ? product.name.toString() : ""}
                         />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
@@ -148,53 +153,61 @@ const ProductDetails = () => {
                             <div className="flex flex-row gap-8">
                                 <div className="flex items-center gap-1 mb-2 text-yellow-500">
                                     {renderStars(product?.rating || 0)}
-                                </div>                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
+                                </div>
+                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
                                 <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
                                     <span className="title-font font-medium text-base text-red-500">Out of Stock</span>
                                 )}
                             </div>
-
-                            <div className="flex mt-10">
+                            <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+                                <div className="flex items-center">
+                                    <div className="flex flex-wrap">
+                                        {product && product.productCategories && renderCategories(product.productCategories)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex">
                                 <span className="title-font font-medium text-2xl text-gray-900">{formatCurrency(product?.price ?? 0)}</span>
                                 {product && product.inStock > 0 && (
-                                    <>
-                                        <div className="ml-auto flex items-center">
+                                    <div className="ml-auto flex items-center">
+                                        <button
+                                            onClick={handleDecreaseQuantity}
+                                            className="flex items-center justify-center text-white bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded"
+                                        >
+                                            -
+                                        </button>
+                                        <input
+                                            type="number"
+                                            min={1}
+                                            max={product?.inStock}
+                                            value={quantity}
+                                            onChange={handleQuantityChange}
+                                            onBlur={handleQuantityBlur}
+                                            className="mx-2 text-sm w-20 h-7 text-center"
+                                        />
+                                        {product && product?.inStock > quantity ? (
                                             <button
-                                                onClick={handleDecreaseQuantity}
+                                                onClick={handleIncreaseQuantity}
                                                 className="flex items-center justify-center text-white bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded"
                                             >
-                                                -
-                                            </button>
-                                            <input
-                                                type="number"
-                                                min={1}
-                                                max={product?.inStock}
-                                                value={quantity}
-                                                onChange={handleQuantityChange}
-                                                onBlur={handleQuantityBlur}
-                                                className="mx-2 text-sm w-20 h-7 text-center"
-                                            />
-                                            {product && product?.inStock > quantity ? (
-                                                <button
-                                                    onClick={handleIncreaseQuantity}
-                                                    className="flex items-center justify-center text-white bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded"
-                                                >
-                                                    +
-                                                </button>) : <span className="mx-2 text-sm text-red-500">Out of stock</span>}
-                                        </div>
-                                        {isCustomer ? (<button
-                                            onClick={handleAddToCart}
-                                            className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-                                        >
-                                            Add To Cart
-                                        </button>) : (<Link to="/login"
-                                            className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-                                        >
-                                            Add To Cart
-                                        </Link>
-                                        )}
-                                    </>
+                                                +
+                                            </button>) : <span className="mx-2 text-sm text-red-500">Out of stock</span>}
+                                    </div>
+                                )}
+                                {isCustomer ? (
+                                    <button
+                                        onClick={handleAddToCart}
+                                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                                    >
+                                        Add To Cart
+                                    </button>
+                                ) : (
+                                    <Link to="/login"
+                                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                                    >
+                                        Add To Cart
+                                    </Link>
                                 )}
                             </div>
                             <div className="w-auto h-auto">

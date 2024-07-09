@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
 import { getAllProducts } from "../../service/features/productSlice";
@@ -7,7 +7,6 @@ import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
 
-
 const Product: React.FC<{ text?: string | null }> = ({ text }) => {
     const dispatch = useAppDispatch();
     const { products, loading } = useAppSelector((state) => state.products);
@@ -15,11 +14,14 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
     useEffect(() => {
         dispatch(getAllProducts({ text }));
     }, [dispatch, text]);
+
     if (loading) return <Spinner />;
     if (!products) return <p>No products available</p>;
+
     const formatCurrency = (price: number): string => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
+
     const renderStars = (rating: number) => {
         const fullStars = Math.floor(rating);
         const halfStars = rating % 1 !== 0;
@@ -33,6 +35,15 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
             </>
         );
     };
+
+    const renderCategories = (productCategories: any[]) => {
+        return productCategories.map((categoryObj, index) => (
+            <span key={index} className="mr-2 mb-2 px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg">
+                {categoryObj.category.name}
+            </span>
+        ));
+    };
+
     return (
         <div className="grid grid-cols-4 gap-4">
             {
@@ -49,6 +60,9 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
                                     <Link to={`/product/${product.id}`}>
                                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{product.name}</h5>
                                     </Link>
+                                    <div className="mb-2">
+                                        {renderCategories(product.productCategories)}
+                                    </div>
                                     <div className="flex flex-row justify-between">
                                         <p className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</p>
                                         <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>

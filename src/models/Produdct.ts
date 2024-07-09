@@ -14,6 +14,7 @@ export interface IProduct {
     thumbnail: string | File | null;
     createAt: string;
     status: string;
+    productCategories: IProductCreate[]
     feedbacks: IFeedback[];
     revenue: number;
     rating: number
