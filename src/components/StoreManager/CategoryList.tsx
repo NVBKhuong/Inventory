@@ -16,22 +16,23 @@ const columns: MRT_ColumnDef<ICategory>[] = [
 ];
 
 const CategoryList = () => {
-  
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [cateData, setCateData] = useState(null);
   const [categories, setCategories] = useState([]);
   const [onPopupCategoryDetail, setOnPopupCategoryDetail] =
     useState<boolean>(false);
-  const loadCategories = async()=>{
-    await instance.post('/categories/filter',{name: ''}).then(response => {
-                setCategories(response.data.data);
-            }).catch(error => console.log(error))
+
+  const loadCategories = async () => {
+    await instance.post('/categories/filter', { name: '' }).then(response => {
+      setCategories(response.data.data);
+    }).catch(error => console.log(error))
   }
   useEffect(() => {
-   loadCategories()
+    loadCategories()
   }, []);
- 
+
   const handlePopupOpen = () => {
     setIsPopupOpen(true);
   };
@@ -70,11 +71,11 @@ const CategoryList = () => {
         closePopup={handlePopupClose}
       />
       {cateData && (
-          <PopupCategoryDetail loadCategories={loadCategories}
-            cate={cateData}
-            onPopupDetail={onPopupCategoryDetail}
-            setOnPopupDetail={setOnPopupCategoryDetail}
-          />
+        <PopupCategoryDetail loadCategories={loadCategories}
+          cate={cateData}
+          onPopupDetail={onPopupCategoryDetail}
+          setOnPopupDetail={setOnPopupCategoryDetail}
+        />
       )}
     </Stack>
   );
