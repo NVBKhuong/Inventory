@@ -38,12 +38,13 @@ const initialState: ProductState = {
     success: false,
 };
 
-export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | null }>(
+export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | null; category?: string | null }>(
     'products/getAllProducts',
-    async (data, thunkAPI) => {
+    async ({ text, category }, thunkAPI) => {
         try {
             const response = await axios.post('/products/filter?pageNumber=0&pageSize=100', {
-                search: data.text
+                search: text || '',
+                categoryId: category || ''
             });
             return response.data.data;
         } catch (error: any) {

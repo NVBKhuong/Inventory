@@ -1,12 +1,15 @@
-import Header from "../../components/Layout/Header"
-import Footer from "../../components/Layout/Footer"
-import Product from "../../components/Product/Product"
-import { useState } from "react"
-import { SearchBar } from "../../components/Layout/Search"
+import React, { useState } from "react";
+import Header from "../../components/Layout/Header";
+import Footer from "../../components/Layout/Footer";
+import Product from "../../components/Product/Product";
+import Carousel from "../../components/Layout/Carousel";
+import { SearchBar } from "../../components/Layout/Search";
+import FilterAction from "../../components/Layout/FilterAction";
 
-const Home = () => {
+const ProductPage = () => {
     const [text, setText] = useState("");
     const [searchText, setSearchText] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
     const handleSearch = () => {
         setSearchText(text);
@@ -14,35 +17,40 @@ const Home = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
-        setSearchText(e.target.value); // Thực hiện tìm kiếm khi người dùng nhập chữ
+        setSearchText(e.target.value);
     };
 
+    const handleFilterChange = (categoryId: string) => {
+        setSelectedCategory(categoryId || null);
+    };
 
     return (
-        <div className="grid h-screen" style={{ gridTemplateRows: 'auto 1fr auto' }}>
-            <div className="row-start-1 row-end-2">
-                <Header />
-            </div>
-            <div className="row-start-2 row-end-3 grid" style={{ gridTemplateRows: 'auto 1fr' }}>
-
-                <div className="row-start-2 row-end-3">
-                    <SearchBar
-                        text={text}
-                        onChange={handleInputChange}
-                        onSearch={handleSearch}
-                    />
+        <div className="flex flex-col min-h-screen bg-gray-100">
+            <Header />
+            <main className="flex-grow">
+                <div className="container mx-auto px-4 py-8">
+                    <Carousel />
+                    <div className="my-6">
+                        <SearchBar
+                            text={text}
+                            onChange={handleInputChange}
+                            onSearch={handleSearch}
+                        />
+                    </div>
+                    <div className="my-6">
+                        <FilterAction onFilterChange={handleFilterChange} />
+                    </div>
+                    <div className="my-6">
+                        <Product
+                            text={searchText === "" ? null : searchText}
+                            selectedCategory={selectedCategory}
+                        />
+                    </div>
                 </div>
-                <div className="row-start-3 row-end-4 my-20 mx-5">
-                    <Product
-                        text={searchText === "" ? null : searchText}
-                    />
-                </div>
-            </div>
-            <div className="row-start-4 row-end-5">
-                <Footer />
-            </div>
+            </main>
+            <Footer />
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default ProductPage;

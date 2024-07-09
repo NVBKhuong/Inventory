@@ -1,4 +1,6 @@
 
+
+
 export interface IProduct {
     id: string;
     name: string;
@@ -21,6 +23,7 @@ export interface IProduct {
     rating: number;
 }
 
+
 export interface ICategory {
     id: string;
     name: string;
@@ -30,7 +33,6 @@ export interface IProductCategory {
     id: string;
     category: ICategory;
 }
-
 export interface IFeedback {
     id: number;
     message: string;
