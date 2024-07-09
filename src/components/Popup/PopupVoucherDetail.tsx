@@ -29,7 +29,24 @@ const PopupVoucherDetail:React.FC<PopupVoucherDetailProps> = ({
     const [day, month, year] = dateString.split('/');
     return `${year}-${month}-${day}`;
   };
-    const [form, setForm]=useState({...voucher, from: formatDateForInput(voucher.from), to: formatDateForInput(voucher.to)})
+
+    const [form, setForm] = useState({
+        name: "", 
+        code: "",
+        quantity: 0,
+        minOrderValue: 0,
+        value: 0,
+        status: "Active",
+        from: "",
+        to: "",
+        thumbnailUrl:""
+    })
+    const loadVoucherObject = async() => {
+        await instance.get(`/vouchers/${voucher.id}`)
+        .then(res => setForm({...res.data, from: formatDateForInput(res.data.from), to: formatDateForInput(res.data.to)}))
+        .catch(err =>console.log(err))
+    }
+    console.log(form)
     const [checkValid, setCheckValid]=useState({
       "code": false,
       "from": false,
@@ -52,13 +69,32 @@ const PopupVoucherDetail:React.FC<PopupVoucherDetailProps> = ({
             closePopup()
         }).catch(err => {console.log(err); toast.error('Update failed!')})
     }
-    useEffect(()=>{setForm(voucher)},[voucher])
+    useEffect(()=>{
+        loadVoucherObject()
+    },[voucher.id])
     return (
       onPopupDetail && (
             <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
                 <div className="relative p-6 bg-white border rounded-lg shadow-lg w-1/2">
                     <button
-                        onClick={closePopup}
+                        onClick={()=>{setForm({
+                            name: "", 
+                            code: "",
+                            quantity: 0,
+                            minOrderValue: 0,
+                            value: 0,
+                            status: "Active",
+                            from: "",
+                            to: "",
+                            thumbnailUrl:""
+                        });
+                        setCheckValid({
+                            "code": false,
+                            "from": false,
+                            "to": false,
+                            "name": false
+                          })
+                        closePopup();}}
                         className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
                     >
                         <XMarkIcon width={24} height={24} />
@@ -66,7 +102,7 @@ const PopupVoucherDetail:React.FC<PopupVoucherDetailProps> = ({
                     <div className="text-center">
                         <h2 className="text-xl font-bold mb-4">Voucher Detail</h2>
                     </div>
-                    <div className="overflow-y-scroll h-96 w-auto">
+                    {form.name !== "" && <div className="overflow-y-scroll h-96 w-auto">
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name <span className="text-red-600 text-xl">*</span></label>
                                 <input
@@ -99,7 +135,7 @@ const PopupVoucherDetail:React.FC<PopupVoucherDetailProps> = ({
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="to" className="block text-sm font-medium text-gray-700">To <span className="text-red-600 text-xl">*</span></label>
-                                <input
+                                <input disabled={form.from === ""}
                                     value={form.to} onChange={(e) => setForm(prev => ({...prev, to: e.target.value}))}
                                     type="date" min={form.from}
                                     id="to"
@@ -141,14 +177,14 @@ const PopupVoucherDetail:React.FC<PopupVoucherDetailProps> = ({
                                 onChange={(_, value) => setForm(prev => ({...prev, status: value}))}
                                 renderInput={(params) => <TextField {...params} />} />
                             </div>
-                           
+
                             <div className="flex justify-end">
                                 <button onClick={handleUpdate}
                                     className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600">
                                     Update
                                 </button>
                             </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         )
