@@ -5,6 +5,7 @@ import instance from "../../service/api/customAxios";
 import { MRT_ColumnDef } from "material-react-table";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 interface Order {
   id: string;
@@ -48,6 +49,7 @@ const OrderManagementPage: React.FC = () => {
         case "Canceled":
           endpoint = `/orders/cancel?orderId=${orderId}`;
           break;
+        // Add cases for "Pending" and "Paid" if necessary
         default:
           throw new Error("Unknown status");
       }
@@ -58,7 +60,15 @@ const OrderManagementPage: React.FC = () => {
       loadOrders();
     } catch (error) {
       console.error(`Error updating order ${orderId} status:`, error);
-      toast.error("Failed to update order status.");
+
+      // Type guard to handle the 'error' type
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error(error.response.data);
+      } else if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Failed to update order status.");
+      }
     }
   };
 
@@ -102,6 +112,8 @@ const OrderManagementPage: React.FC = () => {
           }
           disabled={cell.getValue() === "Completed"}
         >
+          <MenuItem value="Pending">Pending</MenuItem>
+          <MenuItem value="Paid">Paid</MenuItem>
           <MenuItem value="Confirmed">Confirmed</MenuItem>
           <MenuItem value="Delivering">Delivering</MenuItem>
           <MenuItem value="Completed">Completed</MenuItem>

@@ -31,7 +31,7 @@ export const registerUser = createAsyncThunk<IUser, Object>(
     } catch (error: any) {
       toast.error('Register Failed !');
       if (error.response) {
-        toast.error('Register Failed !');
+        toast.error(error.response.data);
         return thunkAPI.rejectWithValue({
           error: error.response?.data?.errorMessages,
         });
