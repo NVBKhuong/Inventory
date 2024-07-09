@@ -101,7 +101,7 @@ const OrderManagementPage: React.FC = () => {
 
   return (
     <Stack sx={{ m: "2rem 0" }}>
-      <CommonTable columns={columns} data={orders} />
+      <CommonTable columns={columns} data={orders} note={true} />
       <ToastContainer />
     </Stack>
   );

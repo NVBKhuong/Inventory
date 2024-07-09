@@ -23,22 +23,14 @@ const listMenu = {
         },
     ],
     isAdminMenu: [
-        // {
-        //     title: 'Admin Dashboard',
-        //     url: '/admin-dashboard',
-        // },
+        {
+            title: 'Admin Dashboard',
+            url: '/admin-dashboard',
+        },
         {
             title: 'User Management',
             url: '/user-management',
         },
-        // {
-        //     title: 'Category Management',
-        //     url: '/category-management',
-        // },
-        // {
-        //     title: 'Product Management',
-        //     url: '/product-management',
-        // },
     ]
 };
 export default listMenu;

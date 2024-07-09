@@ -1,8 +1,9 @@
 import { FaDatabase } from "react-icons/fa";
 import SidebarComponent from "../../components/Layout/Sidebar";
-import AdminDasboardComponent from "../../components/Dashboard/AdminDasboardComponent";
+import RevenueList from "../../components/Dashboard/RevenueList";
 
 const AdminDashboard = () => {
+    
     return (
         <div className="">
             <div className="grid grid-cols-1 md:grid-cols-12 md:p-0">
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
                         <FaDatabase className="text-3xl text-pink-300" />
                         <h3 className="text-3xl font-bold ml-6">Statistic</h3>
                     </div>
-                    <AdminDasboardComponent />
+                    <RevenueList />
                 </div>
             </div>
         </div>

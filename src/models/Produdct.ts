@@ -1,20 +1,22 @@
 export interface IProduct {
-    id: number;
-    name: string;
-    origin: string;
-    brand: string;
-    description: string;
-    price: number;
-    promotionPrice: number;
-    inStock : number;
-    sold: number;
-    quantity: number;
-    expireAt: string;
+    id: string;
+    name?: string;
+    origin?: string;
+    brand?: string;
+    description?: string;
+    price?: number;
+    promotionPrice?: number;
+    inStock?: number;
+    sold?: number;
+    quantity?: number;
+    expireAt?: string;
     thumbnailUrl?: string | File | null ;
-    thumbnail: string | File | null;
-    createAt: string;
-    status: string;
-    feedbacks: IFeedback[];
+    thumbnail?: string | File | null;
+    createAt?: string;
+    status?: string;
+    feedbacks?: IFeedback[];
+    revenue?: number;
+    rating?: number
 }
 export interface IFeedback {
     id: number;

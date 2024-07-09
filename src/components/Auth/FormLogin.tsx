@@ -30,7 +30,6 @@ const FormLogin = () => {
       .then((response) => {
         localStorage.setItem("customerId", response.user.id)
         const role = response.user.role;
-        console.log(role);
         if (role === "Admin") {
           navigate("/admin-dashboard");
         } else if (role === "Staff") {
