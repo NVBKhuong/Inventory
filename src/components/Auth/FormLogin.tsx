@@ -34,7 +34,7 @@ const FormLogin = () => {
         if (role === "Admin") {
           navigate("/admin-dashboard");
         } else if (role === "Staff") {
-          navigate("/dashboard");
+          navigate("/product-management");
         } else if (role === "Customer") {
           navigate("/home");
         }
