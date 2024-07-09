@@ -6,6 +6,7 @@ import { Spinner } from "../Layout/Spinner";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
+import { IProductCategory } from "../../models/Produdct";
 
 const Product: React.FC<{ text?: string | null }> = ({ text }) => {
     const dispatch = useAppDispatch();
@@ -35,15 +36,13 @@ const Product: React.FC<{ text?: string | null }> = ({ text }) => {
             </>
         );
     };
-
-    const renderCategories = (productCategories: any[]) => {
+    const renderCategories = (productCategories: IProductCategory[]) => {
         return productCategories.map((categoryObj, index) => (
             <span key={index} className="mr-2 mb-2 px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-lg">
                 {categoryObj.category.name}
             </span>
         ));
     };
-
     return (
         <div className="grid grid-cols-4 gap-4">
             {
