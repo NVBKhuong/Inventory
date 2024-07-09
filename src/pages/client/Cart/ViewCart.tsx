@@ -50,14 +50,16 @@ const ViewCart = () => {
         return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
 
+    
     const fetchVouchers = async () => {
         try {
-            const response = await instance.post('/vouchers/filter', { status: 'Active' });
-            setVouchers(response.data.data);
+            const response = await instance.get('/vouchers/get-valid');
+            setVouchers(response.data);
         } catch (error) {
             console.error('Error fetching vouchers:', error);
         }
     };
+
 
     useEffect(() => {
         fetchVouchers();

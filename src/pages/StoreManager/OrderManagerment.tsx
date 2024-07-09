@@ -3,7 +3,7 @@ import SidebarComponent from "../../components/Layout/Sidebar"
 import OrderList from "../../components/StoreManager/OrderList"
 
 
-const CategoryManagement = () => {
+const OrderManagement = () => {
     return (
         <div className="">
             <div className="grid grid-cols-1 md:grid-cols-12 md:p-0">
@@ -22,4 +22,4 @@ const CategoryManagement = () => {
         </div>)
 }
 
-export default CategoryManagement
+export default OrderManagement
