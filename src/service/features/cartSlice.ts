@@ -34,11 +34,11 @@ const cartSlice = createSlice({
                 });
             }
         },
-        removeFromCart: (state, action: PayloadAction<number>) => {
+        removeFromCart: (state, action: PayloadAction<string>) => {
             const itemId = action.payload;
             state.items = state.items.filter(item => item.id !== itemId);
         },
-        updateCartItemQuantity: (state, action: PayloadAction<{ id: number, quantity: number }>) => {
+        updateCartItemQuantity: (state, action: PayloadAction<{ id: string, quantity: number }>) => {
             const { id, quantity } = action.payload;
             const cartItem = state.items.find(item => item.id === id);
             if (cartItem) {
