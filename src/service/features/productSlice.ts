@@ -123,7 +123,7 @@ export const productSlice = createSlice({
             // lưu local storage
             saveCartToStorage(state.cart);
         },
-        increaseQuantity: (state, action: PayloadAction<number>) => {
+        increaseQuantity: (state, action: PayloadAction<string>) => {
             const productId = action.payload;
             if (state.cart) {
                 const cartItem = state.cart.find(item => item.id === productId);
@@ -133,7 +133,7 @@ export const productSlice = createSlice({
                 }
             }
         },
-        decreaseQuantity: (state, action: PayloadAction<number>) => {
+        decreaseQuantity: (state, action: PayloadAction<string>) => {
             const productId = action.payload;
             if (state.cart) {
                 const cartItemIndex = state.cart.findIndex(item => item.id === productId);
@@ -148,7 +148,7 @@ export const productSlice = createSlice({
                 }
             }
         },
-        removeFromCart: (state, action: PayloadAction<number>) => {
+        removeFromCart: (state, action: PayloadAction<string>) => {
             const productId = action.payload;
             if (state.cart) {
                 const cartItemIndex = state.cart.findIndex(item => item.id === productId);
@@ -158,7 +158,7 @@ export const productSlice = createSlice({
                 }
             }
         },
-        updateQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
+        updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
             const { id, quantity } = action.payload;
             if (state.cart) {
                 const cartItem = state.cart.find(item => item.id === id);

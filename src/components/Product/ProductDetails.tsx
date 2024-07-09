@@ -70,7 +70,8 @@ const ProductDetails = () => {
             dispatch(addToCart({
                 ...product,
                 quantity,
-                cartId: newCartId
+                cartId: newCartId,
+                image : product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""
             }));
             toast.success(`Added ${product.name} to cart.`);
         }
