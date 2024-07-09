@@ -10,6 +10,7 @@ const Home = () => {
     const [text, setText] = useState("");
     const [searchText, setSearchText] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [visibleCount, setVisibleCount] = useState(16);
 
     const handleSearch = () => {
         setSearchText(text);
@@ -22,6 +23,10 @@ const Home = () => {
 
     const handleFilterChange = (categoryId: string) => {
         setSelectedCategory(categoryId || null);
+    };
+
+    const loadMore = () => {
+        setVisibleCount((prevCount) => prevCount + 16);
     };
 
     return (
@@ -44,6 +49,8 @@ const Home = () => {
                         <Product
                             text={searchText === "" ? null : searchText}
                             selectedCategory={selectedCategory}
+                            visibleCount={visibleCount}
+                            loadMore={loadMore}
                         />
                     </div>
                 </div>
