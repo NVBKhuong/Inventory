@@ -9,6 +9,7 @@ import Header from "../Layout/Header";
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarHalfIcon from '@mui/icons-material/StarHalf';
+import { IProductCategory } from "../../models/Produdct";
 
 const POLLING_INTERVAL = 1000; // 1 second
 
@@ -126,7 +127,7 @@ const ProductDetails = () => {
         );
     };
 
-    const renderCategories = (productCategories: any[]) => {
+    const renderCategories = (productCategories: IProductCategory[]) => {
         return productCategories.map((categoryObj, index) => (
             <span key={index} className="inline-block mr-2 mb-2 px-3 py-1 text-sm font-medium text-gray-900 bg-gray-200 rounded-full">
                 {categoryObj.category.name}
