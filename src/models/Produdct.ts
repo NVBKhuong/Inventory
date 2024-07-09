@@ -1,21 +1,22 @@
 export interface IProduct {
-    id: number;
+    id: string | number;
     name: string;
     origin: string;
     brand: string;
     description: string;
     price: number;
     promotionPrice: number;
-    rating: number;
-    inStock : number;
+    inStock: number;
     sold: number;
     quantity: number;
     expireAt: string;
-    thumbnailUrl?: string | File | null ;
+    thumbnailUrl: string | File | null ;
     thumbnail: string | File | null;
     createAt: string;
     status: string;
     feedbacks: IFeedback[];
+    revenue: number;
+    rating: number
 }
 export interface IFeedback {
     id: number;

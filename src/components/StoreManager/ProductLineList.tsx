@@ -75,7 +75,7 @@ const ProductLineList = () => {
             <Autocomplete disableClearable disablePortal className="ms-4 w-[23%]" size='small'
             options={products} value={selectProduct} onChange={(_,value)=>setSelectProduct(value)}
             renderInput={(params) => <TextField {...params} label="Product" />} />
-            <CommonTable
+            <CommonTable note={true}
                 columns={columns}
                 data={productLines || []}
                 onRowDoubleClick={handleShowProductDetail}

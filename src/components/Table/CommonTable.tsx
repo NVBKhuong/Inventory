@@ -25,6 +25,7 @@ interface CommonTableProps<T extends MRT_RowData> {
   onRowDoubleClick?: (row: T) => void;
   enableRowSelection?: boolean;
   toolbarButtons?: React.ReactNode;
+  note: boolean | null;
 }
 
 const CommonTable = <T extends MRT_RowData>({
@@ -33,6 +34,7 @@ const CommonTable = <T extends MRT_RowData>({
   onRowDoubleClick,
   enableRowSelection = false,
   toolbarButtons,
+  note
 }: CommonTableProps<T>) => {
   const table = useMaterialReactTable({
     columns,
@@ -72,7 +74,7 @@ const CommonTable = <T extends MRT_RowData>({
           color: "red",
         }}
       >
-        * Please double-click a row to view detailed information
+        {note ? "* Please double-click a row to view detailed information" : ""}
       </Typography>
       <TableContainer className="p-4">
         <Table>

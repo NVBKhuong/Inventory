@@ -71,7 +71,7 @@ const ProductList = () => {
 
     return (
         <Stack sx={{ m: "2rem 0" }}>
-            <CommonTable
+            <CommonTable note={true}
                 columns={columns}
                 data={products || []}
                 onRowDoubleClick={handleShowProductDetail}
@@ -94,7 +94,7 @@ const ProductList = () => {
             />
             {productData && (
                 <PopupProductDetail
-                    product={productData}
+                    product={productData} 
                     onPopupDetail={onPopupProductDetail}
                     setOnPopupDetail={setOnPopupProductDetail}
                 />

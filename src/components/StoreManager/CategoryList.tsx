@@ -47,7 +47,7 @@ const CategoryList = () => {
 
   return (
     <Stack sx={{ m: "2rem 0" }}>
-      <CommonTable
+      <CommonTable note={true}
         columns={columns}
         data={categories || []}
         onRowDoubleClick={handleShowCategoryDetail}
