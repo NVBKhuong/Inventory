@@ -42,7 +42,7 @@ export const getAllProducts = createAsyncThunk<IProduct[], { text?: string | nul
     'products/getAllProducts',
     async (data, thunkAPI) => {
         try {
-            const response = await axios.post('/products/filter?pageSize=100', {
+            const response = await axios.post('/products/filter?pageNumber=0&pageSize=100', {
                 search: data.text
             });
             return response.data.data;
