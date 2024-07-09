@@ -1,12 +1,22 @@
-import Header from "../../components/Layout/Header"
-import Footer from "../../components/Layout/Footer"
-import Product from "../../components/Product/Product"
-import Carousel from "../../components/Layout/Carousel"
-import { useState } from "react"
-import { SearchBar } from "../../components/Layout/Search"
+import Header from "../../components/Layout/Header";
+import Footer from "../../components/Layout/Footer";
+import Product from "../../components/Product/Product";
+import Carousel from "../../components/Layout/Carousel";
+import { useState } from "react";
+import { SearchBar } from "../../components/Layout/Search";
 
 const Home = () => {
     const [text, setText] = useState("");
+    const [searchText, setSearchText] = useState("");
+
+    const handleSearch = () => {
+        setSearchText(text);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setText(e.target.value);
+        setSearchText(e.target.value); // Thực hiện tìm kiếm khi người dùng nhập chữ
+    };
 
     return (
         <div className="grid h-screen" style={{ gridTemplateRows: 'auto 1fr auto' }}>
@@ -20,12 +30,13 @@ const Home = () => {
                 <div className="row-start-2 row-end-3">
                     <SearchBar
                         text={text}
-                        onChange={(e) => setText(e.target.value)}
+                        onChange={handleInputChange}
+                        onSearch={handleSearch}
                     />
                 </div>
                 <div className="row-start-3 row-end-4 my-20 mx-5">
                     <Product
-                        text={text === "" ? null : text}
+                        text={searchText === "" ? null : searchText}
                     />
                 </div>
             </div>
@@ -33,7 +44,7 @@ const Home = () => {
                 <Footer />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;
