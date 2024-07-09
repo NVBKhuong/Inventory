@@ -1,15 +1,22 @@
-import { useParams } from "react-router-dom";
+// Trong file ProductDetails.tsx
+import { useParams, useNavigate } from "react-router-dom";
 import Footer from "../Layout/Footer";
 import Header from "../Layout/Header";
 import { useAppDispatch, useAppSelector } from "../../service/store/store";
-import { addToCart, getProductById, increaseQuantity, decreaseQuantity } from "../../service/features/productSlice";
+import { addToCart, getProductById, increaseQuantity, decreaseQuantity, resetProduct } from "../../service/features/productSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Feedback from "../Feedback/Feedback";
 import { Link } from "react-router-dom";
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+
+const POLLING_INTERVAL = 1000; // 1 seconds
 
 const ProductDetails = () => {
     const params = useParams();
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { product, cart } = useAppSelector((state) => state.products);
     const productId = params.id ? params.id : "";
@@ -22,6 +29,26 @@ const ProductDetails = () => {
         if (productId) {
             dispatch(getProductById({ id: productId }));
         }
+
+        return () => {
+            dispatch(resetProduct());
+        };
+    }, [dispatch, productId]);
+
+    useEffect(() => {
+        if (product && product.status === "Inactive") {
+            navigate("*");
+        }
+    }, [product, navigate]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (productId) {
+                dispatch(getProductById({ id: productId }));
+            }
+        }, POLLING_INTERVAL);
+
+        return () => clearInterval(interval);
     }, [dispatch, productId]);
 
     const handleAddToCart = () => {
@@ -37,6 +64,7 @@ const ProductDetails = () => {
                 return;
             }
             // Tạo cartId mới bằng cách lấy độ dài của cart hiện tại + 1
+
             const newCartId = (cart ? cart.length : 0) + 1;
 
             dispatch(addToCart({
@@ -87,6 +115,20 @@ const ProductDetails = () => {
         return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     };
 
+    const renderStars = (rating: number) => {
+        const fullStars = Math.floor(rating);
+        const halfStars = rating % 1 !== 0;
+        const emptyStars = 5 - fullStars - (halfStars ? 1 : 0);
+
+        return (
+            <>
+                {Array(fullStars).fill(null).map((_, index) => <span key={`full-${index}`}><StarIcon /></span>)}
+                {halfStars && <span key="half"><StarHalfIcon /></span>}
+                {Array(emptyStars).fill(null).map((_, index) => <span key={`empty-${index}`}><StarBorderIcon /></span>)}
+            </>
+        );
+    };
+
     return (
         <>
             <section>
@@ -103,7 +145,9 @@ const ProductDetails = () => {
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">{product?.brand}</h2>
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.name}</h1>
                             <div className="flex flex-row gap-8">
-                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
+                                <div className="flex items-center gap-1 mb-2 text-yellow-500">
+                                    {renderStars(product?.rating || 0)}
+                                </div>                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
                                 <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
                                     <span className="title-font font-medium text-base text-red-500">Out of Stock</span>
@@ -151,7 +195,6 @@ const ProductDetails = () => {
                                         )}
                                     </>
                                 )}
-
                             </div>
                             <div className="w-auto h-auto">
                                 {product?.description ? (
@@ -162,8 +205,8 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                </div >
-            </section >
+                </div>
+            </section>
             <section className="text-gray-700 body-font overflow-hidden bg-white border-t-4 w-full">
                 <div className="m-10">
                     <Feedback
@@ -175,7 +218,6 @@ const ProductDetails = () => {
             <section>
                 <Footer />
             </section>
-
         </>
     );
 };

@@ -85,7 +85,7 @@ const UserList = () => {
             <Autocomplete disableClearable disablePortal className="ms-4 w-[23%]" size='small'
             options={['Customer','Staff']} value={role} onChange={(_,value)=>setRole(value)}
             renderInput={(params) => <TextField {...params} label="Role" />} />
-            <CommonTable
+            <CommonTable note={true}
                 columns={columns}
                 data={users || []}
                 onRowDoubleClick={handleShowAccountDetail}

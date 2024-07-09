@@ -168,6 +168,9 @@ export const productSlice = createSlice({
                 }
             }
         },
+        resetProduct: (state) => {
+            state.product = null;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getAllProducts.pending, (state) => {
@@ -209,5 +212,5 @@ export const productSlice = createSlice({
     },
 });
 
-export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity } = productSlice.actions;
+export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity, resetProduct } = productSlice.actions;
 export default productSlice.reducer;
