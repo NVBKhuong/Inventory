@@ -63,7 +63,7 @@ const Product: React.FC<ProductProps> = ({ text, selectedCategory, visibleCount,
             <div className="grid grid-cols-4 gap-4">
                 {filteredProducts && filteredProducts.length > 0 && filteredProducts.slice(0, visibleCount).map((product, index) => (
                     product.status !== 'Inactive' && (
-                        <div key={index} className="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[400px]">
+                        <div key={index} className="flex flex-col bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[auto] w-[auto]">
                             <div className="flex items-center justify-center">
                                 <img className="w-[200px] h-[180px] p-4"
                                     src={product?.thumbnailUrl ? product.thumbnailUrl.toString() : ""}
