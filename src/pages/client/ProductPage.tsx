@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
 import Product from "../../components/Product/Product";
-import Carousel from "../../components/Layout/Carousel";
 import { SearchBar } from "../../components/Layout/Search";
 import FilterAction from "../../components/Layout/FilterAction";
 
@@ -34,7 +33,7 @@ const ProductPage = () => {
             <Header />
             <main className="flex-grow">
                 <div className="container mx-auto px-4 py-8">
-                    <Carousel />
+                    {/* <Carousel /> */}
                     <div className="my-6">
                         <SearchBar
                             text={text}

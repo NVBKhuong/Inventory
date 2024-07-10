@@ -79,7 +79,7 @@ const Product: React.FC<ProductProps> = ({ text, selectedCategory, visibleCount,
                                     </div>
                                     <div className="flex flex-row justify-between">
                                         <p className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{formatCurrency(product.price)}</p>
-                                        <span className="title-font font-medium text-base text-gray-900">Sold: {product.sold} </span>
+                                        <span className="title-font font-bold text-base text-gray-900">Sold: {product.sold} </span>
                                     </div>
                                     <div className="flex items-center gap-1 mb-2 text-yellow-500">
                                         {renderStars(product.rating || 0)}
