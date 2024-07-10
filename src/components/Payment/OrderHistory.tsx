@@ -5,6 +5,7 @@ import { FaStar, FaMoneyBillWave, FaCreditCard, FaClock, FaCheckCircle, FaTimesC
 import Header from "../../components/Layout/Header";
 import Footer from "../../components/Layout/Footer";
 import instance from "../../service/api/customAxios";
+import { Spinner } from "../Layout/Spinner";
 
 interface Customer {
   id: string;
@@ -67,6 +68,7 @@ const OrderHistory = () => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState<boolean>(false);
   const [cancelNote, setCancelNote] = useState<string>("");
   const [orderToCancel, setOrderToCancel] = useState<Order | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
@@ -81,6 +83,8 @@ const OrderHistory = () => {
         setOrders(sortedOrders);
       } catch (error) {
         console.error("Error fetching orders:", error);
+      }finally{
+          setIsLoading(false);
       }
     };
 
@@ -249,7 +253,9 @@ const OrderHistory = () => {
           <p><strong>Receiver:</strong> {order.receiver}</p>
           <p><strong>Phone:</strong> {order.phone}</p>
           <p><strong>Address:</strong> {order.address}</p>
-          {order.note && <p><strong>Note:</strong> {order.note}</p>}
+          {order.note && order.note.split('\n').map((note, index) => (
+            <p key={index}><strong>Note {index + 1}:</strong> {note}</p>
+          ))}
           <div className="flex items-center">
             <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
             <span className="ml-2">{getPaymentMethodIcon(order.paymentMethod)}</span>
@@ -378,82 +384,87 @@ const renderCancelModal = () => {
 
 return (
   <>
-    <Header />
-    <div className="flex flex-col min-h-screen">
-      <section className="text-gray-700 body-font overflow-hidden bg-white flex-grow">
-        <div className="container px-5 py-24 mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-12">Order History</h1>
-          <div className="lg:w-4/5 mx-auto">
-            {orders.length > 0 ? (
-              orders.slice(0, displayedOrders).map((order) => (
-                <div key={order.id} className="lg:w-3/4 w-full mb-6 p-6 border border-gray-200 rounded-lg shadow-md mx-auto">
-                  <div className="flex flex-col lg:flex-row justify-between items-start mb-4">
-                    <div className="w-full lg:w-1/2 pr-0 lg:pr-4 mb-4 lg:mb-0">
-                      <h3 className="text-lg font-medium text-gray-800 mb-4">Order Details:</h3>
-                      {order.orderDetails.map((detail) => (
-                        <div key={detail.id} className="mt-2">
-                          <p className="text-gray-600"><span className="font-semibold">Product:</span> {detail.product.name}</p>
-                          <p className="text-gray-600"><span className="font-semibold">Quantity:</span> {detail.quantity}</p>
-                          <p className="text-gray-600"><span className="font-semibold">Price:</span> {formatCurrency(detail.price)}</p>
-                          {renderFeedbackButton(order, detail)}
+      <Header />
+      <div className="flex flex-col min-h-screen">
+        <section className="text-gray-700 body-font overflow-hidden bg-white flex-grow">
+          <div className="container px-5 py-24 mx-auto">
+            <h1 className="text-3xl font-bold text-center mb-12">Order History</h1>
+            <div className="lg:w-4/5 mx-auto">
+              {isLoading ? (
+                <div className="flex justify-center items-center">
+                  <Spinner />
+                </div>
+              ) : !orders || orders.length === 0 ? (
+                <p className="text-center w-full mt-8 text-lg font-semibold">No orders found.</p>
+              ) : (
+                orders.slice(0, displayedOrders).map((order) => (
+                  <div key={order.id} className="lg:w-3/4 w-full mb-6 p-6 border border-gray-200 rounded-lg shadow-md mx-auto">
+                    <div className="flex flex-col lg:flex-row justify-between items-start mb-4">
+                      <div className="w-full lg:w-1/2 pr-0 lg:pr-4 mb-4 lg:mb-0">
+                        <h3 className="text-lg font-medium text-gray-800 mb-4">Order Details:</h3>
+                        {order.orderDetails.map((detail) => (
+                          <div key={detail.id} className="mt-2">
+                            <p className="text-gray-600"><span className="font-semibold">Product:</span> {detail.product.name}</p>
+                            <p className="text-gray-600"><span className="font-semibold">Quantity:</span> {detail.quantity}</p>
+                            <p className="text-gray-600"><span className="font-semibold">Price:</span> {formatCurrency(detail.price)}</p>
+                            {renderFeedbackButton(order, detail)}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="w-full lg:w-1/2 pl-0 lg:pl-4">
+                        <div className="mb-2">
+                          <h2 className="text-xl font-semibold text-gray-900 mb-1">{order.receiver}</h2>
+                          <p className={`text-sm font-medium flex items-center ${getStatusColor(order.status)}`}>
+                            {getStatusIcon(order.status)}
+                            <span className="ml-2"><span className="font-semibold">Status:</span> {order.status}</span>
+                          </p>
+                          {order.note && order.note.split('\n').map((note, index) => (
+                            <p key={index} className="text-gray-600 mt-2"><span className="font-semibold">Note {index + 1}:</span> {note}</p>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                    <div className="w-full lg:w-1/2 pl-0 lg:pl-4">
-                      <div className="mb-2">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-1">{order.receiver}</h2>
-                        <p className={`text-sm font-medium flex items-center ${getStatusColor(order.status)}`}>
-                          {getStatusIcon(order.status)}
-                          <span className="ml-2"><span className="font-semibold">Status:</span> {order.status}</span>
-                        </p>
-                        {order.note && <p className="text-gray-600 mt-2"><span className="font-semibold">Note:</span> {order.note}</p>}
-                      </div>
-                      <div className="mt-4 text-center">
-                        <p className="text-2xl font-semibold text-gray-800 flex items-center justify-center">
-                          Payment Method: <span className="ml-2 text-3xl">{getPaymentMethodIcon(order.paymentMethod)}</span>
-                        </p>
-                      </div>
-                      <div className="mt-4 text-center">
-                        <p className="text-xl font-semibold text-gray-800">Order Total: {formatCurrency(order.amount)} </p>
-                      </div>
-                      <div className="mt-4">
-                        {renderCancelButton(order)}
-                        <button
-                          onClick={() => handleOrderDetail(order)}
-                          className="text-white bg-blue-600 border-0 py-2 px-4 ml-2 focus:outline-none hover:bg-blue-700 rounded-lg"
-                        >
-                          Order Detail
-                        </button>
+                        <div className="mt-4 text-center">
+                          <p className="text-2xl font-semibold text-gray-800 flex items-center justify-center">
+                            Payment Method: <span className="ml-2 text-3xl">{getPaymentMethodIcon(order.paymentMethod)}</span>
+                          </p>
+                        </div>
+                        <div className="mt-4 text-center">
+                          <p className="text-xl font-semibold text-gray-800">Order Total: {formatCurrency(order.amount)} </p>
+                        </div>
+                        <div className="mt-4">
+                          {renderCancelButton(order)}
+                          <button
+                            onClick={() => handleOrderDetail(order)}
+                            className="text-white bg-blue-600 border-0 py-2 px-4 ml-2 focus:outline-none hover:bg-blue-700 rounded-lg"
+                          >
+                            Order Detail
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
+                ))
+              )}
+              {displayedOrders < orders.length && (
+                <div className="text-center mt-8">
+                  <button
+                    onClick={loadMoreOrders}
+                    className="text-white bg-blue-600 border-0 py-2 px-4 focus:outline-none hover:bg-blue-700 rounded-lg"
+                  >
+                    Load More
+                  </button>
                 </div>
-              ))
-            ) : (
-              <p className="text-center w-full mt-8 text-lg font-semibold">No orders found.</p>
-            )}
-            {displayedOrders < orders.length && (
-              <div className="text-center mt-8">
-                <button
-                  onClick={loadMoreOrders}
-                  className="text-white bg-blue-600 border-0 py-2 px-4 focus:outline-none hover:bg-blue-700 rounded-lg"
-                >
-                  Load More
-                </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      </section>
-      <Footer />
-    </div>
-    <ToastContainer />
-    {isModalOpen && renderOrderDetails(selectedOrder)}
-    {isFeedbackModalOpen && renderFeedbackModal()}
-    {isCancelModalOpen && renderCancelModal()}
-  </>
+        </section>
+        <Footer />
+      </div>
+      <ToastContainer />
+      {isModalOpen && renderOrderDetails(selectedOrder)}
+      {isFeedbackModalOpen && renderFeedbackModal()}
+      {isCancelModalOpen && renderCancelModal()}
+    </>
 );
-
 
   
 }

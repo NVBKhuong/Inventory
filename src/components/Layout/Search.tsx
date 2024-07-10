@@ -10,7 +10,7 @@ export const SearchBar: React.FC<{ text: string, onChange: React.ChangeEventHand
             <input
                 className="h-full w-full flex-1 outline-none"
                 type="text"
-                placeholder="Nhập tên sản phẩm..."
+                placeholder="Enter name product..."
                 value={text}
                 onChange={onChange}
                 onKeyUp={onSearch} // Thêm sự kiện này để tìm kiếm khi người dùng nhập chữ
@@ -19,7 +19,7 @@ export const SearchBar: React.FC<{ text: string, onChange: React.ChangeEventHand
                 className="bg-red-600 border-none font-semibold rounded-sm h-10 w-24 text-center cursor-pointer text-white ease-in duration-300 hover:tracking-[0.1rem]"
                 onClick={onSearch}
             >
-                Tìm kiếm
+                Search
             </button>
         </div>
     );

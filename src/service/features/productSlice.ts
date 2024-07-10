@@ -84,14 +84,14 @@ export const createProduct = createAsyncThunk<IProductCreate, FormData>(
     },
 );
 
-// Define a function to save cart to localStorage
-const saveCartToStorage = (cart: ICartItem[] | null) => {
-    if (cart) {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    } else {
-        localStorage.removeItem('cart');
-    }
-};
+// // Define a function to save cart to localStorage
+// const saveCartToStorage = (cart: ICartItem[] | null) => {
+//     if (cart) {
+//         localStorage.setItem('cart', JSON.stringify(cart));
+//     } else {
+//         localStorage.removeItem('cart');
+//     }
+// };
 
 export const productSlice = createSlice({
     name: 'products',
@@ -122,7 +122,11 @@ export const productSlice = createSlice({
                 }];
             }
             // lưu local storage
-            saveCartToStorage(state.cart);
+            // saveCartToStorage(state.cart);
+        },
+        removeCart:(state) =>{
+           state.cart = [];
+
         },
         increaseQuantity: (state, action: PayloadAction<string>) => {
             const productId = action.payload;
@@ -130,7 +134,7 @@ export const productSlice = createSlice({
                 const cartItem = state.cart.find(item => item.id === productId);
                 if (cartItem) {
                     cartItem.quantity += 1;
-                    saveCartToStorage(state.cart);
+                    // saveCartToStorage(state.cart);
                 }
             }
         },
@@ -145,7 +149,7 @@ export const productSlice = createSlice({
                     } else {
                         state.cart.splice(cartItemIndex, 1);
                     }
-                    saveCartToStorage(state.cart);
+                    // saveCartToStorage(state.cart);
                 }
             }
         },
@@ -155,7 +159,7 @@ export const productSlice = createSlice({
                 const cartItemIndex = state.cart.findIndex(item => item.id === productId);
                 if (cartItemIndex !== -1) {
                     state.cart.splice(cartItemIndex, 1);
-                    saveCartToStorage(state.cart);
+                    // saveCartToStorage(state.cart);
                 }
             }
         },
@@ -165,7 +169,7 @@ export const productSlice = createSlice({
                 const cartItem = state.cart.find(item => item.id === id);
                 if (cartItem) {
                     cartItem.quantity = quantity;
-                    saveCartToStorage(state.cart);
+                    // saveCartToStorage(state.cart);
                 }
             }
         },
@@ -213,5 +217,5 @@ export const productSlice = createSlice({
     },
 });
 
-export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity, resetProduct } = productSlice.actions;
+export const { setError, addToCart, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity, resetProduct, removeCart } = productSlice.actions;
 export default productSlice.reducer;
