@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { loginUser } from "../../service/features/authSlice";
 import { useAppDispatch } from "../../service/store/store";
+import { toast } from "react-toastify";
 
 type FormLoginValues = {
   username: string;
@@ -40,7 +41,7 @@ const FormLogin = () => {
       })
       .catch((error) => {
         console.log(error);
-        // Handle error if needed
+        toast.error(error.response.data);
       })
       .finally(() => setIsLoading(false));
   };
