@@ -155,8 +155,8 @@ const ProductDetails = () => {
                                 <div className="flex items-center gap-1 mb-2 text-yellow-500">
                                     {renderStars(product?.rating || 0)}
                                 </div>
-                                <span className="title-font font-medium text-base text-gray-900">Sold: {product?.sold} </span>
-                                <span className="title-font font-medium text-base text-gray-900">InStock: {product?.inStock} </span>
+                                <span className="title-font font-bold text-base text-gray-900">Sold: {product?.sold} </span>
+                                <span className="title-font font-bold text-base text-gray-900">InStock: {product?.inStock} </span>
                                 {product?.inStock === 0 && (
                                     <span className="title-font font-medium text-base text-red-500">Out of Stock</span>
                                 )}
@@ -169,7 +169,7 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                             <div className="flex">
-                                <span className="title-font font-medium text-2xl text-gray-900">{formatCurrency(product?.price ?? 0)}</span>
+                                <span className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">{formatCurrency(product?.price ?? 0)}</span>
                                 {product && product.inStock > 0 && (
                                     <div className="ml-auto flex items-center">
                                         <button
