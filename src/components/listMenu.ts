@@ -5,10 +5,10 @@ const listMenu = {
             title: 'Product Management',
             url: '/product-management',
         },
-        {
-            title: 'Product Line Management',
-            url: '/product-line-management',
-        },
+        // {
+        //     title: 'Product Line Management',
+        //     url: '/product-line-management',
+        // },
         {
             title: 'Category Management',
             url: '/category-management',

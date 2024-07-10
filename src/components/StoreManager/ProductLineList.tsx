@@ -39,14 +39,14 @@ const ProductLineList = () => {
     const [products, setProducts] = useState([])
     const [selectProduct, setSelectProduct] = useState({label:'',value:''})
     const loadProducts = async() => {
-        await instance.post('/products/filter',{params: {pageNumber:0, pageSize:100}})
+        await instance.post('/products/filter?pageNumber=0&pageSize=1000',{})
         .then(res =>{
             const newList = res.data.data.map((item:any) => ({label: item.name, value: item.id}))
             setSelectProduct(newList[0])
             setProducts(newList)}).catch(err=>console.log(err))
     }
     const loadProductLines = async()=>{
-        await instance.get(`/product-lines/${selectProduct.value}`,{params: {pageNumber:0, pageSize:100}})
+        await instance.get(`/product-lines/${selectProduct.value}`,{params: {pageNumber:0, pageSize:1000}})
         .then(res =>{
             setProductLines(res.data.data)}).catch(err=>console.log(err))
     }
