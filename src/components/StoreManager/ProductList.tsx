@@ -52,7 +52,7 @@ const ProductList = () => {
 
     useEffect(() => {
         if (!isPopupOpen) {
-            dispatch(getAllProducts({text:""}));
+            dispatch(getAllProducts({ text: "" }));
         }
     }, [isPopupOpen, dispatch]);
 
@@ -94,7 +94,7 @@ const ProductList = () => {
             />
             {productData && (
                 <PopupProductDetail
-                    product={productData} 
+                    product={productData}
                     onPopupDetail={onPopupProductDetail}
                     setOnPopupDetail={setOnPopupProductDetail}
                 />
