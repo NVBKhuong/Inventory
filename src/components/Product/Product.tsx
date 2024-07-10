@@ -13,9 +13,10 @@ interface ProductProps {
     selectedCategory: string | null;
     visibleCount: number;
     loadMore: () => void;
+    priceRange: number[]; // Add the priceRange prop
 }
 
-const Product: React.FC<ProductProps> = ({ text, selectedCategory, visibleCount, loadMore }) => {
+const Product: React.FC<ProductProps> = ({ text, selectedCategory, visibleCount, loadMore, priceRange }) => {
     const dispatch = useAppDispatch();
     const { products, loading } = useAppSelector((state) => state.products);
 
@@ -52,11 +53,13 @@ const Product: React.FC<ProductProps> = ({ text, selectedCategory, visibleCount,
         ));
     };
 
-    const filteredProducts = selectedCategory
-        ? products.filter(product =>
-            product.productCategories.some(categoryObj => categoryObj.category.id === selectedCategory)
-        )
-        : products;
+    const filteredProducts = products
+        ?.filter(product => product.price >= priceRange[0] && product.price <= priceRange[1])
+        .filter(product =>
+            selectedCategory
+                ? product.productCategories.some(categoryObj => categoryObj.category.id === selectedCategory)
+                : true
+        );
 
     return (
         <>
